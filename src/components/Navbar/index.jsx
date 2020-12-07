@@ -11,7 +11,7 @@ const Navbar = () => {
       {
       // if user is not logged
       <div className="diconnected-nav-links">
-        <Link to='/register' className="signup-btn">
+        <Link to='/register' className="register-btn">
           Sign up
         </Link>
         <Link to='/login' className="signin-btn">

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Register from './pages/Register';
 import Profile from './pages/Profile';
 
 /* ===== INTL ========
@@ -59,7 +59,7 @@ const App = () => {
               <Home />
             </Route>        
             <UnAuthRoute path="/login" component={Login} />
-            <UnAuthRoute path="/register" component={Signup} />
+            <UnAuthRoute path="/register" component={Register} />
             <AuthRoute path="/profile" component={Profile} />
         </Switch>
       </Router>
