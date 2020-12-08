@@ -13,9 +13,10 @@ export const actionWithProps = (props) => {
 }
 
 
+
+
 ==== TO CALL THEM IN ANOTHER COMPONENT ====
-import {useDispatch} from 'react-redux';
-import { action, actionWithProps } from '../redux/actions';
+
 
 const dispatch = useDispatch();
 dispatch(action());
@@ -23,3 +24,14 @@ dispatch(actionWithProps(props));
 
 
 */
+
+const setCurrentUser = (user) => {
+  return {
+    type: "CURRENT_USER",
+    payload: {
+      current_user: user,
+    },
+  };
+};
+
+export {setCurrentUser}
