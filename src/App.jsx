@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -28,6 +28,9 @@ const text = {
 */
 
 const App = () => {
+
+
+  const [isAuth, setIsAuth] = useState(false)
   /* === INTL ===
   const [language, setLanguage] = useState('fr');
   */
@@ -38,15 +41,27 @@ const App = () => {
   // loading current user at first load of compnent or reload of the page
   useEffect(() => {
 
+    // if checkTokenPresent()
+    // send request to api 
+
+    // if response is 200 and object user is present 
+
+    // setIsAuth(true)
+    
     // if jwt_token key exist in cookies then set current user in global state/store
-    checkAuth() && dispatch(setCurrentUser("test"))
+     dispatch(setCurrentUser("test"))
 
   }, []);
 
   // method to check auth absed on jwt_token key presence in cookies
-  const checkAuth = () => {
+  const checkTokenPresent = () => {
       return Cookies.get('jwt_token') ? true : false
   };
+
+  const checkAuth = () => {
+    return isAuth
+};
+
 
   //Private routes who do not need authentification
   const UnAuthRoute = ({ component: Component, ...rest }) => (
