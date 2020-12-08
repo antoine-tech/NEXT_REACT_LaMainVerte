@@ -28,25 +28,26 @@ const text = {
 */
 
 const App = () => {
-
-  const {setCurrentUser, current_user, isAuth, setIsAuth} = useCurrentUser();
+  const { setCurrentUser, current_user } = useCurrentUser();
   // loading current user at first load of compnent or reload of the page
   useEffect(() => {
 
-    setCurrentUser("test");
-    
+    // try {
+    //   const jwt = Cookies.get("jwt_token")
 
+    // fetch 
+    setCurrentUser("test");
+
+    //   // fetch 
+    // } catch (error) {
+
+
+    // }
   }, []);
 
-  // method to check auth absed on jwt_token key presence in cookies
-  const checkTokenPresent = () => {
-      return Cookies.get('jwt_token') ? true : false
-  };
-
   const checkAuth = () => {
-    return isAuth
-};
-
+    return current_user !== null;
+  };
 
   //Private routes who do not need authentification
   const UnAuthRoute = ({ component: Component, ...rest }) => (

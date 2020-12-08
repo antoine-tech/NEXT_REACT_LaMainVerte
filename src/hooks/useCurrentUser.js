@@ -1,20 +1,17 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../redux/actions/";
 
 const useCurrentUser = () => {
-  const [isAuth, setIsAuth] = useState(false);
 
   // disptaching current user to global state/redux store
   const dispatch = useDispatch();
 
-  const { current_user } = useState();
+  const { current_user } = useSelector();
 
   return {
     setCurrentUser: (user)=>dispatch(setCurrentUser(user)),
-    current_user,
-    isAuth,
-    setIsAuth,
+    current_user
   };
 };
 
