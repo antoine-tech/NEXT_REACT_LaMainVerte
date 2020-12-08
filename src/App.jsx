@@ -1,46 +1,40 @@
-import React, { useEffect, useState } from "react";
+// REACT MODULES
+import React, { useEffect } from "react";
+
+// REACT ROUTER
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from "react-router-dom";
+
+// COMPONENTS
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+
+// COKKIES
 import Cookies from "js-cookie";
+
+// CUSTOMHOOKS
 import useCurrentUser from "./hooks/useCurrentUser";
 
-/* ===== INTL ========
-import { IntlProvider } from 'react-intl';
-import textFr from './translation/fr';
-import textEn from './translation/en';
-import { useDispatch } from 'react-redux';
-import { Cookies } from 'js-cookie';
-import useCurrentUser from './hooks/useCurrentUser';
-
-const text = {
-  fr: textFr,
-  en: textEn,
-}
-*/
 
 const App = () => {
   const { setCurrentUser, current_user } = useCurrentUser();
   // loading current user at first load of compnent or reload of the page
   useEffect(() => {
-
     // try {
     //   const jwt = Cookies.get("jwt_token")
 
-    // fetch 
+    // fetch
     setCurrentUser("test");
 
-    //   // fetch 
+    //   // fetch
     // } catch (error) {
-
 
     // }
   }, []);
@@ -78,7 +72,6 @@ const App = () => {
   );
 
   return (
-    // <IntlProvider locale={language} messages={text[language]}>
     <div className="App">
       <Router>
         <Navbar />
@@ -92,7 +85,6 @@ const App = () => {
         </Switch>
       </Router>
     </div>
-    // </ IntlProvider>
   );
 };
 
