@@ -10,9 +10,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
-import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
-import { setCurrentUser } from "./redux/actions";
+import useCurrentUser from "./hooks/useCurrentUser";
 
 /* ===== INTL ========
 import { IntlProvider } from 'react-intl';
@@ -20,6 +19,7 @@ import textFr from './translation/fr';
 import textEn from './translation/en';
 import { useDispatch } from 'react-redux';
 import { Cookies } from 'js-cookie';
+import useCurrentUser from './hooks/useCurrentUser';
 
 const text = {
   fr: textFr,
@@ -29,27 +29,12 @@ const text = {
 
 const App = () => {
 
-
-  const [isAuth, setIsAuth] = useState(false)
-  /* === INTL ===
-  const [language, setLanguage] = useState('fr');
-  */
-
-  // disptaching current user to global state/redux store
-  const dispatch = useDispatch();
-
+  const {setCurrentUser, current_user, isAuth, setIsAuth} = useCurrentUser();
   // loading current user at first load of compnent or reload of the page
   useEffect(() => {
 
-    // if checkTokenPresent()
-    // send request to api 
-
-    // if response is 200 and object user is present 
-
-    // setIsAuth(true)
+    setCurrentUser("test");
     
-    // if jwt_token key exist in cookies then set current user in global state/store
-     dispatch(setCurrentUser("test"))
 
   }, []);
 
