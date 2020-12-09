@@ -1,14 +1,11 @@
 import React from 'react';
 import RegisterForm from '../components/Forms/RegisterForm';
-// import { FormattedMessage } from 'react-intl';
+import SignContainer from '../components/SignContainer/index';
 
 const Register = () => {
   return (
-    <div className="register-page">
-      <h1>Sign up</h1>
-      <RegisterForm />
-    </div>
-  )
+    <SignContainer backgroundGradient="bg-red-gradient"/>
+  );
 }
 
 export default Register;

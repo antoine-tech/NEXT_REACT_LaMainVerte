@@ -1,22 +1,46 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './style/dist/index.css';
-import App from './App';
+// REACT MODULES
+import React from "react";
+import ReactDOM from "react-dom";
 
-/* ====== REDUX =========
-import { createStore }from 'redux';
-import reducers from './redux/reducers';
-import  {Provider} from 'react-redux';
+// REACT ROUTER
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
 
-const store = createStore(
-  reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()  
-);
-*/
+// REDUX
+//import { composeWithDevTools } from "redux-devtools-extension";
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import reducer from "./redux/reducers/reducer";
+import reduxThunk from "redux-thunk";
+
+// COMPONENTS
+import App from "./App";
+
+// STYLESHEETS
+import "./assets/style/tailwind.css";
+import "./assets/style/main.css";
+
+// STORE
+
+// WITHOUT DEV CONSOLE
+const store = createStore(reducer, applyMiddleware(reduxThunk));
+// WITH DEV CONSOLE
+
+// MIDLEWARES
+//const middlewares = [reduxThunk];
+
+// STORE
+// const store = createStore(
+//   reducer,
+//   composeWithDevTools(applyMiddleware([...middlewares]))
+// );
 
 ReactDOM.render(
-  //<Provider store={store} />
-  <App />,
-  //</ Provider>,
-  document.getElementById('root')
+  <Router>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Router>,
+  document.getElementById("root")
 );

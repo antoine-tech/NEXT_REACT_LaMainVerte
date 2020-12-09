@@ -1,0 +1,37 @@
+/* FONT IMPORTS */
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&display=swap");
+
+:root {
+  --green-gradient: linear-gradient(180deg, #8fe388 0%, #cbff49 100%);
+  --red-gradient: linear-gradient(180deg, #ff6b6b 0%, #ffc185 100%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Lato", sans-serif;
+}
+
+p,
+ol,
+ul,
+li,
+a,
+button,
+figure,
+caption,
+input,
+textarea,
+label {
+  font-family: "Montserrat", sans-serif;
+}
+
+.bg-green-gradient {
+  background: var(--green-gradient);
+}
+
+.bg-red-gradient {
+  background: var(--red-gradient);
+}

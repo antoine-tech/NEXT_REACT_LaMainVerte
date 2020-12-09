@@ -1,71 +1,95 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
+// REACT MODULES
+import React, { useEffect, useState } from "react";
 
-/* ===== INTL ========
-import { IntlProvider } from 'react-intl';
-import textFr from './translation/fr';
-import textEn from './translation/en';
+// REACT ROUTER
+import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 
-const text = {
-  fr: textFr,
-  en: textEn,
-}
-*/
+// COMPONENTS
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+
+// COKKIES
+import Cookies from "js-cookie";
+
+// CUSTOMHOOKS
+import useCurrentUser from "./hooks/useCurrentUser";
 
 const App = () => {
-  /* === INTL ===
-  const [language, setLanguage] = useState('fr');
-  */
+  const { pathname } = useLocation();
 
+  const { setCurrentUser, current_user } = useCurrentUser();
+
+  const [isNavbarPresent, setNavbarPresent] = useState(true);
+
+  // loading current user at first load of compnent or reload of the page
+  useEffect(() => {
+    // try {
+    //   const jwt = Cookies.get("jwt_token")
+
+    // fetch
+    setCurrentUser("test");
+
+    //   // fetch
+    // } catch (error) {
+
+    // }
+  }, []);
+
+  useEffect(() => {
+    pathname === "/login" || pathname === "/register"
+      ? setNavbarPresent(false)
+      : setNavbarPresent(true);
+  }, [pathname]);
 
   const checkAuth = () => {
-    return false
-  }
-  
+    // return current_user !== null;
+    return true;
+  };
+
   //Private routes who do not need authentification
   const UnAuthRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => (
-      checkAuth() ? (
-        <Redirect to={{ pathname: '/' }} />
-      ) : (
+    <Route
+      {...rest}
+      render={(props) =>
+        !checkAuth() ? (
+          <Redirect to={{ pathname: "/" }} />
+        ) : (
           <Component {...props} />
         )
-    )} />
-  )
+      }
+    />
+  );
 
   //Private routes who do need authentification
   const AuthRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => (
-      checkAuth() ? (
-        <Component {...props} />
-      ) : (
-          <Redirect to={{ pathname: '/login' }} />
+    <Route
+      {...rest}
+      render={(props) =>
+        checkAuth() ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: "/login" }} />
         )
-    )} />
-  )
+      }
+    />
+  );
 
   return (
-    // <IntlProvider locale={language} messages={text[language]}>
-    <div className="App">
-      <Router>
-        <Navbar />  
-        <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>        
-            <UnAuthRoute path="/login" component={Login} />
-            <UnAuthRoute path="/register" component={Register} />
-            <AuthRoute path="/profile" component={Profile} />
-        </Switch>
-      </Router>
-    </div>
-    // </ IntlProvider>
+    <>
+      {isNavbarPresent && <Navbar />}
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <UnAuthRoute path="/login" component={Login} />
+        <UnAuthRoute path="/register" component={Register} />
+        <AuthRoute path="/profile" component={Profile} />
+      </Switch>
+    </>
   );
-}
+};
 
 export default App;
