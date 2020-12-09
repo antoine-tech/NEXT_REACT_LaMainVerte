@@ -3,6 +3,8 @@ import React from 'react';
 const RegiterForm = () => {
   return (
     <form className="register-form">
+
+      <h1>Bienvenue parmi nous !</h1>
       <input id="username" type="text" placeholder="Username"/>
       <input id="mail" type="email" placeholder="Email adress" />
       <input id="password" type="password" placeholder="Password" />

@@ -4,6 +4,8 @@
 :root {
   --green-gradient: linear-gradient(180deg, #8fe388 0%, #cbff49 100%);
   --red-gradient: linear-gradient(180deg, #ff6b6b 0%, #ffc185 100%);
+  --base-font-size: 16px;
+  font-size: var(--base-font-size);
 }
 
 h1,
@@ -12,6 +14,32 @@ h3,
 h4,
 h5 {
   font-family: "Lato", sans-serif;
+  line-height: 24px;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+h5 {
+  font-size: 1rem;
+  font-weight: normal;
 }
 
 p,
@@ -26,6 +54,8 @@ input,
 textarea,
 label {
   font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  line-height: 24px;
 }
 
 .bg-green-gradient {
@@ -34,4 +64,19 @@ label {
 
 .bg-red-gradient {
   background: var(--red-gradient);
+}
+
+input {
+  height: 2.5rem;
+  border-bottom: 1px solid #515151;
+  transition: background-color 0.1s ease-in-out;
+}
+
+input:focus {
+  background-color: rgba(203, 255, 73, 0.25);
+  border-bottom: 2px solid #7c906a;
+}
+
+.alert.danger {
+  color: #db4437;
 }
