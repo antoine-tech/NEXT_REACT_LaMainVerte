@@ -12,40 +12,57 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 
 // COKKIES
-import Cookies from "js-cookie";
+import Cookies, { get } from "js-cookie";
 
 // CUSTOMHOOKS
 import useCurrentUser from "./hooks/useCurrentUser";
+import { getUserDatas } from "./requests/user";
+import useJwtToken from "./hooks/useJwtToken";
 
 const App = () => {
+
+  // get current path location using hook from react router  
   const { pathname } = useLocation();
 
+  // current user custom hook to get and set currentUser in relation with redux global state
   const { setCurrentUser, current_user } = useCurrentUser();
 
+  // CHeck wether navbar needs to be displayed or not
   const [isNavbarPresent, setNavbarPresent] = useState(true);
+
+  // jwt token custom hook to get Cookies containing jwt token if available
+  const { getJwtToken } = useJwtToken();
 
   // loading current user at first load of compnent or reload of the page
   useEffect(() => {
-    // try {
-    //   const jwt = Cookies.get("jwt_token")
+    const fetchUserDatas = async () => {
+      const response = await getUserDatas(getJwtToken).then((res) =>
+        res.json()
+      );
 
-    // fetch
-    setCurrentUser("test");
+      response.user && setCurrentUser(response.user);
+      return response;
+    };
 
-    //   // fetch
-    // } catch (error) {
-
-    // }
+    if (getJwtToken) {
+      fetchUserDatas();
+    }
   }, []);
 
+  // useEffect reloading component on change of location
   useEffect(() => {
     pathname === "/login" || pathname === "/register"
       ? setNavbarPresent(false)
       : setNavbarPresent(true);
   }, [pathname]);
 
+  // checking if user is authenticated or not 
   const checkAuth = () => {
+
+    // production mode
     // return current_user !== null;
+
+    // test purposes 
     return true;
   };
 
@@ -76,7 +93,8 @@ const App = () => {
       }
     />
   );
-
+  
+  // render
   return (
     <>
       {isNavbarPresent && <Navbar />}
