@@ -1,37 +1,31 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import Cookies from 'js-cookie';
+import React from "react";
+import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import LaMainVerteBrandNav from "../LaMainVerteBrandNav/index";
+import SettingIcon from "../SettingIcon";
 
 const Navbar = () => {
   return (
-    <nav>
-      <Link to='/' className="nav-link" title="home">
-        Home
+    <nav className="flex w-full justify-between items-center p-4">
+      <Link to="/" title="home">
+        <LaMainVerteBrandNav />
       </Link>
-      {
-      // if user is not logged
-      <div className="diconnected-nav-links">
-        <Link to='/register' className="register-btn">
-          Sign up
-        </Link>
-        <Link to='/login' className="signin-btn">
-          Sign in
-        </Link>
-      </div>
-      }
 
-      { // if user is logged
-        <div className="connected-nav-links">
-          <Link to='/profile' className="nav-link" title="My profile">
-            My Profile
+      <ul className="flex">
+        <li className="mx-4">
+          <div className="toogleSwitch">
+            <input type="checkbox"></input>
+            <div className="switch"></div>
+          </div>
+        </li>
+        <li>
+          <Link to="/" title="home">
+            <SettingIcon />
           </Link>
-          <button className="log-out-btn" onClick={() => Cookies.remove('token') }>
-            Log out
-          </button>
-        </div>
-      }
-  </nav>
-  )
-}
+        </li>
+      </ul>
+    </nav>
+  );
+};
 
 export default Navbar;
