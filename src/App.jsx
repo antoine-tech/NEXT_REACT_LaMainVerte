@@ -1,13 +1,8 @@
 // REACT MODULES
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // REACT ROUTER
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 
 // COMPONENTS
 import Navbar from "./components/Navbar";
@@ -22,9 +17,13 @@ import Cookies from "js-cookie";
 // CUSTOMHOOKS
 import useCurrentUser from "./hooks/useCurrentUser";
 
-
 const App = () => {
+  const { pathname } = useLocation();
+
   const { setCurrentUser, current_user } = useCurrentUser();
+
+  const [isNavbarPresent, setNavbarPresent] = useState(true);
+
   // loading current user at first load of compnent or reload of the page
   useEffect(() => {
     // try {
@@ -39,8 +38,15 @@ const App = () => {
     // }
   }, []);
 
+  useEffect(() => {
+    pathname === "/login" || pathname === "/register"
+      ? setNavbarPresent(false)
+      : setNavbarPresent(true);
+  }, [pathname]);
+
   const checkAuth = () => {
-    return current_user !== null;
+    // return current_user !== null;
+    return true;
   };
 
   //Private routes who do not need authentification
@@ -48,7 +54,7 @@ const App = () => {
     <Route
       {...rest}
       render={(props) =>
-        checkAuth() ? (
+        !checkAuth() ? (
           <Redirect to={{ pathname: "/" }} />
         ) : (
           <Component {...props} />
@@ -72,19 +78,17 @@ const App = () => {
   );
 
   return (
-    <div className="App">
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <UnAuthRoute path="/login" component={Login} />
-          <UnAuthRoute path="/register" component={Register} />
-          <AuthRoute path="/profile" component={Profile} />
-        </Switch>
-      </Router>
-    </div>
+    <>
+      {isNavbarPresent && <Navbar />}
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <UnAuthRoute path="/login" component={Login} />
+        <UnAuthRoute path="/register" component={Register} />
+        <AuthRoute path="/profile" component={Profile} />
+      </Switch>
+    </>
   );
 };
 

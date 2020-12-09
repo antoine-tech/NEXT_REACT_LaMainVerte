@@ -2,6 +2,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+// REACT ROUTER
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
+
 // REDUX
 //import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
@@ -32,8 +37,10 @@ const store = createStore(reducer, applyMiddleware(reduxThunk));
 // );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <Router>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Router>,
   document.getElementById("root")
 );

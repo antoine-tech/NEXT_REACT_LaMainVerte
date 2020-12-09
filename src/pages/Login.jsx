@@ -1,15 +1,10 @@
-import React from 'react';
-import LoginForm from '../components/Forms/LoginForm';
-// import { FormattedMessage } from 'react-intl';
-
+import React from "react";
+import SignContainer from '../components/SignContainer/index';
 
 const Login = () => {
   return (
-    <div className="login-page">
-      <h1>Log in</h1>
-      <LoginForm />
-    </div>
-  )
-}
+    <SignContainer backgroundGradient="bg-green-gradient"/>
+  );
+};
 
 export default Login;
