@@ -7,6 +7,7 @@ const useCurrentUser = () => {
   // disptaching current user to global state/redux store
   const dispatch = useDispatch();
 
+  // getting state of current user available in redux store
   const current_user = useSelector(state=>state.current_user);
 
   return {

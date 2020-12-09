@@ -6,6 +6,7 @@
   --green-gradient: linear-gradient(180deg, #8fe388 0%, #cbff49 100%);
   --red-gradient: linear-gradient(180deg, #ff6b6b 0%, #ffc185 100%);
   --greeen: #8fe388;
+  --red: #ff6b6b;
   --base-min-font-size: 8px;
   --base-max-font-size: 16px;
 }
@@ -20,7 +21,6 @@
     font-size: var(--base-max-font-size);
   }
 }
-
 
 /* GENERAL TYPOS */
 
@@ -80,11 +80,15 @@ label {
   background: var(--green-gradient);
 }
 
+.bg-red {
+  background-color: var(--red);
+}
+
 .bg-red-gradient {
   background: var(--red-gradient);
 }
 
-.bg-green{
+.bg-green {
   background-color: var(--greeen);
 }
 
