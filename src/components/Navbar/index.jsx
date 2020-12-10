@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
-import LaMainVerteBrandNav from "../LaMainVerteBrandNav/index";
-import SettingIcon from "../SettingIcon";
+import LaMainVerteBrandNav from "../icons/LaMainVerteBrandNav/index";
+import SettingIcon from "../icons/SettingIcon";
 
 const Navbar = () => {
   return (
@@ -12,7 +11,7 @@ const Navbar = () => {
       </Link>
 
       <ul className="flex">
-        <li className="mx-4">
+        <li className="mx-4 flex flex-col justify-center">
           <div className="toogleSwitch">
             <input type="checkbox"></input>
             <div className="switch"></div>

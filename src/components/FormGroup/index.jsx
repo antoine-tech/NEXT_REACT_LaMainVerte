@@ -51,7 +51,7 @@ const FormGroup = ({
           >
             <path
               fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
               d="M0.5 16H17.5L9 1L0.5 16ZM10 14H8V12H10V14ZM10 11H8V7H10V11Z"
               fill="#DB4437"
             />

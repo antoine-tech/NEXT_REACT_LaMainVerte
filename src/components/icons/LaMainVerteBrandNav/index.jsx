@@ -9,6 +9,7 @@ const LaMainVerteBrandNav = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
+      className="nav-brand"
     >
       <rect x="-2" width="382.398" height="130" fill="url(#pattern0)" />
       <defs>

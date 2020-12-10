@@ -12,7 +12,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 
 // COKKIES
-import Cookies, { get } from "js-cookie";
+import Cookies from "js-cookie";
 
 // CUSTOMHOOKS
 import useCurrentUser from "./hooks/useCurrentUser";
