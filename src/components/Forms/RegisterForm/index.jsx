@@ -16,17 +16,20 @@ const RegiterForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
       password_confirmation,
       firstname,
       lastname,
+      username,
     } = userDatas;
 
     if (
       password_confirmation === password &&
       firstname !== "" &&
       lastname !== "" &&
-      password_confirmation !== ""
+      password_confirmation !== "" &&
+      username !== ""
     ) {
       const response = await signUserUp(
         firstname,
         lastname,
+        username,
         email,
         password,
         password_confirmation
@@ -75,6 +78,18 @@ const RegiterForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
           type="text"
           labelText="Prénom :"
           alertMessage={alerts.firstname}
+        />
+
+        <FormGroup
+          colSpan="2"
+          onInput={(value) => handleInput(value)}
+          onBlur={(value) => handleBlur(value)}
+          value={userDatas.username}
+          name="username"
+          id="username"
+          type="text"
+          labelText="Identifiant :"
+          alertMessage={alerts.username}
         />
 
         <FormGroup

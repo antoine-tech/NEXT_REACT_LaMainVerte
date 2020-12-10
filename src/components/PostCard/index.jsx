@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import Moment from "react-moment";
+import IconHeart from "../icons/IconHeart/index";
 
 // Ex :
 // {
@@ -19,6 +20,7 @@ const PostCard = ({
   garden_id,
   created_at,
   updated_at,
+  likes,
 }) => {
   const history = useHistory();
   const handleClick = (garden_id) => {
@@ -39,9 +41,19 @@ const PostCard = ({
       <div className="col-span-6 flex flex-col justify-center grid grid-cols-2">
         <h5 className="col-span-1">{title}</h5>
         <h5 className="col-span-1">
-          <Moment format="DD/MM/YYYY à hh:mm:ss">{created_at}</Moment>
+          <Moment
+            format="DD/MM/YYYY à hh:mm:ss"
+            className="block w-full text-right"
+          >
+            {created_at}
+          </Moment>
         </h5>
         <p className="col-span-2 my-2">{content}</p>
+
+        <p className="col-start-2 col-span-1 flex items-center justify-end">
+          <IconHeart />
+          <span className="ml-2"> {likes}</span>
+        </p>
       </div>
     </div>
   );

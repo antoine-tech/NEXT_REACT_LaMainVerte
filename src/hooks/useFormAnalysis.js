@@ -11,6 +11,7 @@ const useFormAnalysis = () => {
   const [userDatas, setUserdatas] = useState({
     firstname: "",
     lastname: "",
+    username: "",
     email: "",
     password: "",
     password_confirmation: "",
@@ -18,11 +19,12 @@ const useFormAnalysis = () => {
 
   // state to store and set alerts to be displayed under the related input
   const [alerts, setAlerts] = useState({
-    alertLastname: "",
-    alertFirstname: "",
-    alertEmail: "",
-    alertPassword: "",
-    alertPasswordConfirmation: "",
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
   });
 
   // onInput event handler logic

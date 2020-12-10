@@ -22,6 +22,7 @@ const signUserIn = async (email, password, jwt_token) => {
 const signUserUp = async (
   first_name,
   last_name,
+  username,
   email,
   password,
   password_confirmation
@@ -31,6 +32,7 @@ const signUserUp = async (
       user: {
         first_name,
         last_name,
+        username,
         email,
         password,
         password_confirmation,

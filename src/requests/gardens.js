@@ -21,4 +21,11 @@ const getGardenType = async (garden_type_id) => {
   return response;
 };
 
-export { getClimate, getLocation, getGardenType };
+const getGarden = async (garden_id) => {
+  const response = await API.find("/gardens/" + garden_id)
+    .then((res) => res.json())
+    .catch((error) => error);
+  return response;
+};
+
+export { getClimate, getLocation, getGardenType, getGarden };
