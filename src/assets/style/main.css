@@ -135,7 +135,7 @@ div {
 }
 .bg-blue {
   background-color: var(--blue);
-
+}
 .bg-light-brown {
   background-color: var(--light-brown);
 }
@@ -173,6 +173,14 @@ button {
 button.btn-lg {
   height: 75px;
 }
+
+/* garden create form */
+.garden-toogle {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 
 .toogleSwitch,
 .toogleSwitch input {

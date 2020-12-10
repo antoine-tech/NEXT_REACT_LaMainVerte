@@ -1,44 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FormGroup from '../../FormGroup';
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from '../../buttons/LetsGoButton/index';
-
+import { createGarden } from '../../../requests/gardens';
+import useIsToogled from '../../../hooks/useIsToogled';
 
 const GardenForm = () => {
   const { gardenData, alerts, handleInput, handleBlur } = useFormAnalysis();
 
+  const {
+    isToogled,
+    handleChange,
+  } = useIsToogled()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const {
-      gardenName,
-      area,
-      soil,
-      climate,
-      address,
-      country,
-    } = gardenData;
+    const handleGarden = {
+      garden: {
+        garden_type_id: isToogled,
+        name: gardenData.name,
+        area: gardenData.area,
+        climate_id: gardenData.climate,
+        location_id: gardenData.location
+      }
+    };
 
-    const response = await 
+    const response = await createGarden(gardenData)
+      .then((response) => console.log(response.json()));
   }
 
   return (
     <div>
-      <h1 className="col-span-2 my-2">Partager mon jardin</h1>
+      <h1 className="col-span-2 my-5">Partager mon jardin</h1>
 
       <form
         className="grid grid-cols-2 gap-4 my-2"
         onSubmit={handleSubmit}
       >
+        <ul className="garden-toogle">
+          <li>Urban</li>
+          <li>
+            <div className="toogleSwitch toogleGarden">
+              <input type="checkbox" onChange={handleChange}></input>
+              <div className="switch"></div>
+            </div>
+          </li>
+          <li>Rural</li>
+        </ul>
         <FormGroup
           colSpan="2"
-          value={gardenData.gardenName}
-          name="gardenName"
-          id="gardenName"
+          value={gardenData.name}
+          name="name"
+          id="name"
           type="text"
           labelText="Nom du potager :"
-          alertMessage={alerts.gardenName}
+          alertMessage={alerts.name}
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
         />
@@ -48,19 +65,8 @@ const GardenForm = () => {
           name="area"
           id="area"
           type="text"
-          labelText="Superficie"
+          labelText="Superficie (en m2)"
           alertMessage={alerts.area}
-          onInput={(value) => handleInput(value)}
-
-        />
-        <FormGroup
-          colSpan="1"
-          value={gardenData.soil}
-          name="soil"
-          id="soil"
-          type="text"
-          labelText="Type de sol"
-          alertMessage={alerts.soil}
           onInput={(value) => handleInput(value)}
         />
         <FormGroup
@@ -76,22 +82,12 @@ const GardenForm = () => {
         />
         <FormGroup
           colSpan="2"
-          value={gardenData.address}
-          name="address"
-          id="address"
+          value={gardenData.location}
+          name="location"
+          id="location"
           type="text"
-          labelText="Adresse (optionnel)"
-          alertMessage={alerts.address}
-          onInput={(value) => handleInput(value)}
-        />
-        <FormGroup
-          colSpan="2"
-          value={gardenData.country}
-          name="country"
-          id="country"
-          type="text"
-          labelText="country"
-          alertMessage={alerts.country}
+          labelText="Lieu"
+          alertMessage={alerts.location}
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
         />
