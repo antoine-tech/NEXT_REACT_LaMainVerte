@@ -113,7 +113,7 @@ const Home = () => {
   return (
     <section className="grid grid-cols-12 min-h-screen gap-4">
       <div className="hidden md:block md:col-span-1 lg:col-span-2 bg-man"></div>
-      <div className="col-span-12 md:col-span-8 lg:col-span-6 px-4">
+      <div className="col-span-12 lg:col-span-6 px-4">
         <SearchEngine />
         <h4 className="my-4">Sélectionné pour vous ....</h4>
 
@@ -149,7 +149,7 @@ const Home = () => {
 
         <GardenCard />
       </div>
-      <div className="hidden md:block md:col-span-3 lg:col-span-4">
+      <div className="hidden lg:block lg:col-span-4">
         <h4 className="mb-4 text-center">Les derniers posts</h4>
         <div className="h-screen radius bg-light-brown shadow-neomorph p-4 overflow-auto">
           {lastPosts?.map((lastPost) => {
