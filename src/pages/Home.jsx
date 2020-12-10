@@ -146,8 +146,6 @@ const Home = () => {
             />
           );
         })}
-
-        <GardenCard />
       </div>
       <div className="hidden lg:block lg:col-span-4">
         <h4 className="mb-4 text-center">Les derniers posts</h4>
