@@ -13,7 +13,7 @@ import Profile from "./pages/Profile";
 import NewGarden from './pages/NewGarden';
 
 // COKKIES
-import Cookies, { get } from "js-cookie";
+import Cookies from "js-cookie";
 
 // CUSTOMHOOKS
 import useCurrentUser from "./hooks/useCurrentUser";
