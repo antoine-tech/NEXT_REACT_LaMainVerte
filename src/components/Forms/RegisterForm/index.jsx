@@ -34,11 +34,11 @@ const RegiterForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
 
       if (response.hasOwnProperty("data")) {
         // redirect to login
-        setAlertMessage("Compte crée avec succès");
+        setAlertMessage("Compte créé avec succès");
         setIsAlertDisplayed(true);
       } else {
         setAlertMessage(
-          "Une erreure est survenue veillez contacter le support technique"
+          "Une erreur est survenue veuillez contacter le support technique"
         );
         setIsAlertDisplayed(true);
       }

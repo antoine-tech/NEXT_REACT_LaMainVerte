@@ -5,8 +5,10 @@
 :root {
   --green-gradient: linear-gradient(180deg, #8fe388 0%, #cbff49 100%);
   --red-gradient: linear-gradient(180deg, #ff6b6b 0%, #ffc185 100%);
+  --blue-gradient: linear-gradient(180deg, #7B8CDE 0%, #A7A7A7 100%);
   --greeen: #8fe388;
   --red: #ff6b6b;
+  --blue: #7B8CDE;
   --base-min-font-size: 8px;
   --base-max-font-size: 16px;
 }
@@ -88,8 +90,16 @@ label {
   background: var(--red-gradient);
 }
 
+.bg-blue-gradient {
+  background: var(--blue-gradient);
+}
+
 .bg-green {
   background-color: var(--greeen);
+}
+
+.bg-blue {
+  background-color: var(--blue);
 }
 
 /* INPUTS  */
@@ -110,6 +120,9 @@ input:focus {
 }
 
 /* BUTTONS */
+button {
+  border-radius: 5px;
+}
 button.btn-lg {
   height: 75px;
 }

@@ -16,6 +16,18 @@ const useFormAnalysis = () => {
     password_confirmation: "",
   });
 
+  //for the gardenForm
+  const [gardenData, setGardenData] = useState({
+    urbanRural: "",
+    gardenName: "",
+    area: "",
+    soil: "",
+    climate: "",
+    address: "",
+    country: "",
+    gardenImage: ""
+  })
+
   // state to store and set alerts to be displayed under the related input
   const [alerts, setAlerts] = useState({
     alertLastname: "",
@@ -23,6 +35,12 @@ const useFormAnalysis = () => {
     alertEmail: "",
     alertPassword: "",
     alertPasswordConfirmation: "",
+    alertGardenName: "",
+    alertArea: "",
+    alertUrbanRural: "",
+    alertClimate: "",
+    alertCountry: "",
+    alertGardenImage: "",
   });
 
   // onInput event handler logic
@@ -31,6 +49,10 @@ const useFormAnalysis = () => {
     const newUserDatas = { ...userDatas };
     newUserDatas[id] = value;
     setUserdatas({ ...newUserDatas });
+
+    const newGardenData = { ...gardenData };
+    newGardenData[id] = value;
+    setGardenData({ ...newGardenData });
 
     // PASSWORD CONFIRMATION CHECK
     if (userDatas.password !== userDatas.password_confirmation) {
@@ -44,6 +66,19 @@ const useFormAnalysis = () => {
         password_confirmation: "",
       });
     }
+
+    //garden area check if area is a float
+    if (typeof parseFloat(gardenData.area) !== 'number' && gardenData.area !== '') {
+      setAlerts({
+        ...alerts,
+        alertArea: "veuillez entrer un nombre",
+      })
+    } else {
+      setAlerts({
+        ...alerts,
+        alertArea: "",
+      })
+    }
   };
 
   // onBlur event handler logic
@@ -52,15 +87,17 @@ const useFormAnalysis = () => {
     const newAlerts = { ...alerts };
 
     value === ""
-      ? (newAlerts[id] = alertMessages.isEmpty)
-      : (newAlerts[id] = "");
+    ? (newAlerts[id] = alertMessages.isEmpty)
+    : (newAlerts[id] = "");
 
     setAlerts(newAlerts);
+
   };
 
   // returning objects with function for setters and values for getters
   return {
     userDatas,
+    gardenData,
     alerts,
     // setUserdatas,
     // setAlerts,
