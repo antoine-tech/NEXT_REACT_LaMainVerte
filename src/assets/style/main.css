@@ -417,6 +417,7 @@ nav .nav-brand {
   height: 150px;
   width: 150px;
   border-radius: var(--radius);
+  cursor: pointer;
 }
 
 /* CARD DATA UPON CARD IMAGE */
