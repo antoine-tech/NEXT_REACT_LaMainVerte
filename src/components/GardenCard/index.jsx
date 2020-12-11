@@ -49,6 +49,7 @@ const GardenCard = ({
             dataText={location?.location?.name}
           />
         </div>
+
       </div>
       <div className="card-footer p-4 flex items-center justify-between">
         <h4 className="italic">{name?.toUpperCase()}</h4>{" "}

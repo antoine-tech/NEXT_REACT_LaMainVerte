@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import Garden from "./pages/Garden";
 
 // COKKIES
 import Cookies from "js-cookie";
@@ -20,8 +21,7 @@ import { getUserDatas } from "./requests/user";
 import useJwtToken from "./hooks/useJwtToken";
 
 const App = () => {
-
-  // get current path location using hook from react router  
+  // get current path location using hook from react router
   const { pathname } = useLocation();
 
   // current user custom hook to get and set currentUser in relation with redux global state
@@ -56,13 +56,12 @@ const App = () => {
       : setNavbarPresent(true);
   }, [pathname]);
 
-  // checking if user is authenticated or not 
+  // checking if user is authenticated or not
   const checkAuth = () => {
-
     // production mode
     // return current_user !== null;
 
-    // test purposes 
+    // test purposes
     return true;
   };
 
@@ -93,7 +92,7 @@ const App = () => {
       }
     />
   );
-  
+
   // render
   return (
     <>
@@ -101,6 +100,9 @@ const App = () => {
       <Switch>
         <Route exact path="/">
           <Home />
+        </Route>
+        <Route exact path="/garden/:id">
+          <Garden />
         </Route>
         <UnAuthRoute path="/login" component={Login} />
         <UnAuthRoute path="/register" component={Register} />
