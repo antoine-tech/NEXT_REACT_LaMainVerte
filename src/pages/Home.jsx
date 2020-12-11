@@ -6,103 +6,64 @@ import GardenCard from "../components/GardenCard/index";
 import SearchEngine from "../components/SearchEngine/index";
 import { findUserDatas, getUserDatas } from "../requests/user";
 import useJwtToken from "../hooks/useJwtToken";
-import { getClimate, getGardenType, getLocation } from "../requests/gardens";
+import {
+  getClimate,
+  getGardenType,
+  getLocation,
+  getGardens,
+  getGarden,
+  getFollowedGardenAndRelatedData,
+  getGardenSelection,
+} from "../requests/gardens";
 import PostCard from "../components/PostCard";
 import { getPosts } from "../requests/posts";
-import { getTestimonies } from "../requests/testimonies";
+import { getTestimoniesAndRelatedUsers } from "../requests/testimonies";
 import TestimonyCard from "../components/TestimonyCard/index";
+import MaskImage from "../assets/backgrounds/mask_image.png";
 
 const Home = () => {
   // current user custom hook to get in relation with redux global state
   const { current_user } = useCurrentUser();
   const { getJwtToken } = useJwtToken();
   const [followedGardens, setFollowedGardens] = useState([]);
+  const [gardenSelection, setGardenSelection] = useState([]);
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
 
   useEffect(() => {
     const fetchPageDatas = async () => {
-      // fetching testimonies
-      const testimonyDatas = await getTestimonies();
+      // fetching testimonies and related users
+      const testimonies = await getTestimoniesAndRelatedUsers();
 
-      // accessing testimony users 
-      const testimonyUsersPromises = await testimonyDatas.map((testimony) => {
-        return findUserDatas(testimony.user_id);
-      });
-
-      const testimonyUsers = await Promise.all(testimonyUsersPromises).then(
-        (testimonyUser) => testimonyUser
-      );
-
-      const testimonies = testimonyDatas.map((testimony, index) => {
-        return {
-          ...testimony,
-          user: testimonyUsers[index]?.user,
-        };
-      });
+      // setting testimonies state
+      setTestimonies(testimonies);
 
       // fetching posts
       const posts = await getPosts();
-      const gardens = await getUserDatas(getJwtToken).then((res) => res.json());
-      if (gardens?.hasOwnProperty("follows")) {
-        // fetching related garden climates to gardens that user is currently following
-        const promisesRelatedClimates = gardens.follows.map((garden) =>
-          getClimate(garden.climate_id)
+
+      // setting last posts state
+      setLastPosts(posts);
+
+      // fetching user profile information to access his followed gardens
+      const userProfile = await getUserDatas(getJwtToken).then((res) =>
+        res.json()
+      );
+
+      if (
+        userProfile?.hasOwnProperty("follows") &&
+        userProfile.follows.length > 0
+      ) {
+        // fetching related gardens data to gardens that user is currently following
+        const userFollowedGardens = await getFollowedGardenAndRelatedData(
+          userProfile.follows
         );
 
-        const relatedClimates = await Promise.all(promisesRelatedClimates).then(
-          (relatedClimate) => relatedClimate
-        );
-
-        // fetching related garden locations to gardens that user is currently following
-        const promisesRelatedLocations = await gardens.follows.map((garden) =>
-          getLocation(garden.location_id)
-        );
-
-        const relatedLocations = await Promise.all(
-          promisesRelatedLocations
-        ).then((relatedLocation) => relatedLocation);
-
-        // fetching related garden types to gardens that user is currently following
-        const promisesRelatedGardenTypes = await gardens.follows.map((garden) =>
-          getGardenType(garden.garden_type_id)
-        );
-
-        const relatedGardenTypes = await Promise.all(
-          promisesRelatedGardenTypes
-        ).then((relatedGardenType) => relatedGardenType);
-
-        // fetching related garden types to gardens that user is currently following
-        const promisesRelatedUsers = await gardens.follows.map((garden) =>
-          findUserDatas(garden.user_id)
-        );
-
-        const relatedUsers = await Promise.all(promisesRelatedUsers).then(
-          (user) => user
-        );
-
-        // constructing final object grouping all datas
-
-        const currentUserfollowedGardens = gardens.follows.map(
-          (garden, index) => {
-            let { id, name, created_at, updated_at } = garden;
-            return {
-              id,
-              name,
-              updated_at,
-              created_at,
-              climate: relatedClimates[index],
-              location: relatedLocations[index],
-              garden_type: relatedGardenTypes[index],
-              user: relatedUsers[index]?.user,
-            };
-          }
-        );
-        setTestimonies(testimonies);
-        setLastPosts(posts);
-        setFollowedGardens(currentUserfollowedGardens);
+        // setting followedGardens state
+        setFollowedGardens(userFollowedGardens);
       } else {
-        console.error("Network error fetching ressource");
+        // fetching a selection of gardens  to be displayed if user has not any followed gardens yet
+        const selectedGardens = await getGardenSelection();
+        setGardenSelection(selectedGardens);
       }
     };
 
@@ -119,33 +80,81 @@ const Home = () => {
 
         <AvatarSlider />
 
-        <h4 className="my-4">Vos jardins préférés ....</h4>
+        {followedGardens?.length > 0 ? (
+          <>
+            <h4 className="my-4">Vos jardins préférés ....</h4>
 
-        {followedGardens.map((followedGarden) => {
-          let {
-            id,
-            name,
-            user,
-            climate,
-            location,
-            garden_type,
-            created_at,
-            updated_at,
-          } = followedGarden;
-          return (
-            <GardenCard
-              key={`garden-card-${id}`}
-              id={id}
-              name={name}
-              user={user}
-              climate={climate}
-              location={location}
-              garden_type={garden_type}
-              created_at={created_at}
-              updated_at={updated_at}
-            />
-          );
-        })}
+            {followedGardens.map((followedGarden) => {
+              let {
+                id,
+                name,
+                user,
+                climate,
+                location,
+                garden_type,
+                created_at,
+                updated_at,
+              } = followedGarden;
+              return (
+                <GardenCard
+                  key={`garden-card-${id}`}
+                  id={id}
+                  name={name}
+                  user={user}
+                  climate={climate}
+                  location={location}
+                  garden_type={garden_type}
+                  created_at={created_at}
+                  updated_at={updated_at}
+                />
+              );
+            })}
+          </>
+        ) : (
+          <>
+            <h4 className="my-4">Votre aventure commence ici !</h4>
+
+            <div className="h-66vh w-full bg-start-to-grow relative">
+              <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4 bg-light-white">
+                <button className="btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1">
+                  Créer un jardin
+                </button>
+
+                <button className="btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1">
+                  Rechercher un jardin
+                </button>
+              </div>
+            </div>
+
+            <h4 className="my-4">Vos jardins préférés ....</h4>
+
+            {gardenSelection?.map((garden) => {
+              let {
+                id,
+                name,
+                user,
+                climate,
+                location,
+                garden_type,
+                created_at,
+                updated_at,
+              } = garden;
+              return (
+                <GardenCard
+                  key={`garden-card-${id}`}
+                  id={id}
+                  name={name}
+                  user={user}
+                  climate={climate}
+                  location={location}
+                  garden_type={garden_type}
+                  created_at={created_at}
+                  updated_at={updated_at}
+                />
+              );
+            })}
+          </>
+        )}
       </div>
       <div className="hidden lg:block lg:col-span-4">
         <h4 className="mb-4 text-center">Les derniers posts</h4>
@@ -172,7 +181,7 @@ const Home = () => {
             );
           })}
         </div>
-        <h4 className="my-4 text-center">Les posts les plus commentés</h4>
+        <h4 className="my-4 text-center">Les derniers témoignages</h4>
         <div className="h-screen radius bg-light-brown shadow-neomorph p-4">
           {testimonies?.map((testimony) => {
             let { id, content, user, created_at, updated_at } = testimony;
