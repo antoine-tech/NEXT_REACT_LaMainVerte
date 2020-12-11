@@ -187,8 +187,12 @@ input:focus {
 }
 
 /* ALERTS */
-.alert.danger {
+.alert.danger p {
   color: #db4437;
+}
+
+.alert.success p {
+  color: #76906A;
 }
 
 /* BUTTONS */
