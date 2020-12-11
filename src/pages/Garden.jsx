@@ -28,7 +28,7 @@ const Garden = () => {
   }, []);
 
   return (
-    <section className="relative bg-plants">
+    <section className="relative">
       <div
         className="absolute z-10 w-full"
         style={{
