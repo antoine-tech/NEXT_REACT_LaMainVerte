@@ -18,14 +18,11 @@ const useFormAnalysis = () => {
 
   //for the gardenForm
   const [gardenData, setGardenData] = useState({
-    urbanRural: "",
-    gardenName: "",
+    garden_type_id: "",
+    name: "",
     area: "",
-    soil: "",
-    climate: "",
-    address: "",
-    country: "",
-    gardenImage: ""
+    climate_id: "",
+    location_id: ""
   })
 
   // state to store and set alerts to be displayed under the related input
@@ -35,12 +32,11 @@ const useFormAnalysis = () => {
     alertEmail: "",
     alertPassword: "",
     alertPasswordConfirmation: "",
-    alertGardenName: "",
+    alertName: "",
     alertArea: "",
-    alertUrbanRural: "",
+    alertGardenType: "",
     alertClimate: "",
-    alertCountry: "",
-    alertGardenImage: "",
+    alertLocation: ""
   });
 
   // onInput event handler logic

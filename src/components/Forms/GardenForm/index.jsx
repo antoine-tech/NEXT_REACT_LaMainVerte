@@ -4,6 +4,7 @@ import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from '../../buttons/LetsGoButton/index';
 import { createGarden } from '../../../requests/gardens';
 import useIsToogled from '../../../hooks/useIsToogled';
+import useJwtToken from '../../../hooks/useJwtToken';
 
 const GardenForm = () => {
   const { gardenData, alerts, handleInput, handleBlur } = useFormAnalysis();
@@ -13,21 +14,25 @@ const GardenForm = () => {
     handleChange,
   } = useIsToogled()
 
+  const { getJwtToken } = useJwtToken();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const handleGarden = {
       garden: {
-        garden_type_id: isToogled,
+        garden_type_id: isToogled ? 1 : 2,
         name: gardenData.name,
         area: gardenData.area,
-        climate_id: gardenData.climate,
-        location_id: gardenData.location
+        climate: parseInt(gardenData.climate),
+        location: parseInt(gardenData.location)
       }
     };
 
-    const response = await createGarden(gardenData)
-      .then((response) => console.log(response.json()));
+    console.log(handleGarden);
+
+    const response = await createGarden(gardenData, getJwtToken);
+    console.log(response);
   }
 
   return (
