@@ -4,14 +4,9 @@ import useCurrentUser from "../hooks/useCurrentUser";
 import AvatarSlider from "../components/AvatarSlider/index";
 import GardenCard from "../components/GardenCard/index";
 import SearchEngine from "../components/SearchEngine/index";
-import { findUserDatas, getUserDatas } from "../requests/user";
+import { getUserDatas } from "../requests/user";
 import useJwtToken from "../hooks/useJwtToken";
 import {
-  getClimate,
-  getGardenType,
-  getLocation,
-  getGardens,
-  getGarden,
   getFollowedGardenAndRelatedData,
   getGardenSelection,
 } from "../requests/gardens";
@@ -19,7 +14,6 @@ import PostCard from "../components/PostCard";
 import { getPosts } from "../requests/posts";
 import { getTestimoniesAndRelatedUsers } from "../requests/testimonies";
 import TestimonyCard from "../components/TestimonyCard/index";
-import MaskImage from "../assets/backgrounds/mask_image.png";
 import Button from "../components/Button/index";
 import useIsLoading from "../hooks/useIsLoading";
 import LoadingAnimation from "../components/LoadingAnimation/index";
@@ -40,19 +34,12 @@ const Home = () => {
 
   useEffect(() => {
     const fetchPageDatas = async () => {
-      // fetching testimonies and related users
       const testimonies = await getTestimoniesAndRelatedUsers();
-
-      // setting testimonies state
       setTestimonies(testimonies);
 
-      // fetching posts
       const posts = await getPosts();
-
-      // setting last posts state
       setLastPosts(posts);
 
-      // fetching user profile information to access his followed gardens
       const userProfile = await getUserDatas(getJwtToken).then((res) =>
         res.json()
       );
@@ -61,15 +48,11 @@ const Home = () => {
         userProfile?.hasOwnProperty("follows") &&
         userProfile.follows.length > 0
       ) {
-        // fetching related gardens data to gardens that user is currently following
         const userFollowedGardens = await getFollowedGardenAndRelatedData(
           userProfile.follows
         );
-
-        // setting followedGardens state
         setFollowedGardens(userFollowedGardens);
       } else {
-        // fetching a selection of gardens  to be displayed if user has not any followed gardens yet
         const selectedGardens = await getGardenSelection();
         setGardenSelection(selectedGardens);
       }

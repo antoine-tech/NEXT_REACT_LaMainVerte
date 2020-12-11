@@ -1,10 +1,9 @@
-import useJwtToken from "../hooks/useJwtToken";
-import API from "../sevices/index";
+import { find, create } from "../sevices/Api";
 import jwtDecode from "jwt-decode";
 
 // perform a request to sign the user in
 const signUserIn = async (email, password, jwt_token) => {
-  const response = await API.create(
+  return await create(
     {
       user: {
         email,
@@ -14,8 +13,6 @@ const signUserIn = async (email, password, jwt_token) => {
     "/login",
     false
   );
-
-  return response;
 };
 
 // perform a request to sign the user up
@@ -27,7 +24,7 @@ const signUserUp = async (
   password,
   password_confirmation
 ) => {
-  const response = await API.create(
+  return await create(
     {
       user: {
         first_name,
@@ -41,24 +38,18 @@ const signUserUp = async (
     "/register",
     false
   );
-
-  return response;
 };
 
 const getUserDatas = async (jwt_token) => {
   const userId = jwtDecode(jwt_token);
 
-  const response = await API.find(`/users/${userId.sub}`, true, jwt_token);
-
-  return response;
+  return await find(`/users/${userId.sub}`, true, jwt_token);
 };
 
 const findUserDatas = async (userId) => {
-  const response = await API.find(`/users/${userId}`, false)
+  return await find(`/users/${userId}`, false)
     .then((res) => res.json())
     .catch((error) => error);
-
-  return response;
 };
 
 export { signUserIn, signUserUp, getUserDatas, findUserDatas };

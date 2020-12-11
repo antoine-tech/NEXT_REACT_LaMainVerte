@@ -1,12 +1,8 @@
-import API from "../sevices/index";
+import { find} from "../sevices/Api";
 import { findUserDatas } from "./user";
 
 const getTestimonies = async () => {
-  const response = await API.find("/testimonies", false).then((res) =>
-    res.json()
-  );
-
-  return response;
+  return await find("/testimonies", false).then((res) => res.json());
 };
 
 const getTestimoniesAndRelatedUsers = async () => {

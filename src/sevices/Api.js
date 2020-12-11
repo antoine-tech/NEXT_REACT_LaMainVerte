@@ -1,64 +1,42 @@
 import API_BASE_URL from "./config";
 
-class Api {
-  constructor(base_url = API_BASE_URL, endpoint) {
-    this.base_url = base_url;
-    this.endpoint = endpoint;
-  }
-  // request method for all requests
-  async request(
+const request = async (
+  method,
+  endpoint,
+  body = null,
+  authenticated = false,
+  jwt_token = null,
+  defaultHeaders = { "Content-Type": "application/json" },
+  authHeaders = { Authorization: `${jwt_token}` }
+) => {
+  const headers =
+    authenticated && jwt_token
+      ? { ...defaultHeaders, ...authHeaders }
+      : defaultHeaders;
+
+  let options = {
     method,
-    body = null,
-    authenticated = false,
-    jwt_token = null,
-    headers = { "Content-Type": "application/json" },
-    authHeaders = { Authorization: `${jwt_token}` }
-  ) {
-    // adding headers to fetch
-    headers =
-      authenticated && jwt_token ? { ...headers, ...authHeaders } : headers;
+    headers,
+  };
 
-    // constructing array of options to pass it to fetch
-    let options = {
-      method: method,
-      headers: headers,
-    };
+  options = body ? { ...options, ...{ body: JSON.stringify(body) } } : options;
 
-    // dealing with options body if needed (POST, PUT)
+  return await fetch(API_BASE_URL + endpoint, options)
+    .then((response) => response)
+    .then((error) => error);
+};
 
-    options = body
-      ? { ...options, ...{ body: JSON.stringify(body) } }
-      : options;
+const create = (datas, endpoint, authenticated = false, jwt_token = null) => {
+  return request("POST", endpoint, datas, authenticated, jwt_token);
+};
+const update = (datas, endpoint, authenticated = true, jwt_token = null) => {
+  return request("PUT", endpoint, datas, authenticated, jwt_token);
+};
+const deletion = (endpoint, authenticated = true, jwt_token = null) => {
+  return request("DELETE", endpoint, null, authenticated, jwt_token);
+};
+const find = (endpoint, authenticated = true, jwt_token = null) => {
+  return request("GET", endpoint, null, authenticated, jwt_token);
+};
 
-    // executing call to api
-    let api_response = await fetch(this.endpoint, options)
-      .then((response) => response)
-      .then((error) => error);
-
-    // return api response
-    return api_response;
-  }
-
-  // WRAPPER POST CREATE METHOD
-  create(datas, endpoint, authenticated = false, jwt_token = null) {
-    this.endpoint = this.base_url + endpoint;
-    return this.request("POST", datas, authenticated, jwt_token);
-  }
-  // WRAPPER PUT UPDATE METHOD
-  update(datas, endpoint, authenticated = true, jwt_token = null) {
-    this.endpoint = this.base_url + endpoint;
-    return this.request("PUT", datas, authenticated, jwt_token);
-  }
-  // WRAPPER DELETE METHOD
-  delete(endpoint, authenticated = true, jwt_token = null) {
-    this.endpoint = this.base_url + endpoint;
-    return this.request("DELETE", null, authenticated, jwt_token);
-  }
-  // WRAPPER FIND METHOD
-  find(endpoint, authenticated = true, jwt_token = null) {
-    this.endpoint = this.base_url + endpoint;
-    return this.request("GET", null, authenticated, jwt_token);
-  }
-}
-
-export default Api;
+export { request, create, update, deletion, find };

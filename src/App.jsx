@@ -1,40 +1,24 @@
-// REACT MODULES
 import React, { useEffect, useState } from "react";
-
-// REACT ROUTER
-import { Route, Switch, Redirect, useLocation } from "react-router-dom";
-
-// COMPONENTS
+import { Route, Switch, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Garden from "./pages/Garden";
-
-// COKKIES
-import Cookies from "js-cookie";
-
-// CUSTOMHOOKS
 import useCurrentUser from "./hooks/useCurrentUser";
 import { getUserDatas } from "./requests/user";
 import useJwtToken from "./hooks/useJwtToken";
 import GardenHistory from "./pages/GardenHistory";
+import UnAuthRoute from "./components/routes/UnAuthRoute/index";
+import AuthRoute from "./components/routes/AuthRoute";
 
 const App = () => {
-  // get current path location using hook from react router
   const { pathname } = useLocation();
-
-  // current user custom hook to get and set currentUser in relation with redux global state
   const { setCurrentUser, current_user } = useCurrentUser();
-
-  // CHeck wether navbar needs to be displayed or not
   const [isNavbarPresent, setNavbarPresent] = useState(true);
-
-  // jwt token custom hook to get Cookies containing jwt token if available
   const { getJwtToken } = useJwtToken();
 
-  // loading current user at first load of compnent or reload of the page
   useEffect(() => {
     const fetchUserDatas = async () => {
       const response = await getUserDatas(getJwtToken).then((res) =>
@@ -50,51 +34,12 @@ const App = () => {
     }
   }, []);
 
-  // useEffect reloading component on change of location
   useEffect(() => {
     pathname === "/login" || pathname === "/register"
       ? setNavbarPresent(false)
       : setNavbarPresent(true);
   }, [pathname]);
 
-  // checking if user is authenticated or not
-  const checkAuth = () => {
-    // production mode
-    // return current_user !== null;
-
-    // test purposes
-    return true;
-  };
-
-  //Private routes who do not need authentification
-  const UnAuthRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        !checkAuth() ? (
-          <Redirect to={{ pathname: "/" }} />
-        ) : (
-          <Component {...props} />
-        )
-      }
-    />
-  );
-
-  //Private routes who do need authentification
-  const AuthRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        checkAuth() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: "/login" }} />
-        )
-      }
-    />
-  );
-
-  // render
   return (
     <>
       {isNavbarPresent && <Navbar />}
@@ -102,11 +47,34 @@ const App = () => {
         <Route exact path="/">
           <Home />
         </Route>
-        <UnAuthRoute path="/login" component={Login} />
-        <UnAuthRoute path="/register" component={Register} />
-        <AuthRoute exact path="/profile" component={Profile} />
-        <AuthRoute exact path="/garden/:id/events" component={GardenHistory} />
-        <AuthRoute exact path="/garden/:id" component={Garden} />
+        <UnAuthRoute
+          current_user={current_user}
+          path="/login"
+          component={Login}
+        />
+        <UnAuthRoute
+          current_user={current_user}
+          path="/register"
+          component={Register}
+        />
+        <AuthRoute
+          current_user={current_user}
+          exact
+          path="/profile"
+          component={Profile}
+        />
+        <AuthRoute
+          current_user={current_user}
+          exact
+          path="/garden/:id/events"
+          component={GardenHistory}
+        />
+        <AuthRoute
+          current_user={current_user}
+          exact
+          path="/garden/:id"
+          component={Garden}
+        />
       </Switch>
     </>
   );

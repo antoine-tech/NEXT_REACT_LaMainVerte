@@ -19,7 +19,6 @@ const GardenCard = ({
 }) => {
   const history = useHistory();
 
-  // redirection to specific garden page
   const handleRedirect = (id) => {
     history.push("/garden/" + id);
   };

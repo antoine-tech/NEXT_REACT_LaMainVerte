@@ -11,18 +11,14 @@ import { getGarden } from "../requests/gardens";
 import Moment from "react-moment";
 import Button from "../components/Button/index";
 const Garden = () => {
-  // extracting garden id from url
   const { id } = useParams();
-
   const [gardenData, setGardenData] = useState({});
-
   const history = useHistory();
 
   const handleClickEventHistory = () => {
-    history.push("/garden/"+id+'/events');
+    history.push("/garden/" + id + "/events");
   };
 
-  // on component will mount
   useEffect(() => {
     const fetchGardenData = async () => {
       const garden = await getGarden(id);
@@ -31,7 +27,7 @@ const Garden = () => {
     };
 
     fetchGardenData();
-  }, []);
+  }, [id]);
 
   return (
     <section className="relative">

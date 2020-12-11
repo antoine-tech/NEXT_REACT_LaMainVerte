@@ -6,16 +6,6 @@ import { getPost, likePost, unlikePost } from "../../requests/posts";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import useJwtToken from "../../hooks/useJwtToken";
 
-// Ex :
-// {
-//     "id": 1,
-//     "title": "Whirlpool",
-//     "content": "The Guild... they're fighting me in the mental vaults. They're behind everything. They fear the one who will come, who will know more, who will see more. The Guild is behind everything. It's not finished yet. I'm not formed.",
-//     "garden_id": 5,
-//     "created_at": "2020-12-09T10:44:21.359Z",
-//     "updated_at": "2020-12-09T10:44:21.359Z"
-// }
-
 const PostCard = ({
   id,
   title,
@@ -38,7 +28,7 @@ const PostCard = ({
     const fetchPost = async () => {
       const post = await getPost(id);
 
-      const userLike = post.likes.find(
+      const userLike = await post?.likes.find(
         (el) =>
           el.post_id === id && el.user_id === current_user?.current_user.id
       );
@@ -46,9 +36,8 @@ const PostCard = ({
       userLike && setMyLike(userLike);
       setPostData(post);
     };
-
     fetchPost();
-  }, [postData]);
+  }, []);
 
   const handleClick = (garden_id) => {
     history.push("/garden/" + garden_id);
