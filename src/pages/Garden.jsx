@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import MaskImage from "../assets/backgrounds/mask_image.png";
 import CardIndicator from "../components/CardIndicator/index";
 import IconClimate from "../components/icons/IconClimate/index";
@@ -15,6 +15,12 @@ const Garden = () => {
   const { id } = useParams();
 
   const [gardenData, setGardenData] = useState({});
+
+  const history = useHistory();
+
+  const handleClickEventHistory = () => {
+    history.push("/garden/"+id+'/events');
+  };
 
   // on component will mount
   useEffect(() => {
@@ -70,6 +76,7 @@ const Garden = () => {
                   {gardenData?.garden?.updated_at}
                 </Moment>
               }
+              onClick={handleClickEventHistory}
             />
             <CardIndicator
               icon={IconClimate}

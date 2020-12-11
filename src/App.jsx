@@ -19,6 +19,7 @@ import Cookies from "js-cookie";
 import useCurrentUser from "./hooks/useCurrentUser";
 import { getUserDatas } from "./requests/user";
 import useJwtToken from "./hooks/useJwtToken";
+import GardenHistory from "./pages/GardenHistory";
 
 const App = () => {
   // get current path location using hook from react router
@@ -101,12 +102,11 @@ const App = () => {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route exact path="/garden/:id">
-          <Garden />
-        </Route>
         <UnAuthRoute path="/login" component={Login} />
         <UnAuthRoute path="/register" component={Register} />
-        <AuthRoute path="/profile" component={Profile} />
+        <AuthRoute exact path="/profile" component={Profile} />
+        <AuthRoute exact path="/garden/:id/events" component={GardenHistory} />
+        <AuthRoute exact path="/garden/:id" component={Garden} />
       </Switch>
     </>
   );
