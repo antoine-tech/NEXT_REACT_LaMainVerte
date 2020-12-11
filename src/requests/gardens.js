@@ -28,4 +28,91 @@ const getGarden = async (garden_id) => {
   return response;
 };
 
-export { getClimate, getLocation, getGardenType, getGarden };
+const getGardens = async () => {
+  const response = await API.find("/gardens")
+    .then((res) => res.json())
+    .catch((error) => error);
+  return response;
+};
+
+const getFollowedGardenAndRelatedData = async (gardens) => {
+  // fetching each of the gardens available data to gather all related data to a garden at once
+  let gardensDataPromises = await gardens.map((garden) => getGarden(garden.id));
+
+  // solving Pomises and getting out the data as object
+  let gardensDatas = await Promise.all(gardensDataPromises).then(
+    (gardenData) => gardenData
+  );
+
+  // reformating object
+  const followedGardens = gardensDatas.map((gardenData) => {
+    let {
+      garden: { id, name, updated_at, created_at },
+      climate,
+      location,
+      type,
+      user,
+    } = gardenData;
+    return {
+      id,
+      name,
+      updated_at,
+      created_at,
+      climate,
+      location,
+      garden_type:type,
+      user,
+    };
+  });
+
+  return followedGardens;
+};
+
+
+const getGardenSelection = async () => {
+
+  // fetching all gardens 
+  let gardens = await getGardens();
+
+  // fetching each of the gardens available data to gather all related data to a garden at once
+  let gardenDataPromises = await gardens.map((userGardenSelection) =>
+    getGarden(userGardenSelection.id)
+  );
+  // solving promises
+  let gardensData = await Promise.all(gardenDataPromises).then(
+    (gardenData) => gardenData
+  );
+
+  // reformating object
+  const selectedGardens = gardensData.map((gardenData) => {
+    let {
+      garden: { id, name, updated_at, created_at },
+      climate,
+      location,
+      type,
+      user,
+    } = gardenData;
+    return {
+      id,
+      name,
+      updated_at,
+      created_at,
+      climate,
+      location,
+      garden_type:type,
+      user,
+    };
+  });
+
+  return selectedGardens;
+};
+
+export {
+  getClimate,
+  getLocation,
+  getGardenType,
+  getGarden,
+  getGardens,
+  getFollowedGardenAndRelatedData,
+  getGardenSelection
+};

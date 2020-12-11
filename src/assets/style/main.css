@@ -10,6 +10,7 @@
   --red: #ff6b6b;
   --blue-dark: #3a405a;
   --light-brown: rgba(217, 200, 165, 0.15);
+  --light-white: rgba(255, 255, 255, 0.25);
   --shadow-neomorph-1: 1px 1px 2px rgba(255, 255, 255, 0.3),
     -1px -1px 2px rgba(220, 220, 220, 0.5),
     inset -1px 1px 2px rgba(220, 220, 220, 0.2),
@@ -141,17 +142,35 @@ div {
   background-color: var(--blue-dark);
 }
 
-
 .bg-light-brown {
   background-color: var(--light-brown);
 }
+
+.bg-light-white {
+  background-color: var(--light-white);
+}
+
 /* BG IMAGE */
 
-.bg-man {
+.bg-man,
+.bg-start-to-grow,
+.bg-plants {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.bg-plants {
+  background-image: url(../backgrounds/plants.jpg);
+  background-attachment: fixed;
+}
+
+.bg-man {
   background-image: url(../backgrounds/man.jpg);
+}
+
+.bg-start-to-grow {
+  background-image: url(../backgrounds/start_to_grow.jpg);
 }
 
 /* INPUTS  */
@@ -175,6 +194,7 @@ input:focus {
 /* BUTTONS */
 button.btn-lg {
   height: 75px;
+  border-radius: var(--radius);
 }
 
 .toogleSwitch,
@@ -386,7 +406,7 @@ nav .nav-brand {
   align-items: center;
   justify-content: center;
   height: 150px;
-  width:150px;
+  width: 150px;
   border-radius: var(--radius);
 }
 
@@ -428,12 +448,4 @@ nav .nav-brand {
 
 .h-66vh {
   height: 66vh;
-}
-
-.bg-plants {
-  background-image: url(../backgrounds/plants.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
 }
