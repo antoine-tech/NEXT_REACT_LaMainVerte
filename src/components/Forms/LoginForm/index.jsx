@@ -11,18 +11,12 @@ import Alert from "../../Alert";
 import { useHistory } from "react-router-dom";
 
 const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
-  // formAnalysis custom hook allowing to get intels on inputs validations
   const { userDatas, alerts, handleInput, handleBlur } = useFormAnalysis();
-
-  // current user custom hook to get and set currentUser in relation with redux global state
   const { setCurrentUser, currentUser } = useCurrentUser();
-
-  // jwt token custom hook to get and set Cookies containing jwt token if available
   const { getJwtToken, setJwtToken } = useJwtToken();
 
   const history = useHistory();
 
-  // event handler for the submit action of the form allowing to perform login action
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { email, password } = userDatas;
@@ -41,7 +35,6 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
         setAlertMessage("Les informations fournies ne sont pas correctes");
         setAlertType("danger");
         setIsAlertDisplayed(true);
-        // display alert on page
         console.error(response);
       }
     }
