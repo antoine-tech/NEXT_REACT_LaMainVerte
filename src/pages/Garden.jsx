@@ -21,8 +21,6 @@ const Garden = () => {
     const fetchGardenData = async () => {
       const garden = await getGarden(id);
 
-      console.log(garden);
-
       setGardenData(garden);
     };
 
