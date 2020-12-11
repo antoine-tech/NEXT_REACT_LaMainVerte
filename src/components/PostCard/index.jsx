@@ -24,21 +24,6 @@ const PostCard = ({
 
   const [myLike, setMyLike] = useState(null);
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      const post = await getPost(id);
-
-      const userLike = await post?.likes.find(
-        (el) =>
-          el.post_id === id && el.user_id === current_user?.current_user.id
-      );
-
-      userLike && setMyLike(userLike);
-      setPostData(post);
-    };
-    fetchPost();
-  }, []);
-
   const handleClick = (garden_id) => {
     history.push("/garden/" + garden_id);
   };
@@ -56,6 +41,23 @@ const PostCard = ({
       setPostData(post);
     }
   };
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      const post = await getPost(id);
+
+      setPostData(post);
+    };
+    fetchPost();
+  }, []);
+
+  useEffect(() => {
+    const userLike = postData?.likes?.find(
+      (el) => el.post_id === id && el.user_id === current_user?.current_user.id
+    );
+
+    userLike && setMyLike(userLike);
+  }, [postData]);
 
   return (
     <div className="post-card grid grid-cols-8 p-4 my-4" id={id}>

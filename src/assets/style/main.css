@@ -8,6 +8,7 @@
   --red-gradient-overlay: linear-gradient(180deg, #ff6b6b 0%, #ffb3b3 100%);
   --greeen: #8fe388;
   --red: #ff6b6b;
+  --red-hover: #f34b4b;
   --blue-dark: #3a405a;
   --blue-dark-hover: #3a59f1;
   --light-brown: rgba(217, 200, 165, 0.15);
@@ -155,6 +156,24 @@ div {
   background-color: var(--light-white);
 }
 
+/* BORDERS */
+
+.border-red {
+  border: 2px solid var(--red);
+}
+
+.border-red:hover {
+  border: 2px solid var(--red-hover);
+}
+
+.border-blue-dark {
+  border: 2px solid var(--blue-dark);
+}
+
+.border-blue-dark:hover {
+  border: 2px solid var(--blue-dark-hover);
+}
+
 /* BG IMAGE */
 
 .bg-man,
@@ -192,7 +211,7 @@ input:focus {
 }
 
 .alert.success p {
-  color: #76906A;
+  color: #76906a;
 }
 
 /* BUTTONS */

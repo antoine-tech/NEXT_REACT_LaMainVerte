@@ -7,27 +7,78 @@ import IconLabel from "../components/icons/IconLabel/index";
 import IconLocation from "../components/icons/IconLocation/index";
 import IconUpdate from "../components/icons/IconUpdate/index";
 import PostCard from "../components/PostCard";
-import { getGarden } from "../requests/gardens";
+import {
+  getGarden,
+  follow,
+  unfollow,
+  unlikeGarden,
+  likeGarden,
+} from "../requests/gardens";
 import Moment from "react-moment";
 import Button from "../components/Button/index";
+import useJwtToken from "../hooks/useJwtToken";
+import useCurrentUser from "../hooks/useCurrentUser";
 const Garden = () => {
+  const { current_user } = useCurrentUser();
+  const { getJwtToken } = useJwtToken();
   const { id } = useParams();
   const [gardenData, setGardenData] = useState({});
+  const [gardenFollow, setGardenFollow] = useState(null);
   const history = useHistory();
+  const [myLike, setMyLike] = useState(null);
 
   const handleClickEventHistory = () => {
     history.push("/garden/" + id + "/events");
   };
 
+  const handleLike = async (idRessource) => {
+    if (current_user) {
+      if (myLike) {
+        await unlikeGarden(myLike.id, getJwtToken);
+        setMyLike(null);
+      } else {
+        const newLike = await likeGarden(idRessource, getJwtToken);
+        setMyLike(newLike);
+      }
+      const garden = await getGarden(id);
+      setGardenData(garden);
+    }
+  };
+
+  const handleFollow = async (garden_id) => {
+    if (current_user) {
+      if (gardenFollow) {
+        await unfollow(gardenFollow.id, getJwtToken);
+        setGardenFollow(null);
+      } else {
+        const followGarden = await follow(garden_id, getJwtToken);
+        setGardenFollow(followGarden);
+      }
+      const garden = await getGarden(id);
+      setGardenData(garden);
+    }
+  };
+
   useEffect(() => {
     const fetchGardenData = async () => {
       const garden = await getGarden(id);
-
       setGardenData(garden);
     };
 
     fetchGardenData();
   }, [id]);
+
+  useEffect(() => {
+    const userLike = gardenData?.likes?.find(
+      (el) => el.garden_id == id && el.user_id == current_user?.current_user.id
+    );
+    const userFollow = gardenData?.follows?.find(
+      (el) => el.garden_id == id && el.user_id == current_user?.current_user.id
+    );
+
+    userFollow && setGardenFollow(userFollow);
+    userLike && setMyLike(userLike);
+  }, [gardenData]);
 
   return (
     <section className="relative">
@@ -106,32 +157,68 @@ const Garden = () => {
           </div>
 
           <div className="my-8 grid grid-cols-2 gap-4">
-            <Button
-              text="Suivre"
-              classNames={[
-                "btn",
-                "btn-lg",
-                "bg-blue-dark",
-                "text-white",
-                "p-4",
-                "w-full",
-                "col-span-2",
-                "lg:col-span-1",
-              ]}
-            />
-            <Button
-              text="Modifier mon jardin"
-              classNames={[
-                "btn",
-                "btn-lg",
-                "bg-blue-dark",
-                "text-white",
-                "p-4",
-                "w-full",
-                "col-span-2",
-                "lg:col-span-1",
-              ]}
-            />
+            {gardenFollow !== null ? (
+              <Button
+                text="Ne plus suivre"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "bg-blue-dark",
+                  "text-white",
+                  "p-4",
+                  "w-full",
+                  "col-span-2",
+                  "lg:col-span-1",
+                ]}
+                onclick={() => handleFollow(id)}
+              />
+            ) : (
+              <Button
+                text="Suivre"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "bg-blue-dark",
+                  "text-white",
+                  "p-4",
+                  "w-full",
+                  "col-span-2",
+                  "lg:col-span-1",
+                ]}
+                onclick={() => handleFollow(id)}
+              />
+            )}
+            {myLike !== null ? (
+              <Button
+                text="Je n'aime plus"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "border-blue-dark",
+                  "text-dark",
+                  "p-4",
+                  "w-full",
+                  "col-span-2",
+                  "lg:col-span-1",
+                ]}
+                onclick={() => handleLike(id)}
+              />
+            ) : (
+              <Button
+                text="J'aime ce jardin"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "border-red",
+                  "text-dark",
+                  "p-4",
+                  "w-full",
+                  "col-span-2",
+                  "lg:col-span-1",
+                ]}
+                onclick={() => handleLike(id)}
+              />
+            )}
           </div>
 
           <div className="my-8">
