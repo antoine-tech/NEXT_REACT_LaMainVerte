@@ -194,6 +194,7 @@ input:focus {
 /* BUTTONS */
 button.btn-lg {
   height: 75px;
+  border-radius: var(--radius);
 }
 
 .toogleSwitch,

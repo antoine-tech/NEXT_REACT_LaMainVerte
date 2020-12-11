@@ -9,6 +9,7 @@ import IconUpdate from "../components/icons/IconUpdate/index";
 import PostCard from "../components/PostCard";
 import { getGarden } from "../requests/gardens";
 import Moment from "react-moment";
+import Button from "../components/Button/index";
 const Garden = () => {
   // extracting garden id from url
   const { id } = useParams();
@@ -104,13 +105,32 @@ const Garden = () => {
           </div>
 
           <div className="my-8 grid grid-cols-2 gap-4">
-            <button className="btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1">
-              Suivre
-            </button>
-
-            <button className="btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1">
-              Modifier mon jardin
-            </button>
+            <Button
+              text="Suivre"
+              classNames={[
+                "btn",
+                "btn-lg",
+                "bg-blue-dark",
+                "text-white",
+                "p-4",
+                "w-full",
+                "col-span-2",
+                "lg:col-span-1",
+              ]}
+            />
+            <Button
+              text="Modifier mon jardin"
+              classNames={[
+                "btn",
+                "btn-lg",
+                "bg-blue-dark",
+                "text-white",
+                "p-4",
+                "w-full",
+                "col-span-2",
+                "lg:col-span-1",
+              ]}
+            />
           </div>
 
           <div className="my-8">
@@ -124,7 +144,7 @@ const Garden = () => {
                 content,
                 created_at,
                 updated_at,
-                likes
+                likes,
               } = post;
               return (
                 <PostCard

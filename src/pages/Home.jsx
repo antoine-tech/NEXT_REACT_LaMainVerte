@@ -20,6 +20,7 @@ import { getPosts } from "../requests/posts";
 import { getTestimoniesAndRelatedUsers } from "../requests/testimonies";
 import TestimonyCard from "../components/TestimonyCard/index";
 import MaskImage from "../assets/backgrounds/mask_image.png";
+import Button from "../components/Button/index";
 
 const Home = () => {
   // current user custom hook to get in relation with redux global state
@@ -116,17 +117,37 @@ const Home = () => {
 
             <div className="h-66vh w-full bg-start-to-grow relative">
               <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4 bg-light-white">
-                <button className="btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1">
-                  Créer un jardin
-                </button>
+                <Button
+                  text="Créer un jardin"
+                  classNames={[
+                    "btn",
+                    "btn-lg",
+                    "bg-blue-dark",
+                    "text-white",
+                    "p-4",
+                    "w-full",
+                    "col-span-2",
+                    "lg:col-span-1",
+                  ]}
+                />
 
-                <button className="btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1">
-                  Rechercher un jardin
-                </button>
+                <Button
+                  text="Rechecher un jardin"
+                  classNames={[
+                    "btn",
+                    "btn-lg",
+                    "bg-blue-dark",
+                    "text-white",
+                    "p-4",
+                    "w-full",
+                    "col-span-2",
+                    "lg:col-span-1",
+                  ]}
+                />
               </div>
             </div>
 
-            <h4 className="my-4">Vos jardins préférés ....</h4>
+            <h4 className="my-4"> ....</h4>
 
             {gardenSelection?.map((garden) => {
               let {
@@ -139,6 +160,7 @@ const Home = () => {
                 created_at,
                 updated_at,
               } = garden;
+
               return (
                 <GardenCard
                   key={`garden-card-${id}`}

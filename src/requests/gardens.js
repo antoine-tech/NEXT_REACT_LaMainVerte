@@ -50,7 +50,7 @@ const getFollowedGardenAndRelatedData = async (gardens) => {
       garden: { id, name, updated_at, created_at },
       climate,
       location,
-      garden_type,
+      type,
       user,
     } = gardenData;
     return {
@@ -60,7 +60,7 @@ const getFollowedGardenAndRelatedData = async (gardens) => {
       created_at,
       climate,
       location,
-      garden_type,
+      garden_type:type,
       user,
     };
   });
@@ -89,7 +89,7 @@ const getGardenSelection = async () => {
       garden: { id, name, updated_at, created_at },
       climate,
       location,
-      garden_type,
+      type,
       user,
     } = gardenData;
     return {
@@ -99,7 +99,7 @@ const getGardenSelection = async () => {
       created_at,
       climate,
       location,
-      garden_type,
+      garden_type:type,
       user,
     };
   });
