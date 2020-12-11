@@ -7,6 +7,8 @@ const SignContainer = ({ backgroundGradient, component: Component }) => {
 
   const [alertMessage, setAlertMessage] = useState("");
 
+  const [alertType, setAlertType] = useState("");
+
   return (
     <section className="grid grid-cols-10">
       <div
@@ -16,9 +18,11 @@ const SignContainer = ({ backgroundGradient, component: Component }) => {
       </div>
 
       <div className="grid grid-cols-1 col-span-10 md:col-span-5 lg:col-span-4 px-4 place-content-center min-h-screen overflow-y-auto relative">
-        <Component setAlertMessage={setAlertMessage} setIsAlertDisplayed={setIsAlertDisplayed} />
 
-        {isAlertDisplayed && <Alert message={alertMessage} setIsAlertDisplayed={setIsAlertDisplayed} />}
+
+        <Component setAlertMessage={setAlertMessage} setIsAlertDisplayed={setIsAlertDisplayed} setAlertType={setAlertType} />
+        
+        {isAlertDisplayed && <Alert message={alertMessage} type={alertType} setIsAlertDisplayed={setIsAlertDisplayed} />}
       </div>
     </section>
   );

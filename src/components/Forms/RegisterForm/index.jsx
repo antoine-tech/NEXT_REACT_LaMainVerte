@@ -4,10 +4,21 @@ import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from "../../buttons/LetsGoButton/index";
 import RegistrationLinks from "../../RegistrationLinks";
 import { signUserUp } from "../../../requests/user";
+import { useHistory } from "react-router-dom";
 
-const RegiterForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
+const RegiterForm = ({
+  setAlertMessage,
+  setIsAlertDisplayed,
+  setAlertType,
+}) => {
+
+  // formanalysis hooks allowing custom display of alerts under form input
   const { userDatas, alerts, handleInput, handleBlur } = useFormAnalysis();
 
+  // accessing History appi from browser
+  const history = useHistory();
+
+  // handling registration submit form
   const handleSubmit = async (event) => {
     event.preventDefault();
     const {
@@ -36,13 +47,18 @@ const RegiterForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
       ).then((res) => res.json());
 
       if (response.hasOwnProperty("data")) {
-        // redirect to login
+        // SETTING ALERT TYPE
         setAlertMessage("Compte crée avec succès");
+        setAlertType("success");
         setIsAlertDisplayed(true);
+        // REDIRECT USER TO SIGNIN PAGE
+        history.push('/login');
       } else {
+        // SETTING ALERT TYPE
         setAlertMessage(
           "Une erreure est survenue veillez contacter le support technique"
         );
+        setAlertType("danger");
         setIsAlertDisplayed(true);
       }
     }

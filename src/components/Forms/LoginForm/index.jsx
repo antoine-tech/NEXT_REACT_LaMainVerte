@@ -8,8 +8,9 @@ import useJwtToken from "../../../hooks/useJwtToken";
 import { signUserIn } from "../../../requests/user";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import Alert from "../../Alert";
+import { useHistory } from "react-router-dom";
 
-const LoginForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
+const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
   // formAnalysis custom hook allowing to get intels on inputs validations
   const { userDatas, alerts, handleInput, handleBlur } = useFormAnalysis();
 
@@ -19,6 +20,8 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
   // jwt token custom hook to get and set Cookies containing jwt token if available
   const { getJwtToken, setJwtToken } = useJwtToken();
 
+  const history = useHistory();
+
   // event handler for the submit action of the form allowing to perform login action
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,6 +30,7 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
       const response = await signUserIn(email, password).then((res) => {
         if (res.headers.get("Authorization")) {
           setJwtToken(res.headers.get("Authorization"));
+          history.push("/");
         }
         return res.json();
       });
@@ -35,6 +39,7 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
         setCurrentUser(response.data);
       } else {
         setAlertMessage("Les informations fournies ne sont pas correctes");
+        setAlertType("danger");
         setIsAlertDisplayed(true);
         // display alert on page
         console.error(response);
