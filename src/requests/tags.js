@@ -1,10 +1,6 @@
-import API from '../sevices/index';
+import { find } from "../sevices/Api";
+const getTags = async () => {
+  return await find("/tags", false).then((res) => res.json());
+};
 
-const getTags = async () =>
-{
-    const response = await API.find('/tags', false).then((res)=>res.json())
-
-    return response
-}
-
-export {getTags}
+export { getTags };

@@ -5,12 +5,15 @@
 :root {
   --green-gradient: linear-gradient(180deg, #8fe388 0%, #cbff49 100%);
   --red-gradient: linear-gradient(180deg, #ff6b6b 0%, #ffc185 100%);
+  --red-gradient-overlay: linear-gradient(180deg, #ff6b6b 0%, #ffb3b3 100%);
   --blue-gradient: linear-gradient(180deg, #7B8CDE 0%, #A7A7A7 100%);
   --greeen: #8fe388;
   --red: #ff6b6b;
   --blue: #7B8CDE;
   --blue-dark: #3a405a;
+  --blue-dark-hover: #3a59f1;
   --light-brown: rgba(217, 200, 165, 0.15);
+  --light-white: rgba(255, 255, 255, 0.25);
   --shadow-neomorph-1: 1px 1px 2px rgba(255, 255, 255, 0.3),
     -1px -1px 2px rgba(220, 220, 220, 0.5),
     inset -1px 1px 2px rgba(220, 220, 220, 0.2),
@@ -35,6 +38,11 @@
     5px 5px 13px rgba(230, 230, 230, 0.9),
     inset 1px 1px 2px rgba(255, 255, 255, 0.3),
     inset -1px -1px 2px rgba(230, 230, 230, 0.5);
+  --shadow-neomorph-5: -2px 2px 4px rgba(102, 102, 102, 0.2),
+    2px -2px 4px rgba(102, 102, 102, 0.2),
+    -2px -2px 4px rgba(255, 255, 255, 0.9), 2px 2px 5px rgba(102, 102, 102, 0.9),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+    inset -1px -1px 2px rgba(102, 102, 102, 0.5);
   --base-min-font-size: 8px;
   --base-max-font-size: 16px;
   --radius: 12.5px;
@@ -121,6 +129,9 @@ div {
   background: var(--red-gradient);
 }
 
+.bg-red-gradient-overlay {
+  background: var(--red-gradient-overlay);
+}
 .bg-blue-gradient {
   background: var(--blue-gradient);
 }
@@ -133,19 +144,41 @@ div {
 .bg-green {
   background-color: var(--greeen);
 }
+.bg-blue-dark {
+  background-color: var(--blue-dark);
+}
+
+.bg-blue-dark:hover {
+  background-color: var(--blue-dark-hover);
+}
+
 .bg-blue {
   background-color: var(--blue);
 }
 .bg-light-brown {
   background-color: var(--light-brown);
 }
+
+.bg-light-white {
+  background-color: var(--light-white);
+}
+
 /* BG IMAGE */
 
-.bg-man {
+.bg-man,
+.bg-start-to-grow,
+.bg-plants {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.bg-man {
   background-image: url(../backgrounds/man.jpg);
+}
+
+.bg-start-to-grow {
+  background-image: url(../backgrounds/start_to_grow.jpg);
 }
 
 /* INPUTS  */
@@ -162,16 +195,26 @@ input:focus {
 }
 
 /* ALERTS */
-.alert.danger {
+.alert.danger p {
   color: #db4437;
 }
 
+.alert.success p {
+  color: #76906A;
+}
+
 /* BUTTONS */
+
+.btn {
+  cursor: pointer;
+  transition: background-color 0.33s ease-in-out;
+}
 button {
   border-radius: 5px;
 }
 button.btn-lg {
   height: 75px;
+  border-radius: var(--radius);
 }
 
 /* garden create form */
@@ -339,6 +382,7 @@ nav .nav-brand {
   margin-bottom: 4rem;
   cursor: pointer;
   box-shadow: var(--shadow-neomorph-3);
+  border-radius: var(--radius);
 }
 
 .card:hover {
@@ -374,9 +418,25 @@ nav .nav-brand {
 
 /* POST CARD */
 
-.post-card, .testimony-card {
+.post-card,
+.testimony-card {
   background-color: #ffff;
   box-shadow: var(--shadow-neomorph-4);
+  border-radius: var(--radius);
+}
+
+/* CARD INDICATOR */
+
+.card-indicator {
+  box-shadow: var(--shadow-neomorph-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  width: 150px;
+  border-radius: var(--radius);
+  cursor: pointer;
 }
 
 /* CARD DATA UPON CARD IMAGE */
@@ -413,4 +473,8 @@ nav .nav-brand {
 .checkbox-group {
   min-width: 5rem;
   margin-right: 1rem;
+}
+
+.h-66vh {
+  height: 66vh;
 }

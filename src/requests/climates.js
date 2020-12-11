@@ -1,9 +1,6 @@
-import API from "../sevices/index";
-
+import { find } from "../sevices/Api";
 const getClimates = async () => {
-  const response = await API.find("/climates", false).then((res) => res.json());
-
-  return response;
+  return await find("/climates", false).then((res) => res.json());
 };
 
 export { getClimates };

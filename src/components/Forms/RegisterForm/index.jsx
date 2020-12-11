@@ -4,10 +4,15 @@ import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from "../../buttons/LetsGoButton/index";
 import RegistrationLinks from "../../RegistrationLinks";
 import { signUserUp } from "../../../requests/user";
+import { useHistory } from "react-router-dom";
 
-const RegiterForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
+const RegiterForm = ({
+  setAlertMessage,
+  setIsAlertDisplayed,
+  setAlertType,
+}) => {
   const { userDatas, alerts, handleInput, handleBlur } = useFormAnalysis();
-
+  const history = useHistory();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const {
@@ -16,30 +21,35 @@ const RegiterForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
       password_confirmation,
       firstname,
       lastname,
+      username,
     } = userDatas;
 
     if (
       password_confirmation === password &&
       firstname !== "" &&
       lastname !== "" &&
-      password_confirmation !== ""
+      password_confirmation !== "" &&
+      username !== ""
     ) {
       const response = await signUserUp(
         firstname,
         lastname,
+        username,
         email,
         password,
         password_confirmation
       ).then((res) => res.json());
 
       if (response.hasOwnProperty("data")) {
-        // redirect to login
-        setAlertMessage("Compte créé avec succès");
+        setAlertMessage("Compte crée avec succès");
+        setAlertType("success");
         setIsAlertDisplayed(true);
+        history.push('/login');
       } else {
         setAlertMessage(
           "Une erreur est survenue veuillez contacter le support technique"
         );
+        setAlertType("danger");
         setIsAlertDisplayed(true);
       }
     }
@@ -75,6 +85,18 @@ const RegiterForm = ({ setAlertMessage, setIsAlertDisplayed }) => {
           type="text"
           labelText="Prénom :"
           alertMessage={alerts.firstname}
+        />
+
+        <FormGroup
+          colSpan="2"
+          onInput={(value) => handleInput(value)}
+          onBlur={(value) => handleBlur(value)}
+          value={userDatas.username}
+          name="username"
+          id="username"
+          type="text"
+          labelText="Identifiant :"
+          alertMessage={alerts.username}
         />
 
         <FormGroup

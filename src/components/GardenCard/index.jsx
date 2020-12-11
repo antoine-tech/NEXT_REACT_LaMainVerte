@@ -19,7 +19,6 @@ const GardenCard = ({
 }) => {
   const history = useHistory();
 
-  // redirection to specific garden page
   const handleRedirect = (id) => {
     history.push("/garden/" + id);
   };
@@ -39,16 +38,17 @@ const GardenCard = ({
               <Moment format="DD/MM:YYYY à hh:mm:ss">{updated_at}</Moment>
             }
           />
-          <DataContainer icon={IconClimate} dataText={climate?.climate?.name} />
+          <DataContainer icon={IconClimate} dataText={climate?.name} />
           <DataContainer
             icon={IconLabel}
-            dataText={garden_type?.garden_type?.name}
+            dataText={garden_type?.name}
           />
           <DataContainer
             icon={IconLocation}
-            dataText={location?.location?.name}
+            dataText={location?.name}
           />
         </div>
+
       </div>
       <div className="card-footer p-4 flex items-center justify-between">
         <h4 className="italic">{name?.toUpperCase()}</h4>{" "}

@@ -22,7 +22,7 @@ const GardenForm = () => {
     const handleGarden = {
       garden: {
         garden_type_id: isToogled ? 1 : 2,
-        name: gardenData.name,
+        name: gardenData.gardenName,
         area: gardenData.area,
         climate: parseInt(gardenData.climate),
         location: parseInt(gardenData.location)
@@ -55,12 +55,12 @@ const GardenForm = () => {
         </ul>
         <FormGroup
           colSpan="2"
-          value={gardenData.name}
-          name="name"
-          id="name"
+          value={gardenData.gardenName}
+          name="gardenName"
+          id="gardenName"
           type="text"
           labelText="Nom du potager :"
-          alertMessage={alerts.name}
+          alertMessage={alerts.gardenName}
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
         />

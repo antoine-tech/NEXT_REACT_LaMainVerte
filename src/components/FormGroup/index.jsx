@@ -12,7 +12,6 @@ const FormGroup = ({
   onBlur,
 }) => {
 
-  // EVENTS HANLDERS
   const handleInput = (value) => {
     return onInput(value);
   };
@@ -20,7 +19,6 @@ const FormGroup = ({
     return onBlur(value);
   };
 
-  // RENDER
   return (
     <div className={`form-group col-span-${colSpan} flex flex-col my-2`}>
       <label htmlFor={id} className="mb-1">
@@ -68,6 +66,7 @@ const FormGroup = ({
               </svg>
             </div>
           )}
+
         </div>
       );
     };
