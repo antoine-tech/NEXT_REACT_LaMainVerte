@@ -9,6 +9,7 @@
   --greeen: #8fe388;
   --red: #ff6b6b;
   --blue-dark: #3a405a;
+  --blue-dark-hover: #3a59f1;
   --light-brown: rgba(217, 200, 165, 0.15);
   --light-white: rgba(255, 255, 255, 0.25);
   --shadow-neomorph-1: 1px 1px 2px rgba(255, 255, 255, 0.3),
@@ -142,6 +143,10 @@ div {
   background-color: var(--blue-dark);
 }
 
+.bg-blue-dark:hover {
+  background-color: var(--blue-dark-hover);
+}
+
 .bg-light-brown {
   background-color: var(--light-brown);
 }
@@ -192,6 +197,11 @@ input:focus {
 }
 
 /* BUTTONS */
+
+.btn {
+  cursor: pointer;
+  transition: background-color 0.33s ease-in-out;
+}
 button.btn-lg {
   height: 75px;
   border-radius: var(--radius);
