@@ -27,16 +27,16 @@ const request = async (
 };
 
 const create = (datas, endpoint, authenticated = false, jwt_token = null) => {
-  return this.request("POST", endpoint, datas, authenticated, jwt_token);
+  return request("POST", endpoint, datas, authenticated, jwt_token);
 };
 const update = (datas, endpoint, authenticated = true, jwt_token = null) => {
-  return this.request("PUT", endpoint, datas, authenticated, jwt_token);
+  return request("PUT", endpoint, datas, authenticated, jwt_token);
 };
 const deletion = (endpoint, authenticated = true, jwt_token = null) => {
-  return this.request("DELETE", endpoint, null, authenticated, jwt_token);
+  return request("DELETE", endpoint, null, authenticated, jwt_token);
 };
 const find = (endpoint, authenticated = true, jwt_token = null) => {
-  return this.request("GET", endpoint, null, authenticated, jwt_token);
+  return request("GET", endpoint, null, authenticated, jwt_token);
 };
 
 export { request, create, update, deletion, find };

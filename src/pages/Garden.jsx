@@ -19,10 +19,8 @@ const Garden = () => {
   const history = useHistory();
 
   const handleClickEventHistory = () => {
-    history.push("/garden/"+id+'/events');
+    history.push("/garden/" + id + "/events");
   };
-
-  // on component will mount
   useEffect(() => {
     const fetchGardenData = async () => {
       const garden = await getGarden(id);
@@ -31,7 +29,7 @@ const Garden = () => {
     };
 
     fetchGardenData();
-  }, []);
+  }, [id]);
 
   return (
     <section className="relative">

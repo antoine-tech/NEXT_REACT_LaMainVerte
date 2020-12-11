@@ -1,4 +1,4 @@
-import { find, create} from "../sevices/Api";
+import { find, create, deletion} from "../sevices/Api";
 
 const getPosts = async () => {
   return await find("/posts", false).then((res) => res.json());
