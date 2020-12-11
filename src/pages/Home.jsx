@@ -240,6 +240,7 @@ const Home = () => {
               content,
               created_at,
               updated_at,
+              likes,
             } = lastPost;
             return (
               <PostCard
@@ -247,6 +248,7 @@ const Home = () => {
                 id={id}
                 title={title}
                 content={content}
+                likes={likes}
                 garden_id={garden_id}
                 created_at={created_at}
                 updated_at={updated_at}

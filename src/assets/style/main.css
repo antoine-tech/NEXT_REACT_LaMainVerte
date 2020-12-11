@@ -165,11 +165,6 @@ div {
   background-position: center;
 }
 
-.bg-plants {
-  background-image: url(../backgrounds/plants.jpg);
-  background-attachment: fixed;
-}
-
 .bg-man {
   background-image: url(../backgrounds/man.jpg);
 }
