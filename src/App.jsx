@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import {Switch, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -44,9 +44,6 @@ const App = () => {
     <>
       {isNavbarPresent && <Navbar />}
       <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
         <UnAuthRoute
           current_user={current_user}
           path="/login"
@@ -57,6 +54,7 @@ const App = () => {
           path="/register"
           component={Register}
         />
+        <AuthRoute current_user={current_user} exact path="/" component={Home}></AuthRoute>
         <AuthRoute
           current_user={current_user}
           exact

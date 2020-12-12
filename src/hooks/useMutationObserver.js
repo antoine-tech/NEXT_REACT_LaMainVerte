@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
@@ -30,7 +29,7 @@ const useMutationObserver = (
   useEffect(() => {
     if (
       viewedItem &&
-      viewedItems.find((element) => element == viewedItem) === undefined
+      viewedItems.find((element) => element === viewedItem) === undefined
     ) {
       setViewedItems([...viewedItems, viewedItem]);
     }
