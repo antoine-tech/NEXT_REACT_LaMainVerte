@@ -224,6 +224,7 @@ const Garden = () => {
           <div className="my-8">
             <h3 className="my-4">Les posts</h3>
 
+
             {gardenData?.posts?.map((post) => {
               let {
                 id,

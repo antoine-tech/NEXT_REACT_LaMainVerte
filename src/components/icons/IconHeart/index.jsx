@@ -9,6 +9,7 @@ const IconHeart = ({onclick, id, fillColor}) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       onClick={()=>onclick(id)}
+      className="iconHeart"
     >
       <g id="favorite_border_24px">
         <path

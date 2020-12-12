@@ -10,6 +10,7 @@
   --red: #ff6b6b;
   --red-hover: #f34b4b;
   --blue-dark: #3a405a;
+  --blue-dark-light: rgba(58, 64, 90, 0.9);
   --blue-dark-hover: #3a59f1;
   --light-brown: rgba(217, 200, 165, 0.15);
   --light-white: rgba(255, 255, 255, 0.25);
@@ -116,6 +117,14 @@ div {
   color: var(--blue-dark);
 }
 
+.font-blue-dark-light {
+  color: var(--blue-dark-light);
+}
+
+.font-sm {
+  font-size: 0.85rem;
+}
+
 /* BACKGROUNDS */
 
 /* BG GRADIENTS */
@@ -173,6 +182,11 @@ div {
 .border-blue-dark:hover {
   border: 2px solid var(--blue-dark-hover);
 }
+
+.border-blue-dark-light {
+  border: 2px solid var(--blue-dark-light);
+}
+
 
 /* BG IMAGE */
 
@@ -319,13 +333,13 @@ nav .nav-brand {
   }
 
   .suggestion-avatar-half {
-    height: 75px;
-    width: 75px;
+    height: 37px;
+    width: 37px;
   }
 
   .suggestion-avatar-half .avatar-img {
-    height: 62.5px;
-    width: 62.5px;
+    height: 31px;
+    width: 31px;
   }
 }
 
@@ -477,4 +491,11 @@ nav .nav-brand {
 
 .h-66vh {
   height: 66vh;
+}
+
+/* 
+ICONS  */
+
+.iconHeart, .iconComment {
+  cursor: pointer;
 }
