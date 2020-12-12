@@ -478,3 +478,35 @@ nav .nav-brand {
 .h-66vh {
   height: 66vh;
 }
+
+/* gardenform dropzone */
+.gardenDropzone {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 6rem;
+  left: 0;
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--light-white);
+  z-index: 2;
+}
+.realDropzone{
+  top: 20%;
+  border: dotted var(--light-white) 3px;
+  border-radius: var(--radius);
+}
+.realDropzone:hover {
+  cursor: pointer;
+  border: dotted white 3px;
+  transition: 0.3s ease-in-out;
+}
+.imagePreview {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}

@@ -78,8 +78,7 @@ const App = () => {
         />
         <AuthRoute
           current_user={current_user}
-          exact
-          path="/garden/new"
+          exact path="/new-garden"
           component={NewGarden}
         />
       </Switch>
