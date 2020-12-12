@@ -1,4 +1,4 @@
-import { find, create, deletion} from "../sevices/Api";
+import { find, create, deletion } from "../sevices/Api";
 
 const getPosts = async () => {
   return await find("/posts", false).then((res) => res.json());
@@ -25,4 +25,14 @@ const unlikePost = async (postLikeId, jwt_token) => {
     .catch((error) => error);
 };
 
-export { getPosts, getPost, likePost, unlikePost };
+const commentPost = async (postId, content, jwtToken) => {
+  const data = { post_comment: { content: content } };
+  return await create(
+    data,
+    `/posts/${postId}/post_comments`,
+    true,
+    jwtToken
+  ).then((res) => res.json());
+};
+
+export { getPosts, getPost, likePost, unlikePost, commentPost };

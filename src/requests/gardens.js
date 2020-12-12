@@ -1,4 +1,4 @@
-import { find} from "../sevices/Api";
+import { find, create, deletion } from "../sevices/Api";
 
 const getClimate = async (garden_climate_id) => {
   return find("/climates/" + garden_climate_id)
@@ -100,6 +100,38 @@ const getGardenSelection = async () => {
   return selectedGardens;
 };
 
+const follow = async (garden_id, jwt_token) => {
+  const data = {
+    follow: {
+      garden_id,
+    },
+  };
+  return await create(data, "/follows", true, jwt_token).then((res) =>
+    res.text()
+  );
+};
+
+const unfollow = async (follow_id, jwt_token) => {
+  return await deletion("/follows/" + follow_id, true, jwt_token).then((res) =>
+    res.json()
+  );
+};
+
+const likeGarden = async (idGarden, jwt_token) => {
+  const data = {
+    garden_like: { garden_id: idGarden },
+  };
+  return await create(data, "/garden_likes", true, jwt_token)
+    .then((res) => res.json())
+    .catch((error) => error);
+};
+
+const unlikeGarden = async (gardenLikeId, jwt_token) => {
+  return await deletion("/garden_likes/" + gardenLikeId, true, jwt_token)
+    .then((res) => res.text())
+    .catch((error) => error);
+};
+
 export {
   getClimate,
   getLocation,
@@ -108,4 +140,8 @@ export {
   getGardens,
   getFollowedGardenAndRelatedData,
   getGardenSelection,
+  follow,
+  unfollow,
+  likeGarden,
+  unlikeGarden,
 };
