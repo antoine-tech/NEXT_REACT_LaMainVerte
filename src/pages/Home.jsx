@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import { FormattedMessage } from 'react-intl';
 import useCurrentUser from "../hooks/useCurrentUser";
 import AvatarSlider from "../components/AvatarSlider/index";
@@ -17,20 +17,18 @@ import TestimonyCard from "../components/TestimonyCard/index";
 import Button from "../components/Button/index";
 import useIsLoading from "../hooks/useIsLoading";
 import LoadingAnimation from "../components/LoadingAnimation/index";
+import useMutationObserver from '../hooks/useMutationObserver';
 
 const Home = () => {
-  // current user custom hook to get in relation with redux global state
   const { current_user } = useCurrentUser();
-  // custom hook to get/set jwttoken into/fom cookies
   const { getJwtToken } = useJwtToken();
-  // custom hook to check wether the page is loading
   const { isLoading, setIsLoading } = useIsLoading();
-
-  // Component s states
   const [followedGardens, setFollowedGardens] = useState([]);
   const [gardenSelection, setGardenSelection] = useState([]);
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
+
+  const viewItems = useMutationObserver();
 
   useEffect(() => {
     const fetchPageDatas = async () => {
@@ -64,6 +62,8 @@ const Home = () => {
 
     fetchPageDatas();
   }, []);
+
+
 
   // render
   return isLoading ? (
@@ -109,7 +109,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="col-span-12 lg:col-span-6 px-4">
+      <div className="col-span-12 lg:col-span-6 px-4" id="wall">
         <SearchEngine />
         <h4 className="my-4">Sélectionné pour vous ....</h4>
 

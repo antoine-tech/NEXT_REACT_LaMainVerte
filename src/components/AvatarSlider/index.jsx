@@ -7,7 +7,7 @@ const AvatarSlider = () => {
     autoplaySpeed: 5000,
     duration: 500,
     centerMode: true,
-    initialSlide: true,
+    initialSlide: 1,
     slidesPerRow: 3,
     wheel: true,
   };
