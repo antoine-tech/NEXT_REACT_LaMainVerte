@@ -9,8 +9,10 @@
   --blue-gradient: linear-gradient(180deg, #7B8CDE 0%, #A7A7A7 100%);
   --greeen: #8fe388;
   --red: #ff6b6b;
+  --red-hover: #f34b4b;
   --blue: #7B8CDE;
   --blue-dark: #3a405a;
+  --blue-dark-light: rgba(58, 64, 90, 0.9);
   --blue-dark-hover: #3a59f1;
   --light-brown: rgba(217, 200, 165, 0.15);
   --light-white: rgba(255, 255, 255, 0.25);
@@ -117,6 +119,14 @@ div {
   color: var(--blue-dark);
 }
 
+.font-blue-dark-light {
+  color: var(--blue-dark-light);
+}
+
+.font-sm {
+  font-size: 0.85rem;
+}
+
 /* BACKGROUNDS */
 
 /* BG GRADIENTS */
@@ -163,6 +173,29 @@ div {
   background-color: var(--light-white);
 }
 
+/* BORDERS */
+
+.border-red {
+  border: 2px solid var(--red);
+}
+
+.border-red:hover {
+  border: 2px solid var(--red-hover);
+}
+
+.border-blue-dark {
+  border: 2px solid var(--blue-dark);
+}
+
+.border-blue-dark:hover {
+  border: 2px solid var(--blue-dark-hover);
+}
+
+.border-blue-dark-light {
+  border: 2px solid var(--blue-dark-light);
+}
+
+
 /* BG IMAGE */
 
 .bg-man,
@@ -200,7 +233,7 @@ input:focus {
 }
 
 .alert.success p {
-  color: #76906A;
+  color: #76906a;
 }
 
 /* BUTTONS */
@@ -319,13 +352,13 @@ nav .nav-brand {
   }
 
   .suggestion-avatar-half {
-    height: 75px;
-    width: 75px;
+    height: 37px;
+    width: 37px;
   }
 
   .suggestion-avatar-half .avatar-img {
-    height: 62.5px;
-    width: 62.5px;
+    height: 31px;
+    width: 31px;
   }
 }
 
@@ -509,4 +542,9 @@ nav .nav-brand {
   top: 0;
   left: 0;
   z-index: -1;
+/*
+ICONS  */
+
+.iconHeart, .iconComment {
+  cursor: pointer;
 }
