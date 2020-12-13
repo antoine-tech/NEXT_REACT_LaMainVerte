@@ -16,6 +16,7 @@
     "moment-timezone": "^0.5.32",
     "postcss": "^7.0.35",
     "postcss-cli": "^8.3.0",
+    "rc-slider": "^9.6.5",
     "react": "^17.0.1",
     "react-big-calendar": "^0.30.0",
     "react-dom": "^17.0.1",

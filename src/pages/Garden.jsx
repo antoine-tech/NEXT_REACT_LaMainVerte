@@ -23,6 +23,7 @@ import useIsAmmendable from "../hooks/useIsAmmendable";
 import TextArea from "../components/TextArea/index";
 import IconArrowDown from "../components/icons/IconArrowDown/index";
 import Select from "../components/Select/index";
+import SliderInput from "../components/SliderInput/index";
 const Garden = () => {
   const { current_user } = useCurrentUser();
   const { getJwtToken } = useJwtToken();
@@ -32,6 +33,12 @@ const Garden = () => {
   const [gardenFollow, setGardenFollow] = useState(null);
   const history = useHistory();
   const [myLike, setMyLike] = useState(null);
+
+  const [opacityValue, setOpacityValue] = useState(0.1);
+
+  const handleOpacityValue = (value) => {
+    setOpacityValue(1 - value / 100);
+  };
 
   const handleClickEventHistory = () => {
     history.push("/garden/" + id + "/events");
@@ -112,7 +119,7 @@ const Garden = () => {
           src={MaskImage}
           alt=""
           className="h-full w-full"
-          style={{ backgroundColor: "rgba(255,255,255,.1)" }}
+          style={{ backgroundColor: `rgba(255,255,255,${opacityValue})` }}
         />
       </div>
 
@@ -165,7 +172,7 @@ const Garden = () => {
             </h1>
           )}
 
-          <div className="col-span-4 main-data-container flex flex-wrap justify-between my-8">
+          <div className="col-span-4 main-data-container flex flex-wrap justify-between mt-8">
             {isAmmendable ? (
               <>
                 <Select
@@ -188,6 +195,12 @@ const Garden = () => {
                   type="text"
                   placeholder="Où vous situez vous ?"
                   className="w-full my-4"
+                />
+
+                <SliderInput
+                  classNames={["my-4"]}
+                  label="Modifier l'opacité de la photo d'arrière plan :"
+                  opacityValue={(value) => handleOpacityValue(value)}
                 />
               </>
             ) : (
