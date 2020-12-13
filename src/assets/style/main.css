@@ -7,6 +7,8 @@
   --red-gradient: linear-gradient(180deg, #ff6b6b 0%, #ffc185 100%);
   --red-gradient-overlay: linear-gradient(180deg, #ff6b6b 0%, #ffb3b3 100%);
   --greeen: #8fe388;
+  --brown-light: #d9c8a5;
+  --brown-extra-light: rgba(217, 200, 165, 0.1);
   --red: #ff6b6b;
   --red-hover: #f34b4b;
   --blue-dark: #3a405a;
@@ -214,23 +216,36 @@ textarea {
   background-image: url(../backgrounds/start_to_grow.jpg);
 }
 
-/* INPUTS  */
-input, select {
+/* INPUTS SELECT */
+select {
+  border-bottom: 1px solid var(--blue-dark-light);
+  border-top: 1px solid var(--blue-dark-light);
+}
+.prepend,
+.append {
+  border: 1px solid var(--blue-dark-light);
+}
+
+input,
+select {
   height: 2.5rem;
 }
 
-input{
+input {
   border-bottom: 1px solid var(--blue-dark-light);
   transition: background-color 0.1s ease-in-out;
 }
 
-select{
+select {
   appearance: none;
 }
 
+input:focus, textarea:focus{
+  background-color: var(--brown-extra-light);
+}
+
 input:focus {
-  background-color: rgba(203, 255, 73, 0.1);
-  border-bottom: 2px solid #7c906a;
+  border-bottom: 2px solid var(--brown-light);
   padding-left: 1rem;
 }
 
@@ -527,3 +542,4 @@ ICONS  */
 .hover-animate-bounce:hover {
   animation: bounce 1s infinite;
 }
+

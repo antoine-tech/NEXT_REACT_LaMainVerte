@@ -21,6 +21,8 @@ import useCurrentUser from "../hooks/useCurrentUser";
 import IconPen from "../components/icons/IconPen/index";
 import useIsAmmendable from "../hooks/useIsAmmendable";
 import TextArea from "../components/TextArea/index";
+import IconArrowDown from "../components/icons/IconArrowDown/index";
+import Select from "../components/Select/index";
 const Garden = () => {
   const { current_user } = useCurrentUser();
   const { getJwtToken } = useJwtToken();
@@ -166,27 +168,22 @@ const Garden = () => {
           <div className="col-span-4 main-data-container flex flex-wrap justify-between my-8">
             {isAmmendable ? (
               <>
-                <div className="grid grid-cols-12 w-full my-4">
-                  <div className="prepend col-span-1"></div>
-                  <select name="" id="" className="col-span-10 pl-4">
-                    <option value="" disabled selected hidden>
-                      Quel est le type de votre jardin ?
-                    </option>
-                  </select>
-                  <div className="append col-span-1"></div>
-                </div>
+                <Select
+                  icon={IconLabel}
+                  prompter="Quel est le type de votre jardin ?"
+                  options={[
+                    { value: 1, text: "urbain" },
+                    { value: 2, text: "rural" },
+                  ]}
+                  selectedOption={(value) => console.log(value)}
+                />
+                <Select
+                  icon={IconClimate}
+                  prompter=" Quel est votre climat ?"
+                  options={[]}
+                  selectedOption={(value) => console.log(value)}
+                />
 
-                <div className="grid grid-cols-12 w-full my-4">
-                  <div className="prepend col-span-1"></div>
-                  <select name="" id="" className="col-span-10 pl-4">
-                    <option value="" disabled selected hidden>
-                      Quel est votre climat ?
-                    </option>
-                  </select>
-                  <div className="append col-span-1"></div>
-                </div>
-
-               
                 <input
                   type="text"
                   placeholder="Où vous situez vous ?"
