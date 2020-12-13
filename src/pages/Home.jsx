@@ -16,6 +16,7 @@ import Button from "../components/Button/index";
 import useIsLoading from "../hooks/useIsLoading";
 import LoadingAnimation from "../components/LoadingAnimation/index";
 import useMutationObserver from "../hooks/useMutationObserver";
+import useInstantMessages from "../hooks/useIntantMessages";
 
 const Home = () => {
   const { getJwtToken } = useJwtToken();
@@ -24,8 +25,9 @@ const Home = () => {
   const [gardenSelection, setGardenSelection] = useState([]);
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
-
   const viewItems = useMutationObserver();
+
+  const { instantMessages, sendInstantMessage } = useInstantMessages();
 
   useEffect(() => {
     const fetchPageDatas = async () => {
@@ -56,6 +58,7 @@ const Home = () => {
         setIsLoading(false);
       }
     };
+
     fetchPageDatas();
   }, []);
 
@@ -101,6 +104,13 @@ const Home = () => {
               "lg:col-span-1",
             ]}
           />
+
+          {/* <button
+            onClick={() => sendInstantMessage({ message: "hello world" })}
+            className="btn btn-md bg-blue-dark text-white p-4 w-64 col-span-2 lg:col-span-1"
+          >
+            TEST WS
+          </button> */}
         </div>
       </div>
       <div className="col-span-12 lg:col-span-6 px-4" id="wall">
@@ -249,6 +259,7 @@ const Home = () => {
             );
           })}
         </div>
+        {console.log(instantMessages)}
       </div>
     </section>
   );
