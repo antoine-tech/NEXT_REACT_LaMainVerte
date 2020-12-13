@@ -108,6 +108,8 @@ figure,
 caption,
 input,
 textarea,
+select,
+option,
 label,
 span,
 div {
@@ -115,6 +117,13 @@ div {
   font-weight: 400;
   line-height: 125%;
   color: var(--blue-dark);
+}
+
+textarea {
+  border-width: 1px;
+  padding: 1rem;
+  border-style: solid;
+  border-color: var(--blue-dark-light);
 }
 
 .font-blue-dark-light {
@@ -187,7 +196,6 @@ div {
   border: 2px solid var(--blue-dark-light);
 }
 
-
 /* BG IMAGE */
 
 .bg-man,
@@ -207,10 +215,17 @@ div {
 }
 
 /* INPUTS  */
-input {
+input, select {
   height: 2.5rem;
-  border-bottom: 1px solid #515151;
+}
+
+input{
+  border-bottom: 1px solid var(--blue-dark-light);
   transition: background-color 0.1s ease-in-out;
+}
+
+select{
+  appearance: none;
 }
 
 input:focus {
@@ -234,6 +249,7 @@ input:focus {
   cursor: pointer;
   transition: background-color 0.33s ease-in-out;
 }
+
 button.btn-lg {
   height: 75px;
   border-radius: var(--radius);
@@ -312,6 +328,11 @@ nav .nav-brand {
 }
 
 /* AVATARS */
+
+.suggestion-avatar,
+.suggestion-avatar-half {
+  padding: 2px;
+}
 
 .suggestion-avatar,
 .suggestion-avatar .avatar-img,
@@ -496,6 +517,13 @@ nav .nav-brand {
 /* 
 ICONS  */
 
-.iconHeart, .iconComment {
+.iconHeart,
+.iconComment {
   cursor: pointer;
+}
+
+/* ANIMATIONS */
+
+.hover-animate-bounce:hover {
+  animation: bounce 1s infinite;
 }

@@ -5,7 +5,7 @@ const DataContainer = ({icon:Icon, dataText}) =>
 {
     return (
 
-        <div className="data-container">
+        <div className="data-container hover-animate-bounce">
         <div className="icon-data">
             <Icon/>
         </div>

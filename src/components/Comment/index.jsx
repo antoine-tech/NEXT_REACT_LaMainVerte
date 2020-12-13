@@ -20,11 +20,14 @@ const Comment = ({ id, content, user_id }) => {
   return isLoading ? (
     <LoadingSpinner />
   ) : (
-    <div className="comment col-span-12 justify-center grid grid-cols-12 p-4 my-2 border-gray-200" style={{borderWidth:'1px'}}>
-    
-        <p className="col-span-2 my-2 italic font-blue-dark-light font-sm">
-          {author?.user?.username}
-        </p>
+    <div
+      className="comment col-span-12 justify-center grid grid-cols-12 p-4 my-2 border-gray-200 bg-white"
+      style={{ borderWidth: "1px" }}
+      id={`comment-${id}`}
+    >
+      <p className="col-span-2 my-2 italic font-blue-dark-light font-sm">
+        {author?.user?.username}
+      </p>
       <p id={id} className="col-span-12 flex">
         {content}
       </p>
