@@ -24,7 +24,7 @@ const GardenCard = ({
   };
 
   return (
-    <div className="card p-4" id={id} onClick={(event) => handleRedirect(id)}>
+    <div className="card card-garden p-4" id={id} onClick={(event) => handleRedirect(id)}>
       <div
         className="card-image"
         style={{

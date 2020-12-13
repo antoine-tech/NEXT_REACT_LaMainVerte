@@ -76,14 +76,14 @@ const PostCard = ({
       setPostData(post);
     };
     fetchPost();
-    
+
     const userLike = postData?.likes?.find(
       (el) => el.post_id === id && el.user_id === current_user?.current_user.id
     );
     userLike && setMyLike(userLike);
 
     setIsLoading(false);
-  }, [postData]);
+  }, []);
 
   return isLoading ? (
     <LoadingSpinner />
