@@ -1,4 +1,5 @@
 import React from "react";
+import Input from "../Input/index";
 
 const FormGroup = ({
   colSpan,
@@ -11,32 +12,20 @@ const FormGroup = ({
   onInput,
   onBlur,
 }) => {
-
-  const handleInput = (value) => {
-    return onInput(value);
-  };
-  const handleBlur = (value) => {
-    return onBlur(value);
-  };
-
   return (
     <div className={`form-group col-span-${colSpan} flex flex-col my-2`}>
       <label htmlFor={id} className="mb-1">
         {labelText}
       </label>
-      <input
+
+      <Input
         id={id}
         type={type}
         name={name}
         value={value}
-        onInput={(event) =>
-          handleInput({ value: event.target.value, id: event.target.id })
-        }
-        onBlur={(event) =>
-          handleBlur({ value: event.target.value, id: event.target.id })
-        }
+        onInput={(value) => onInput(value)}
+        onBlur={(value) => onBlur(value)}
       />
-
       {alertMessage && (
         <div className="alert danger my-2 flex w-full justify-between">
           <p>{alertMessage}</p>

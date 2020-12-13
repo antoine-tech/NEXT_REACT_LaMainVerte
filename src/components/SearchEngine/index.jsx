@@ -54,7 +54,7 @@ const SearchEngine = () => {
             let { id, name } = tag;
             return (
               <SearchFilter
-                key={`search-filter-tag-${id}`}
+                key={`tag-${id}`}
                 id={id}
                 name={id}
                 label={name}
@@ -69,7 +69,7 @@ const SearchEngine = () => {
             let { id, name } = climate;
             return (
               <SearchFilter
-                key={`search-filter-climate-${id}`}
+                key={`climate-${id}`}
                 id={id}
                 name={id}
                 label={name}

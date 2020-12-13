@@ -126,7 +126,7 @@ const Home = () => {
               } = followedGarden;
               return (
                 <GardenCard
-                  key={`garden-card-${id}`}
+                  key={`garden-${id}`}
                   id={id}
                   name={name}
                   user={user}
@@ -191,7 +191,7 @@ const Home = () => {
 
               return (
                 <GardenCard
-                  key={`garden-card-${id}`}
+                  key={`garden-${id}`}
                   id={id}
                   name={name}
                   user={user}

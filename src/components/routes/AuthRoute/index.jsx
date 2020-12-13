@@ -1,10 +1,6 @@
 import { Route, Redirect } from "react-router-dom";
 import checkAuth from "../checkAuth";
 const AuthRoute = ({ current_user, component: Component, ...rest }) => (
-  <>
-  {
-    console.log(current_user)
-  }
   <Route
     {...rest}
     render={(props) =>
@@ -15,8 +11,6 @@ const AuthRoute = ({ current_user, component: Component, ...rest }) => (
       )
     }
   />
-
-  </>
 );
 
 export default AuthRoute;

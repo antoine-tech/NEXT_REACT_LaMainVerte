@@ -7,6 +7,8 @@
   --red-gradient: linear-gradient(180deg, #ff6b6b 0%, #ffc185 100%);
   --red-gradient-overlay: linear-gradient(180deg, #ff6b6b 0%, #ffb3b3 100%);
   --greeen: #8fe388;
+  --brown-light: #d9c8a5;
+  --brown-extra-light: rgba(217, 200, 165, 0.1);
   --red: #ff6b6b;
   --red-hover: #f34b4b;
   --blue-dark: #3a405a;
@@ -108,6 +110,8 @@ figure,
 caption,
 input,
 textarea,
+select,
+option,
 label,
 span,
 div {
@@ -115,6 +119,13 @@ div {
   font-weight: 400;
   line-height: 125%;
   color: var(--blue-dark);
+}
+
+textarea {
+  border-width: 1px;
+  padding: 1rem;
+  border-style: solid;
+  border-color: var(--blue-dark-light);
 }
 
 .font-blue-dark-light {
@@ -187,7 +198,6 @@ div {
   border: 2px solid var(--blue-dark-light);
 }
 
-
 /* BG IMAGE */
 
 .bg-man,
@@ -206,16 +216,36 @@ div {
   background-image: url(../backgrounds/start_to_grow.jpg);
 }
 
-/* INPUTS  */
-input {
+/* INPUTS SELECT */
+select {
+  border-bottom: 1px solid var(--blue-dark-light);
+  border-top: 1px solid var(--blue-dark-light);
+}
+.prepend,
+.append {
+  border: 1px solid var(--blue-dark-light);
+}
+
+input,
+select {
   height: 2.5rem;
-  border-bottom: 1px solid #515151;
+}
+
+input {
+  border-bottom: 1px solid var(--blue-dark-light);
   transition: background-color 0.1s ease-in-out;
 }
 
+select {
+  appearance: none;
+}
+
+input:focus, textarea:focus{
+  background-color: var(--brown-extra-light);
+}
+
 input:focus {
-  background-color: rgba(203, 255, 73, 0.1);
-  border-bottom: 2px solid #7c906a;
+  border-bottom: 2px solid var(--brown-light);
   padding-left: 1rem;
 }
 
@@ -234,6 +264,7 @@ input:focus {
   cursor: pointer;
   transition: background-color 0.33s ease-in-out;
 }
+
 button.btn-lg {
   height: 75px;
   border-radius: var(--radius);
@@ -312,6 +343,11 @@ nav .nav-brand {
 }
 
 /* AVATARS */
+
+.suggestion-avatar,
+.suggestion-avatar-half {
+  padding: 2px;
+}
 
 .suggestion-avatar,
 .suggestion-avatar .avatar-img,
@@ -496,6 +532,26 @@ nav .nav-brand {
 /* 
 ICONS  */
 
-.iconHeart, .iconComment {
+.iconHeart,
+.iconComment {
   cursor: pointer;
+}
+
+/* ANIMATIONS */
+
+.hover-animate-bounce:hover {
+  animation: bounce 1s infinite;
+}
+
+/* 
+SLIDER */
+
+.rc-slider-track{
+  background-color: var(--blue-dark-light);
+}
+.rc-slider-dot-active{
+  border-color: var(--blue-dark-light);
+}
+.rc-slider-handle {
+  border: solid 2px var(--blue-dark-light);
 }
