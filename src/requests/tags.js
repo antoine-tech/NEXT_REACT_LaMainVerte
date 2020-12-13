@@ -1,6 +1,5 @@
 import { find } from "../sevices/Api";
-const getTags = async () => {
-  return await find("/tags", false).then((res) => res.json());
-};
+const getTags = async () =>
+  await find("/tags", false).then((res) => res.json());
 
 export { getTags };

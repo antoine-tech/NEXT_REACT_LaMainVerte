@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-// import { FormattedMessage } from 'react-intl';
-import useCurrentUser from "../hooks/useCurrentUser";
+import React, { useEffect, useState } from "react";
 import AvatarSlider from "../components/AvatarSlider/index";
 import GardenCard from "../components/GardenCard/index";
 import SearchEngine from "../components/SearchEngine/index";
@@ -17,10 +15,9 @@ import TestimonyCard from "../components/TestimonyCard/index";
 import Button from "../components/Button/index";
 import useIsLoading from "../hooks/useIsLoading";
 import LoadingAnimation from "../components/LoadingAnimation/index";
-import useMutationObserver from '../hooks/useMutationObserver';
+import useMutationObserver from "../hooks/useMutationObserver";
 
 const Home = () => {
-  const { current_user } = useCurrentUser();
   const { getJwtToken } = useJwtToken();
   const { isLoading, setIsLoading } = useIsLoading();
   const [followedGardens, setFollowedGardens] = useState([]);
@@ -59,11 +56,8 @@ const Home = () => {
         setIsLoading(false);
       }
     };
-
     fetchPageDatas();
   }, []);
-
-
 
   // render
   return isLoading ? (

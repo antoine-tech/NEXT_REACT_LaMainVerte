@@ -1,14 +1,12 @@
 import { find, create, deletion } from "../sevices/Api";
 
-const getPosts = async () => {
-  return await find("/posts", false).then((res) => res.json());
-};
+const getPosts = async () =>
+  await find("/posts", false).then((res) => res.json());
 
-const getPost = async (idPost) => {
-  return await find("/posts/" + idPost, false)
+const getPost = async (idPost) =>
+  await find("/posts/" + idPost, false)
     .then((res) => res.json())
     .catch((error) => error);
-};
 
 const likePost = async (idPost, jwt_token) => {
   const data = {
@@ -19,11 +17,10 @@ const likePost = async (idPost, jwt_token) => {
     .catch((error) => error);
 };
 
-const unlikePost = async (postLikeId, jwt_token) => {
-  return await deletion("/post_likes/" + postLikeId, true, jwt_token)
+const unlikePost = async (postLikeId, jwt_token) =>
+  await deletion("/post_likes/" + postLikeId, true, jwt_token)
     .then((res) => res.text())
     .catch((error) => error);
-};
 
 const commentPost = async (postId, content, jwtToken) => {
   const data = { post_comment: { content: content } };

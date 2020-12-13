@@ -1,9 +1,8 @@
-import { find, create } from "../sevices/Api";
+import { find, create, deletion } from "../sevices/Api";
 import jwtDecode from "jwt-decode";
 
-// perform a request to sign the user in
-const signUserIn = async (email, password, jwt_token) => {
-  return await create(
+const signUserIn = async (email, password, jwt_token) =>
+  await create(
     {
       user: {
         email,
@@ -13,9 +12,7 @@ const signUserIn = async (email, password, jwt_token) => {
     "/login",
     false
   );
-};
 
-// perform a request to sign the user up
 const signUserUp = async (
   first_name,
   last_name,
@@ -23,8 +20,8 @@ const signUserUp = async (
   email,
   password,
   password_confirmation
-) => {
-  return await create(
+) =>
+  await create(
     {
       user: {
         first_name,
@@ -38,18 +35,20 @@ const signUserUp = async (
     "/register",
     false
   );
-};
+
+const logout = async (jwtToken) =>
+  await deletion("/logout", true, jwtToken)
+    .then((res) => res.text())
+    .catch((error) => error);
 
 const getUserDatas = async (jwt_token) => {
   const userId = jwtDecode(jwt_token);
-
   return await find(`/users/${userId.sub}`, true, jwt_token);
 };
 
-const findUserDatas = async (userId) => {
-  return await find(`/users/${userId}`, false)
+const findUserDatas = async (userId) =>
+  await find(`/users/${userId}`, false)
     .then((res) => res.json())
     .catch((error) => error);
-};
 
-export { signUserIn, signUserUp, getUserDatas, findUserDatas };
+export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout };

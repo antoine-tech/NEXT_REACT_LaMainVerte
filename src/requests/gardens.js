@@ -1,34 +1,29 @@
 import { find, create, deletion } from "../sevices/Api";
 
-const getClimate = async (garden_climate_id) => {
-  return find("/climates/" + garden_climate_id)
+const getClimate = async (garden_climate_id) =>
+  find("/climates/" + garden_climate_id)
     .then((res) => res.json())
     .catch((error) => error);
-};
 
-const getLocation = async (garden_location_id) => {
-  return find("/locations/" + garden_location_id)
+const getLocation = async (garden_location_id) =>
+  find("/locations/" + garden_location_id)
     .then((res) => res.json())
     .catch((error) => error);
-};
 
-const getGardenType = async (garden_type_id) => {
-  return find("/garden_types/" + garden_type_id)
+const getGardenType = async (garden_type_id) =>
+  find("/garden_types/" + garden_type_id)
     .then((res) => res.json())
     .catch((error) => error);
-};
 
-const getGarden = async (garden_id) => {
-  return find("/gardens/" + garden_id)
+const getGarden = async (garden_id) =>
+  find("/gardens/" + garden_id)
     .then((res) => res.json())
     .catch((error) => error);
-};
 
-const getGardens = async () => {
-  return find("/gardens")
+const getGardens = async () =>
+  find("/gardens")
     .then((res) => res.json())
     .catch((error) => error);
-};
 
 const getFollowedGardenAndRelatedData = async (gardens) => {
   // fetching each of the gardens available data to gather all related data to a garden at once
@@ -126,11 +121,10 @@ const likeGarden = async (idGarden, jwt_token) => {
     .catch((error) => error);
 };
 
-const unlikeGarden = async (gardenLikeId, jwt_token) => {
-  return await deletion("/garden_likes/" + gardenLikeId, true, jwt_token)
+const unlikeGarden = async (gardenLikeId, jwt_token) =>
+  await deletion("/garden_likes/" + gardenLikeId, true, jwt_token)
     .then((res) => res.text())
     .catch((error) => error);
-};
 
 export {
   getClimate,

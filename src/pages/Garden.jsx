@@ -34,14 +34,26 @@ const Garden = () => {
   const handleLike = async (idRessource) => {
     if (current_user) {
       if (myLike) {
-        await unlikeGarden(myLike.id, getJwtToken);
-        setMyLike(null);
+        try {
+          await unlikeGarden(myLike.id, getJwtToken);
+          setMyLike(null);
+        } catch (error) {
+          console.error(error);
+        }
       } else {
-        const newLike = await likeGarden(idRessource, getJwtToken);
-        setMyLike(newLike);
+        try {
+          const newLike = await likeGarden(idRessource, getJwtToken);
+          setMyLike(newLike);
+        } catch (error) {
+          console.error(error);
+        }
       }
-      const garden = await getGarden(id);
-      setGardenData(garden);
+      try {
+        const garden = await getGarden(id);
+        setGardenData(garden);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -70,10 +82,11 @@ const Garden = () => {
 
   useEffect(() => {
     const userLike = gardenData?.likes?.find(
-      (el) => el.garden_id == id && el.user_id == current_user?.current_user.id
+      (el) => el.garden_id === id && el.user_id === current_user?.id
     );
+
     const userFollow = gardenData?.follows?.find(
-      (el) => el.garden_id == id && el.user_id == current_user?.current_user.id
+      (el) => el.garden_id === id && el.user_id === current_user?.id
     );
 
     userFollow && setGardenFollow(userFollow);
@@ -223,7 +236,6 @@ const Garden = () => {
 
           <div className="my-8">
             <h3 className="my-4">Les posts</h3>
-
 
             {gardenData?.posts?.map((post) => {
               let {
