@@ -7,13 +7,6 @@ import IconLabel from "../components/icons/IconLabel/index";
 import IconLocation from "../components/icons/IconLocation/index";
 import IconUpdate from "../components/icons/IconUpdate/index";
 import PostCard from "../components/PostCard";
-import {
-  getGarden,
-  follow,
-  unfollow,
-  unlikeGarden,
-  likeGarden,
-} from "../requests/gardens";
 import Moment from "react-moment";
 import Button from "../components/Button/index";
 import useJwtToken from "../hooks/useJwtToken";
@@ -21,9 +14,17 @@ import useCurrentUser from "../hooks/useCurrentUser";
 import IconPen from "../components/icons/IconPen/index";
 import useIsAmmendable from "../hooks/useIsAmmendable";
 import TextArea from "../components/TextArea/index";
-import IconArrowDown from "../components/icons/IconArrowDown/index";
 import Select from "../components/Select/index";
 import SliderInput from "../components/SliderInput/index";
+import Input from "../components/Input/index";
+import {
+  getGarden,
+  follow,
+  unfollow,
+  unlikeGarden,
+  likeGarden,
+} from "../requests/gardens";
+
 const Garden = () => {
   const { current_user } = useCurrentUser();
   const { getJwtToken } = useJwtToken();
@@ -82,6 +83,10 @@ const Garden = () => {
       const garden = await getGarden(id);
       setGardenData(garden);
     }
+  };
+
+  const handleChangeGardenLocation = (value) => {
+    console.log(value);
   };
 
   useEffect(() => {
@@ -191,10 +196,14 @@ const Garden = () => {
                   selectedOption={(value) => console.log(value)}
                 />
 
-                <input
-                  type="text"
-                  placeholder="Où vous situez vous ?"
-                  className="w-full my-4"
+                <Input
+                  id={"garden-location"}
+                  type={"text"}
+                  name={"garden-location"}
+                  value={gardenData?.location?.name}
+                  onInput={(value) => handleChangeGardenLocation(value)}
+                  placeHolder={"Où se trouve votre jardin ?"}
+                  classNames={["w-full"]}
                 />
 
                 <SliderInput

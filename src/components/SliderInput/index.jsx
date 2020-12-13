@@ -7,9 +7,9 @@ const wrapperStyle = { width: "100%" };
 const SliderInput = ({ classNames, label, opacityValue }) => {
   return (
     <div style={wrapperStyle} className={classNames ? classNames.join() : ""}>
-      <h5 className="my-4" style={{ fontSize: "1rem" }}>
+      <p className="my-4" style={{ fontSize: "1rem" }}>
         {label}
-      </h5>
+      </p>
       <Slider
         min={0}
         defaultValue={100}

@@ -15,10 +15,8 @@ const Select = ({ icon: Icon, prompter, options, selectedOption }) => {
         id=""
         className="col-span-10 pl-4"
         onChange={handleChange}
+        defaultValue={prompter}
       >
-        <option value="" disabled selected hidden>
-          {prompter}
-        </option>
         {options.map((option) => {
           let { value, text } = option;
           return (
