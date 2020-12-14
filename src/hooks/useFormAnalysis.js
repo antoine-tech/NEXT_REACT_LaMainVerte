@@ -92,6 +92,7 @@ const useFormAnalysis = () => {
     userDatas,
     gardenData,
     alerts,
+    setGardenData,
     // setUserdatas,
     // setAlerts,
     handleInput: (datas) => handleInput(datas),
