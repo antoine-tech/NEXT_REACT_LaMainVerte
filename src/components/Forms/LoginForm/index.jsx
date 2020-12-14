@@ -11,16 +11,11 @@ import { useHistory } from "react-router-dom";
 const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
   const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
     {
-      firstname: "",
-      lastname: "",
-      username: "",
       email: "",
       password: "",
-      password_confirmation: "",
     },
     {
       isEmpty: "Ce champ est obligatoire",
-      passwordsAreDifferent: "Les mots de passes ne sont pas similaires",
     }
   );
   const { setCurrentUser } = useCurrentUser();

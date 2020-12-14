@@ -240,7 +240,8 @@ select {
   appearance: none;
 }
 
-input:focus, textarea:focus{
+input:focus,
+textarea:focus {
   background-color: var(--brown-extra-light);
 }
 
@@ -546,12 +547,23 @@ ICONS  */
 /* 
 SLIDER */
 
-.rc-slider-track{
+.rc-slider-track {
   background-color: var(--blue-dark-light);
 }
-.rc-slider-dot-active{
+.rc-slider-dot-active {
   border-color: var(--blue-dark-light);
 }
 .rc-slider-handle {
   border: solid 2px var(--blue-dark-light);
+}
+
+/* MODAL */
+
+#modal {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(255,255,255,.8);
+  padding: 2rem;
+  z-index: 1000;
 }
