@@ -13,28 +13,29 @@ const MyDropzone = () => {
     }});
 
 
-  //   {droppedImages.map(file => (
-  //     <div key={file.name}>
-  //       <img src={file.preview}/>
-  //     </div>
-  // ))}
 
-  return (
-    <div>
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        {
-          isDragActive ?
-          <p className="text-center">Glissez ici l'image de votre jardin ...</p> :
-            <p  className="text-center">
-              Glissez ici l'image de votre jardin <br />
-            ou bien cliquez afin de sélectionner un fichier
-          </p>
-        }
+    return (
+      <div className="gardenDropzone">
+        <div className="realDropzone" {...getRootProps()}>
+          <input {...getInputProps()} />
+          {
+            isDragActive ?
+            <p className="text-center">Glissez ici l'image de votre jardin ...</p> :
+              <p  className="text-center">
+                Glissez ici l'image de votre jardin <br />
+              ou bien cliquez afin de sélectionner un fichier
+            </p>
+          }
+        </div>
+        <div className="imagePreview">
+          {droppedImages.map(file => (
+            <div key={file.name}>
+              <img src={file.preview}/>
+            </div>
+          ))}
+        </div>
       </div>
+    );
+  }
 
-    </div>
-  );
-}
-
-export default MyDropzone;
+  export default MyDropzone;

@@ -558,11 +558,6 @@ nav .nav-brand {
 
 /* gardenform dropzone */
 .gardenDropzone {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 6rem;
-  left: 0;
   text-align: center;
   font-family: "Lato", sans-serif;
   font-size: 1.5rem;
@@ -581,14 +576,14 @@ nav .nav-brand {
   transition: 0.3s ease-in-out;
 }
 .imagePreview {
-  position: absolute;
   width: 100%;
   top: 0;
   left: 0;
   z-index: -1;
 }
-/*
-ICONS  */
+
+
+/*  ICONS  */
 
 .iconHeart,
 .iconComment {
