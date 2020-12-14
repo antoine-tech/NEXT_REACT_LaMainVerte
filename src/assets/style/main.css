@@ -6,13 +6,13 @@
   --green-gradient: linear-gradient(180deg, #8fe388 0%, #cbff49 100%);
   --red-gradient: linear-gradient(180deg, #ff6b6b 0%, #ffc185 100%);
   --red-gradient-overlay: linear-gradient(180deg, #ff6b6b 0%, #ffb3b3 100%);
-  --blue-gradient: linear-gradient(180deg, #7B8CDE 0%, #A7A7A7 100%);
+  --blue-gradient: linear-gradient(180deg, #7b8cde 0%, #a7a7a7 100%);
   --greeen: #8fe388;
   --brown-light: #d9c8a5;
   --brown-extra-light: rgba(217, 200, 165, 0.1);
   --red: #ff6b6b;
   --red-hover: #f34b4b;
-  --blue: #7B8CDE;
+  --blue: #7b8cde;
   --blue-dark: #3a405a;
   --blue-dark-light: rgba(58, 64, 90, 0.9);
   --blue-dark-hover: #3a59f1;
@@ -157,6 +157,15 @@ textarea {
   background: var(--blue-gradient);
 }
 
+/* BG ABSTRACT */
+
+.bg-abstractform {
+  background-image: url(../backgrounds/abstract-background-blue.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 /* BG COLORS */
 
 .bg-red {
@@ -248,7 +257,8 @@ select {
   appearance: none;
 }
 
-input:focus, textarea:focus{
+input:focus,
+textarea:focus {
   background-color: var(--brown-extra-light);
 }
 
@@ -286,7 +296,6 @@ button.btn-lg {
   justify-content: space-around;
   align-items: center;
 }
-
 
 .toogleSwitch,
 .toogleSwitch input {
@@ -561,7 +570,7 @@ nav .nav-brand {
   color: var(--light-white);
   z-index: 2;
 }
-.realDropzone{
+.realDropzone {
   top: 20%;
   border: dotted var(--light-white) 3px;
   border-radius: var(--radius);
@@ -595,10 +604,10 @@ ICONS  */
 /*
 SLIDER */
 
-.rc-slider-track{
+.rc-slider-track {
   background-color: var(--blue-dark-light);
 }
-.rc-slider-dot-active{
+.rc-slider-dot-active {
   border-color: var(--blue-dark-light);
 }
 .rc-slider-handle {

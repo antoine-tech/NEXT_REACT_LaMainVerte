@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import AbstractShape from "../AbstractShape/index";
 import Alert from "../Alert";
-import MyDropzone from '../DropZone/index';
 
 
 const SignContainer = ({
   backgroundGradient,
-  component: Component,
-  dropzone = null
+  component: Component
 }) => {
   const [isAlertDisplayed, setIsAlertDisplayed] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -20,15 +18,6 @@ const SignContainer = ({
       >
         <AbstractShape />
       </div>
-      {dropzone &&
-        <div className="grid grid-cols-10 gardenDropzone">
-          <div className="md:flex md:col-span-5 lg:col-span-6 h-full items-center justify-center">
-            <div className="realDropzone">
-              <MyDropzone />
-            </div>
-          </div>
-        </div>
-      }
 
       <div className="grid grid-cols-1 col-span-10 md:col-span-5 lg:col-span-4 px-4 place-content-center min-h-screen overflow-y-auto relative">
         <Component
