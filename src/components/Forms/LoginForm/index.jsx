@@ -9,15 +9,28 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 import { useHistory } from "react-router-dom";
 
 const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
-  const { userDatas, alerts, handleInput, handleBlur } = useFormAnalysis();
-  const { setCurrentUser} = useCurrentUser();
+  const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
+    {
+      firstname: "",
+      lastname: "",
+      username: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+    },
+    {
+      isEmpty: "Ce champ est obligatoire",
+      passwordsAreDifferent: "Les mots de passes ne sont pas similaires",
+    }
+  );
+  const { setCurrentUser } = useCurrentUser();
   const { setJwtToken } = useJwtToken();
 
   const history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { email, password } = userDatas;
+    const { email, password } = datas;
     if (email !== "" && password !== "") {
       const response = await signUserIn(email, password).then((res) => {
         if (res.headers.get("Authorization")) {
@@ -50,7 +63,7 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
           colSpan="2"
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
-          value={userDatas.email}
+          value={datas.email}
           name="email"
           id="email"
           type="text"
@@ -61,7 +74,7 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
           colSpan="2"
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
-          value={userDatas.password}
+          value={datas.password}
           name="password"
           id="password"
           type="password"

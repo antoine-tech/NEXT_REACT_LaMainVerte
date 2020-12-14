@@ -8,7 +8,7 @@ const localizer = momentLocalizer(moment);
 const GardenCalendar = ({ events }) => {
   const handleSelectEvent = () => {};
   return (
-    <div className="w-full grid grid-cols-12" style={{backgroundColor:"#f8f8f8"}}>
+    <div className="w-full grid grid-cols-12 relative" style={{backgroundColor:"#f8f8f8"}} id="calendar-container">
       <Calendar
         localizer={localizer}
         events={events}

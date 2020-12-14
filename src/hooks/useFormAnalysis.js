@@ -1,40 +1,22 @@
 import { useState } from "react";
 
-const useFormAnalysis = () => {
-  const alertMessages = {
-    isEmpty: "Ce champ est obligatoire",
-    passwordsAreDifferent: "Les mots de passes ne sont pas similaires",
-  };
+const useFormAnalysis = (formDataObj, alertMessages) => {
+  const [datas, setDatas] = useState(formDataObj);
 
-  const [userDatas, setUserdatas] = useState({
-    firstname: "",
-    lastname: "",
-    username: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-  });
+  const [alerts, setAlerts] = useState(formDataObj);
 
-  const [alerts, setAlerts] = useState({
-    firstname: "",
-    lastname: "",
-    username: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-  });
+  const handleInput = (val) => {
+    let { value, id } = val;
+    const newDatas = { ...datas };
+    newDatas[id] = value;
+    setDatas({ ...newDatas });
 
-  const handleInput = (datas) => {
-    let { value, id } = datas;
-    const newUserDatas = { ...userDatas };
-    newUserDatas[id] = value;
-    setUserdatas({ ...newUserDatas });
-
-    if (userDatas.password !== userDatas.password_confirmation) {
+    if (datas.password !== datas.password_confirmation) {
       setAlerts({
         ...alerts,
         password_confirmation: alertMessages.passwordsAreDifferent,
       });
+
     } else {
       setAlerts({
         ...alerts,
@@ -43,8 +25,8 @@ const useFormAnalysis = () => {
     }
   };
 
-  const handleBlur = (datas) => {
-    let { value, id } = datas;
+  const handleBlur = (val) => {
+    let { value, id } = val;
     const newAlerts = { ...alerts };
 
     value === ""
@@ -55,10 +37,8 @@ const useFormAnalysis = () => {
   };
 
   return {
-    userDatas,
+    datas,
     alerts,
-    // setUserdatas,
-    // setAlerts,
     handleInput: (datas) => handleInput(datas),
     handleBlur: (datas) => handleBlur(datas),
   };
