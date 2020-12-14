@@ -118,11 +118,9 @@ const PostCard = ({
         </div>
 
         <div className="col-start-11 col-span-1 flex items-center justify-end">
-          {postData?.comments?.length > 0 && (
-            <IconComment
-              onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
-            />
-          )}
+          <IconComment
+            onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
+          />
         </div>
 
         <div className="col-span-1 flex items-center justify-end">
@@ -136,17 +134,18 @@ const PostCard = ({
       </div>
       {areCommentDisplayed && (
         <>
-          {postData.comments.map((comment) => {
-            let { id, content, user_id } = comment;
-            return (
-              <Comment
-                key={`comment-${id}`}
-                id={id}
-                user_id={user_id}
-                content={content}
-              />
-            );
-          })}
+          {postData?.comments?.length > 0 &&
+            postData.comments.map((comment) => {
+              let { id, content, user_id } = comment;
+              return (
+                <Comment
+                  key={`comment-${id}`}
+                  id={id}
+                  user_id={user_id}
+                  content={content}
+                />
+              );
+            })}
 
           <div
             className="col-span-12 justify-center grid grid-cols-12 p-4 my-2 bg-white border-gray-200"
