@@ -116,16 +116,26 @@ const Garden = () => {
       <div
         className="absolute z-10 w-full"
         style={{
-          backgroundImage:
-            "url(https://images.pexels.com/photos/4207910/pexels-photo-4207910.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)",
+          backgroundImage: `url(${gardenData?.garden?.picture_url})`,
         }}
       >
-        <img
-          src={MaskImage}
-          alt=""
-          className="h-full w-full"
-          style={{ backgroundColor: `rgba(255,255,255,${opacityValue})` }}
-        />
+        {isAmmendable ? (
+          <img
+            src={MaskImage}
+            alt=""
+            className="h-full w-full"
+            style={{ backgroundColor: `rgba(255,255,255,${opacityValue})` }}
+          />
+        ) : (
+          <img
+            src={MaskImage}
+            alt=""
+            className="h-full w-full"
+            style={{
+              backgroundColor: `rgba(255,255,255,${gardenData.garden.picture_opacity})`,
+            }}
+          />
+        )}
       </div>
 
       <div className="grid grid-cols-12 relative z-20">

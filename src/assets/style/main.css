@@ -293,7 +293,7 @@ button.btn-lg {
 /* garden create form */
 .garden-toogle {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -580,8 +580,14 @@ nav .nav-brand {
   top: 0;
   left: 0;
   z-index: -1;
+  height: 100%;
+  position: absolute;
 }
 
+.imagePreview * {
+  height: 100%;
+  width: 100%;
+}
 
 /*  ICONS  */
 
@@ -607,4 +613,8 @@ SLIDER */
 }
 .rc-slider-handle {
   border: solid 2px var(--blue-dark-light);
+}
+
+.min-h-80vh {
+  min-height: 90vh;
 }

@@ -11,6 +11,7 @@ const GardenCard = ({
   id,
   name,
   user,
+  image_url,
   climate,
   location,
   garden_type,
@@ -32,7 +33,7 @@ const GardenCard = ({
       <div
         className="card-image"
         style={{
-          backgroundImage: `url(https://images.pexels.com/photos/827518/pexels-photo-827518.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)`,
+          backgroundImage: `url(${image_url})`,
         }}
       >
         <div className="garden-datas">

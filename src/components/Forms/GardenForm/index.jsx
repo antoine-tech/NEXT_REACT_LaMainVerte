@@ -1,56 +1,75 @@
-import React, { useState, useEffect } from 'react';
-import FormGroup from '../../FormGroup';
+import React, { useEffect, useState } from "react";
+import FormGroup from "../../FormGroup";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
-import LetsGoButton from '../../buttons/LetsGoButton/index';
-import { createGarden } from '../../../requests/gardens';
-import useIsToogled from '../../../hooks/useIsToogled';
-import useJwtToken from '../../../hooks/useJwtToken';
-import { uploadToAWS } from '../../AwsConnect';
+import LetsGoButton from "../../buttons/LetsGoButton/index";
+import { createGarden } from "../../../requests/gardens";
+import useIsToogled from "../../../hooks/useIsToogled";
+import useJwtToken from "../../../hooks/useJwtToken";
+import { uploadToAWS } from "../../../sevices/Api";
+import Select from "../../Select/index";
+import IconClimate from "../../icons/IconClimate/index";
+import { getClimates } from "../../../requests/climates";
+import { getGardenTypes } from "../../../requests/gardens";
 
-const GardenForm = ({droppedImage}) => {
+const GardenForm = ({ droppedImage }) => {
+  const [climates, setClimates] = useState([]);
+  const [gardenTypes, setGardenTypes] = useState([]);
   const { gardenData, alerts, handleInput, handleBlur } = useFormAnalysis();
   const { getJwtToken } = useJwtToken();
+  const { isToogled, handleChange } = useIsToogled();
 
-  const handleDroppedImage = async (droppedImage) => {
-    return await uploadToAWS(getJwtToken, droppedImage, 'la-main-verte');
-  }
+  useEffect(() => {
+    const fetchClimates = async () => {
+      try {
+        const fetchedClimates = await getClimates();
+        setClimates(fetchedClimates);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  const {
-    isToogled,
-    handleChange,
-  } = useIsToogled()
+    const fetchGardenTypes = async () => {
+      try {
+        const fetchedGardenTypes = await getGardenTypes();
+        setGardenTypes(fetchedGardenTypes);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    fetchGardenTypes();
+    fetchClimates();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const image_url = await handleDroppedImage();
+    const image_url = await uploadToAWS(
+      getJwtToken,
+      droppedImage[0],
+      "la-main-verte"
+    );
 
-    const handleGarden = {
+    const newGarden = {
       garden: {
         garden_type_id: isToogled ? 1 : 2,
-        name: gardenData.gardenName,
+        name: gardenData.name,
         area: gardenData.area,
-        climate: parseInt(gardenData.climate),
+        climate: parseInt(gardenData.climate_id),
         location: parseInt(gardenData.location),
-        image_url: image_url
-      }
+        image_url: image_url,
+      },
     };
 
-    console.log(handleGarden);
-
-    const response = await createGarden(gardenData, getJwtToken);
+    const response = await createGarden(newGarden, getJwtToken);
     console.log(response);
-  }
+  };
 
   return (
     <div>
-      <h1 className="col-span-2 my-5">Partager mon jardin</h1>
+      <h1 className="my-5">Partager mon jardin</h1>
 
-      <form
-        className="grid grid-cols-2 gap-4 my-2"
-        onSubmit={handleSubmit}
-      >
+      <form className="grid grid-cols-2 gap-4 my-2" onSubmit={handleSubmit}>
         <ul className="garden-toogle">
           <li>Urban</li>
           <li>
@@ -63,13 +82,13 @@ const GardenForm = ({droppedImage}) => {
         </ul>
         <FormGroup
           colSpan="2"
-          value={gardenData.gardenName}
-          name="gardenName"
-          id="gardenName"
+          value={gardenData.name}
+          name="name"
+          id="name"
           type="text"
           labelText="Nom du potager :"
-          alertMessage={alerts.gardenName}
-          onInput={(value) => console.log(value)}
+          alertMessage={alerts.name}
+          onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
         />
         <FormGroup
@@ -81,18 +100,21 @@ const GardenForm = ({droppedImage}) => {
           labelText="Superficie (en m2)"
           alertMessage={alerts.area}
           onInput={(value) => handleInput(value)}
-        />
-        <FormGroup
-          colSpan="1"
-          value={gardenData.climate}
-          name="climate"
-          id="climate"
-          type="text"
-          labelText="Climat"
-          alertMessage={alerts.climate}
-          onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
         />
+
+        <Select
+          classNames={["col-span-2"]}
+          name="climate"
+          id="climate"
+          icon={IconClimate}
+          prompter="Quel est votre climat ?"
+          options={climates.map((climate) => {
+            return { id: climate.id, text: climate.name };
+          })}
+          selectedOption={(value) => console.log(value)}
+        />
+
         <FormGroup
           colSpan="2"
           value={gardenData.location}
@@ -108,6 +130,6 @@ const GardenForm = ({droppedImage}) => {
         <LetsGoButton backgroundColor="bg-blue" text="C'EST PARTI" />
       </form>
     </div>
-  )
-}
+  );
+};
 export default GardenForm;

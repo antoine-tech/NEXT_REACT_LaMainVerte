@@ -20,6 +20,7 @@ const useFormAnalysis = () => {
     garden_type_id: "",
     name: "",
     area: "",
+    location: "",
     climate_id: "",
     location_id: ""
   })
@@ -32,9 +33,9 @@ const useFormAnalysis = () => {
     email: "",
     password: "",
     password_confirmation: "",
-    gardenName: "",
+    name: "",
     area: "",
-    gardenType: "",
+    garden_type_id: "",
     climate: "",
     location: "",
   });
@@ -48,6 +49,9 @@ const useFormAnalysis = () => {
     const newGardenData = { ...gardenData };
     newGardenData[id] = value;
     setGardenData({ ...newGardenData });
+
+    console.log(gardenData)
+
 
     // PASSWORD CONFIRMATION CHECK
     if (userDatas.password !== userDatas.password_confirmation) {
