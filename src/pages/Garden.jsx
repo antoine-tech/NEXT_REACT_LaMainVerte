@@ -117,6 +117,9 @@ const Garden = () => {
         className="absolute z-10 w-full"
         style={{
           backgroundImage: `url(${gardenData?.garden?.picture_url})`,
+          backgroundSize:'cover',
+          backgroundRepeat:'no-repeat',
+          backgroundPosition:'center'
         }}
       >
         {isAmmendable ? (
