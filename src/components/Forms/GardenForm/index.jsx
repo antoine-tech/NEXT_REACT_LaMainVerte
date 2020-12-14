@@ -5,15 +5,14 @@ import LetsGoButton from '../../buttons/LetsGoButton/index';
 import { createGarden } from '../../../requests/gardens';
 import useIsToogled from '../../../hooks/useIsToogled';
 import useJwtToken from '../../../hooks/useJwtToken';
-import { uploadToAWS } from '../AwsConnect';
+import { uploadToAWS } from '../../AwsConnect';
 
 const GardenForm = ({droppedImage}) => {
-  const { gardenData, setGardenData, alerts, handleInput, handleBlur } = useFormAnalysis();
+  const { gardenData, alerts, handleInput, handleBlur } = useFormAnalysis();
   const { getJwtToken } = useJwtToken();
 
   const handleDroppedImage = async (droppedImage) => {
-    const image_url = await uploadToAWS(getJwtToken, droppedImage, 'la-main-verte');
-    setGardenData({...gardenData, image_url});
+    return await uploadToAWS(getJwtToken, droppedImage, 'la-main-verte');
   }
 
   const {
@@ -25,6 +24,8 @@ const GardenForm = ({droppedImage}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const image_url = await handleDroppedImage();
+
     const handleGarden = {
       garden: {
         garden_type_id: isToogled ? 1 : 2,
@@ -32,7 +33,7 @@ const GardenForm = ({droppedImage}) => {
         area: gardenData.area,
         climate: parseInt(gardenData.climate),
         location: parseInt(gardenData.location),
-        image_url: gardenData.image_url
+        image_url: image_url
       }
     };
 
