@@ -131,6 +131,8 @@ const Home = () => {
                 climate,
                 location,
                 garden_type,
+                picture_url,
+                picture_opacity,
                 created_at,
                 updated_at,
               } = followedGarden;
@@ -139,6 +141,8 @@ const Home = () => {
                   key={`garden-${id}`}
                   id={id}
                   name={name}
+                  picture_url={picture_url}
+                  picture_opacity={picture_opacity}
                   user={user}
                   climate={climate}
                   location={location}
@@ -191,6 +195,8 @@ const Home = () => {
               let {
                 id,
                 name,
+                picture_url,
+                picture_opacity,
                 user,
                 climate,
                 location,
@@ -204,6 +210,8 @@ const Home = () => {
                   key={`garden-${id}`}
                   id={id}
                   name={name}
+                  picture_url={picture_url}
+                  picture_opacity={picture_opacity}
                   user={user}
                   climate={climate}
                   location={location}
