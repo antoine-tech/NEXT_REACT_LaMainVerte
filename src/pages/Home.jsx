@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { FormattedMessage } from 'react-intl';
-import useCurrentUser from "../hooks/useCurrentUser";
 import AvatarSlider from "../components/AvatarSlider/index";
 import GardenCard from "../components/GardenCard/index";
 import SearchEngine from "../components/SearchEngine/index";
@@ -17,20 +15,18 @@ import TestimonyCard from "../components/TestimonyCard/index";
 import Button from "../components/Button/index";
 import useIsLoading from "../hooks/useIsLoading";
 import LoadingAnimation from "../components/LoadingAnimation/index";
+import useMutationObserver from "../hooks/useMutationObserver";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
-  // current user custom hook to get in relation with redux global state
-  const { current_user } = useCurrentUser();
-  // custom hook to get/set jwttoken into/fom cookies
   const { getJwtToken } = useJwtToken();
-  // custom hook to check wether the page is loading
   const { isLoading, setIsLoading } = useIsLoading();
-
-  // Component s states
   const [followedGardens, setFollowedGardens] = useState([]);
   const [gardenSelection, setGardenSelection] = useState([]);
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
+
+  const viewItems = useMutationObserver();
 
   useEffect(() => {
     const fetchPageDatas = async () => {
@@ -61,7 +57,6 @@ const Home = () => {
         setIsLoading(false);
       }
     };
-
     fetchPageDatas();
   }, []);
 
@@ -80,19 +75,10 @@ const Home = () => {
     <section className="grid grid-cols-12 min-h-screen gap-4">
       <div className="hidden md:block md:col-span-1 lg:col-span-2 bg-man relative">
         <div className="fixed h-1/6 flex flex-col justify-around mx-auto p-4">
-          <Button
-            text="Créer un jardin"
-            classNames={[
-              "btn",
-              "btn-md",
-              "bg-blue-dark",
-              "text-white",
-              "p-4",
-              "w-64",
-              "col-span-2",
-              "lg:col-span-1",
-            ]}
-          />
+          <Link to="/gardens/new"
+            className="btn btn-md bg-blue-dark text-white p-4 w-64 col-span-2 lg:col-span-1">
+            Créer un jardin
+          </Link>
 
           <Button
             text="Mon profil"
@@ -109,7 +95,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="col-span-12 lg:col-span-6 px-4">
+      <div className="col-span-12 lg:col-span-6 px-4" id="wall">
         <SearchEngine />
         <h4 className="my-4">Sélectionné pour vous ....</h4>
 
@@ -132,7 +118,7 @@ const Home = () => {
               } = followedGarden;
               return (
                 <GardenCard
-                  key={`garden-card-${id}`}
+                  key={`garden-${id}`}
                   id={id}
                   name={name}
                   user={user}
@@ -197,7 +183,7 @@ const Home = () => {
 
               return (
                 <GardenCard
-                  key={`garden-card-${id}`}
+                  key={`garden-${id}`}
                   id={id}
                   name={name}
                   user={user}

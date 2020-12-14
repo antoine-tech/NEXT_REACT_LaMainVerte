@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-// custom hook allowing to perform validations on the inputs of a form
 const useFormAnalysis = () => {
   const alertMessages = {
     isEmpty: "Ce champ est obligatoire",
     passwordsAreDifferent: "Les mots de passes ne sont pas similaires",
   };
 
-  // state to store and set user informations filled in the form
   const [userDatas, setUserdatas] = useState({
     firstname: "",
     lastname: "",
@@ -41,7 +39,6 @@ const useFormAnalysis = () => {
     location: "",
   });
 
-  // onInput event handler logic
   const handleInput = (datas) => {
     let { value, id } = datas;
     const newUserDatas = { ...userDatas };
@@ -79,7 +76,6 @@ const useFormAnalysis = () => {
     }
   };
 
-  // onBlur event handler logic
   const handleBlur = (datas) => {
     let { value, id } = datas;
     const newAlerts = { ...alerts };
@@ -92,7 +88,6 @@ const useFormAnalysis = () => {
 
   };
 
-  // returning objects with function for setters and values for getters
   return {
     userDatas,
     gardenData,

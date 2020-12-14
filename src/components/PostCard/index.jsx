@@ -76,20 +76,20 @@ const PostCard = ({
       setPostData(post);
     };
     fetchPost();
-    
+
     const userLike = postData?.likes?.find(
-      (el) => el.post_id === id && el.user_id === current_user?.current_user.id
+      (el) => el.post_id === id && el.user_id === current_user?.id
     );
     userLike && setMyLike(userLike);
 
     setIsLoading(false);
-  }, [postData]);
+  }, []);
 
   return isLoading ? (
     <LoadingSpinner />
   ) : (
     <>
-      <div className="post-card grid grid-cols-12 p-4 my-4" id={id}>
+      <div className="post-card grid grid-cols-12 p-4 my-4" id={`post-${id}`}>
         <div className="flex col-span-2 items-center">
           <div
             className="suggestion-avatar-half"
@@ -149,7 +149,7 @@ const PostCard = ({
           })}
 
           <div
-            className="col-span-12 justify-center grid grid-cols-12 p-4 my-2 border-gray-200"
+            className="col-span-12 justify-center grid grid-cols-12 p-4 my-2 bg-white border-gray-200"
             style={{ borderWidth: "1px" }}
           >
             <TextArea
@@ -168,8 +168,9 @@ const PostCard = ({
               classNames={[
                 "border-blue-dark-light",
                 "col-span-12",
-                "p-2",
-                "lg:col-span-3",
+                "p-4",
+                "lg:col-span-12",
+                "mt-4",
               ]}
             />
           </div>

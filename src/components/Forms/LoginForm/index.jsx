@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import FormGroup from "../../FormGroup/index";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from "../../buttons/LetsGoButton/index";
@@ -7,13 +6,12 @@ import RegistrationLinks from "../../RegistrationLinks";
 import useJwtToken from "../../../hooks/useJwtToken";
 import { signUserIn } from "../../../requests/user";
 import useCurrentUser from "../../../hooks/useCurrentUser";
-import Alert from "../../Alert";
 import { useHistory } from "react-router-dom";
 
 const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
   const { userDatas, alerts, handleInput, handleBlur } = useFormAnalysis();
-  const { setCurrentUser, currentUser } = useCurrentUser();
-  const { getJwtToken, setJwtToken } = useJwtToken();
+  const { setCurrentUser} = useCurrentUser();
+  const { setJwtToken } = useJwtToken();
 
   const history = useHistory();
 
@@ -24,13 +22,13 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
       const response = await signUserIn(email, password).then((res) => {
         if (res.headers.get("Authorization")) {
           setJwtToken(res.headers.get("Authorization"));
-          history.push("/");
         }
         return res.json();
       });
 
       if (response.hasOwnProperty("data")) {
         setCurrentUser(response.data);
+        history.push("/");
       } else {
         setAlertMessage("Les informations fournies ne sont pas correctes");
         setAlertType("danger");

@@ -24,7 +24,11 @@ const GardenCard = ({
   };
 
   return (
-    <div className="card p-4" id={id} onClick={(event) => handleRedirect(id)}>
+    <div
+      className="card card-garden p-4"
+      id={`garden-${id}`}
+      onClick={(event) => handleRedirect(id)}
+    >
       <div
         className="card-image"
         style={{
@@ -39,20 +43,13 @@ const GardenCard = ({
             }
           />
           <DataContainer icon={IconClimate} dataText={climate?.name} />
-          <DataContainer
-            icon={IconLabel}
-            dataText={garden_type?.name}
-          />
-          <DataContainer
-            icon={IconLocation}
-            dataText={location?.name}
-          />
+          <DataContainer icon={IconLabel} dataText={garden_type?.name} />
+          <DataContainer icon={IconLocation} dataText={location?.name} />
         </div>
-
       </div>
       <div className="card-footer p-4 flex items-center justify-between">
-        <h4 className="italic">{name?.toUpperCase()}</h4>{" "}
-        <h5>{user?.first_name}</h5>
+        <h4>{name?.toUpperCase()}</h4>{" "}
+        <h4 className="italic">Par {user?.username}</h4>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ const UnAuthRoute = ({ current_user, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      !checkAuth(current_user) ? (
+      checkAuth(current_user) ? (
         <Redirect to={{ pathname: "/" }} />
       ) : (
         <Component {...props} />

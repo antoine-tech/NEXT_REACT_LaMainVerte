@@ -9,6 +9,7 @@ import useJwtToken from '../../../hooks/useJwtToken';
 const GardenForm = () => {
   const { gardenData, alerts, handleInput, handleBlur } = useFormAnalysis();
 
+
   const {
     isToogled,
     handleChange,
@@ -61,7 +62,7 @@ const GardenForm = () => {
           type="text"
           labelText="Nom du potager :"
           alertMessage={alerts.gardenName}
-          onInput={(value) => handleInput(value)}
+          onInput={(value) => console.log(value)}
           onBlur={(value) => handleBlur(value)}
         />
         <FormGroup

@@ -9,8 +9,8 @@ const TextArea = ({ id, name, cols, rows, classNames, value, oninput }) => {
       rows={rows}
       className={classNames ? classNames.join(" ") : ""}
       onInput={(event) => oninput(event)}
+      value={value}
     >
-      {value}
     </textarea>
   );
 };
