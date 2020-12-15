@@ -156,25 +156,27 @@ const Garden = () => {
             Par {gardenData?.user?.fist_name} {gardenData?.user?.last_name}
           </h2>
 
-          <Button
-            content={IconPen}
-            classNames={[
-              "h-20",
-              "w-20",
-              "flex",
-              "items-center",
-              "justify-center",
-              "justify-self-end",
-              "p-2",
-              "col-span-1",
-              "bg-blue-dark",
-              "text-white",
-              "text-center",
-              "rounded-full",
-              "hover-animate-bounce",
-            ]}
-            onclick={() => setIsAmmendable()}
-          />
+          {current_user && current_user.id === gardenData?.user?.id && (
+            <Button
+              content={IconPen}
+              classNames={[
+                "h-20",
+                "w-20",
+                "flex",
+                "items-center",
+                "justify-center",
+                "justify-self-end",
+                "p-2",
+                "col-span-1",
+                "bg-blue-dark",
+                "text-white",
+                "text-center",
+                "rounded-full",
+                "hover-animate-bounce",
+              ]}
+              onclick={() => setIsAmmendable()}
+            />
+          )}
 
           {isAmmendable ? (
             <input
