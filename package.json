@@ -35,7 +35,7 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "start": "npm run build:css && react-scripts start",
+    "start": "npm run build:css && serve -s build",
     "build": "npm run build:css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
