@@ -22,69 +22,58 @@ import { Link } from "react-router-dom";
 import usePageStatus from "../hooks/usePageStatus";
 
 const Home = () => {
-  const { pageStatus, setPageStatus } = usePageStatus();
+  const { pageStatus, setPageStatus } = usePageStatus("loading");
   const { getJwtToken } = useJwtToken();
   const { isLoading, setIsLoading } = useIsLoading();
-  const [followedGardens, setFollowedGardens] = useState([]);
-  const [gardenSelection, setGardenSelection] = useState([]);
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
+  const [userProfile, setUserProfile] = useState([]);
+  const [displayedGardens, setDisplayedGardens] = useState([]);
   const viewItems = useMutationObserver();
-
   const { instantMessages, sendInstantMessage } = useInstantMessages();
 
   const { current_user } = useCurrentUser();
 
   useEffect(() => {
-    const fetchAndSetGardenSelection = async () => {
-      const selectedGardens = await getGardenSelection();
-      setGardenSelection(selectedGardens);
-    };
+    const fetchGardenSelection = async () => await getGardenSelection();
 
-    const fetchAndSetTestimonies = async () => {
-      const testimonies = await getTestimoniesAndRelatedUsers();
-      setTestimonies(testimonies);
-    };
+    const fetchAndSetTestimonies = async () =>
+      await getTestimoniesAndRelatedUsers();
 
-    const fetchAndSetPosts = async () => {
-      const posts = await getPosts();
-      setLastPosts(posts);
-    };
+    const fetchAndSetPosts = async () => await getPosts();
 
-    const fetchUserProfile = async () => {
-      const userProfile = await getUserDatas(getJwtToken).then((res) =>
-        res.json()
-      );
+    const fetchAndSetUserProfile = async () =>
+      await getUserDatas(getJwtToken).then((res) => res.json());
 
-      return userProfile;
-    };
-
-    const fetchAndSetFollowedGarden = async (userProfile) => {
+    const fetchFollowedGarden = async (userProfile) => {
       const userFollowedGardens = await getFollowedGardenAndRelatedData(
         userProfile.follows
       );
 
       if (userFollowedGardens.length) {
-        setFollowedGardens(userFollowedGardens);
+        return userFollowedGardens;
       } else {
-        fetchAndSetGardenSelection();
+        return await fetchGardenSelection();
       }
     };
 
     const fetchPageDatas = async (current_user) => {
-      fetchAndSetPosts();
-      fetchAndSetTestimonies();
+      const fetchedPosts = await fetchAndSetPosts();
+      setLastPosts(fetchedPosts);
+      const fetchedTestimonies = await fetchAndSetTestimonies();
+      setTestimonies(fetchedTestimonies);
 
       if (current_user) {
-        const userProfile = await fetchUserProfile();
-        fetchAndSetFollowedGarden(userProfile);
+        const userProfile = await fetchAndSetUserProfile();
+        const followedGarden = await fetchFollowedGarden(userProfile);
+        setDisplayedGardens(followedGarden);
       } else {
-        fetchAndSetGardenSelection();
+        const gardenSelection = await fetchGardenSelection();
+        setDisplayedGardens(gardenSelection);
       }
-
       setPageStatus("loaded");
     };
-
+    
     fetchPageDatas(current_user);
   }, []);
 
@@ -135,44 +124,14 @@ const Home = () => {
           </div>
         </div>
         <div className="col-span-12 lg:col-span-6 px-4" id="wall">
-          <SearchEngine />
+          <SearchEngine getSearchResult={(value) => console.log(value)} />
           <h4 className="my-4">Sélectionné pour vous ...</h4>
 
           <AvatarSlider />
 
-          {followedGardens?.length > 0 ? (
+          {userProfile.follows?.length > 0 ? (
             <>
               <h4 className="my-4">Vos jardins préférés ...</h4>
-
-              {followedGardens.map((followedGarden) => {
-                let {
-                  id,
-                  name,
-                  user,
-                  climate,
-                  location,
-                  garden_type,
-                  picture_url,
-                  picture_opacity,
-                  created_at,
-                  updated_at,
-                } = followedGarden;
-                return (
-                  <GardenCard
-                    key={`garden-${id}`}
-                    id={id}
-                    name={name}
-                    picture_url={picture_url}
-                    picture_opacity={picture_opacity}
-                    user={user}
-                    climate={climate}
-                    location={location}
-                    garden_type={garden_type}
-                    created_at={created_at}
-                    updated_at={updated_at}
-                  />
-                );
-              })}
             </>
           ) : (
             <>
@@ -211,41 +170,38 @@ const Home = () => {
               </div>
 
               <h4 className="my-4"> De merveilleux jardin à découvir...</h4>
-
-              {console.log(gardenSelection)}
-
-              {gardenSelection?.map((garden) => {
-                let {
-                  id,
-                  name,
-                  picture_url,
-                  picture_opacity,
-                  user,
-                  climate,
-                  location,
-                  garden_type,
-                  created_at,
-                  updated_at,
-                } = garden;
-
-                return (
-                  <GardenCard
-                    key={`garden-${id}`}
-                    id={id}
-                    name={name}
-                    picture_url={picture_url}
-                    picture_opacity={picture_opacity}
-                    user={user}
-                    climate={climate}
-                    location={location}
-                    garden_type={garden_type}
-                    created_at={created_at}
-                    updated_at={updated_at}
-                  />
-                );
-              })}
             </>
           )}
+
+          {displayedGardens.map((displayedGarden) => {
+            let {
+              id,
+              name,
+              user,
+              climate,
+              location,
+              garden_type,
+              picture_url,
+              picture_opacity,
+              created_at,
+              updated_at,
+            } = displayedGarden;
+            return (
+              <GardenCard
+                key={`garden-${id}`}
+                id={id}
+                name={name}
+                picture_url={picture_url}
+                picture_opacity={picture_opacity}
+                user={user}
+                climate={climate}
+                location={location}
+                garden_type={garden_type}
+                created_at={created_at}
+                updated_at={updated_at}
+              />
+            );
+          })}
         </div>
         <div className="hidden lg:block lg:col-span-4">
           <h4 className="mb-4 text-center">Les derniers posts</h4>
@@ -274,6 +230,7 @@ const Home = () => {
               );
             })}
           </div>
+
           <h4 className="my-4 text-center">Les derniers témoignages</h4>
           <div className="h-screen radius bg-light-brown shadow-neomorph p-4">
             {testimonies?.map((testimony) => {

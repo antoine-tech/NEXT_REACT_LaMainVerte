@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { getClimates } from "../../requests/climates";
 import { getTags } from "../../requests/tags";
+import { search } from "../../requests/gardens";
 import SearchFilter from "../SearchFilter/index";
 
-const SearchEngine = () => {
+const SearchEngine = ({getSearchResult}) => {
   const [filters, setFilters] = useState([]);
   const [tags, setTags] = useState([]);
   const [climates, setClimates] = useState([]);
 
-  const handleCheckBoxChange = (object) => {
+  const handleInput = async (event) =>
+  {
+      const searchResult = await search(event.target.value);
+      getSearchResult(searchResult)
+  }
+
+  const handleCheckBoxChange = (object, dataType) => {
     if (
       filters.find(
         (element) => element.id === object.id && element.type === object.type
@@ -20,9 +27,16 @@ const SearchEngine = () => {
         )
       );
     } else {
-      setFilters([...filters, object]);
+      setFilters([...filters, {...object, dataType}]);
     }
+
   };
+
+  useEffect(()=>{
+
+    // console.log(filters)
+
+  }, [filters])
 
   useEffect(() => {
     const fetchClimates = async () => {
@@ -45,6 +59,7 @@ const SearchEngine = () => {
         id="search"
         className="w-full"
         placeholder="A la recherche du jardin des espérides ? "
+        onInput={handleInput}
       />
       <p className="mt-4">Filtres :</p>
 
@@ -58,7 +73,7 @@ const SearchEngine = () => {
                 id={id}
                 name={id}
                 label={name}
-                onChange={(tag) => handleCheckBoxChange(tag)}
+                onChange={() => handleCheckBoxChange(tag, 'tag')}
                 type="tag"
               />
             );
@@ -73,7 +88,7 @@ const SearchEngine = () => {
                 id={id}
                 name={id}
                 label={name}
-                onChange={(climate) => handleCheckBoxChange(climate)}
+                onChange={() => handleCheckBoxChange(climate, 'climate')}
                 type="climate"
               />
             );

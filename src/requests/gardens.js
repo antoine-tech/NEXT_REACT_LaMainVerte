@@ -163,6 +163,10 @@ const getEvents = async (garden_id) => {
   return events;
 };
 
+const search = async (ressource,key,value) => {
+  return await find(`/${ressource}?${key}=${value}`).then((res) => res.json());
+};
+
 export {
   getClimate,
   getLocation,
@@ -178,4 +182,5 @@ export {
   likeGarden,
   unlikeGarden,
   createGarden,
+  search
 };
