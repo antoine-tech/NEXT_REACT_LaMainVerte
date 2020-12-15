@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import GardenCard from '../components/GardenCard'
 import PostCard from '../components/PostCard'
 import { useSelector } from "react-redux";
+import {getFollowedGardenAndRelatedData} from "../requests/gardens"
+import {findUserDatas} from "../requests/user"
 
 const Profile = () => {
   const [gardens, setGardens] = useState([]);
@@ -9,8 +11,21 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
   const current_user = useSelector(state=>state.current_user);
 
-  useState(() => {
-    setGardens(["test"])
+  useEffect(() => {
+    const fetchPageDatas = async () => {
+      const fetchUser = await findUserDatas(current_user.id);
+      setPosts(fetchUser.posts);
+      const userFollowedGardens = await getFollowedGardenAndRelatedData(
+        fetchUser.follows
+      );
+      setFollowedGardens(userFollowedGardens);
+      const userGardens = await getFollowedGardenAndRelatedData(
+        fetchUser.gardens
+      );
+      setGardens(userGardens)
+    };
+
+    fetchPageDatas();
   }, [])
 
 
@@ -52,44 +67,23 @@ const Profile = () => {
         </div>
 
         <div className="gardens">
-          <GardenCard
-            id = "3"
-            name = "Super Jardin"
-            picture_url = "https://images.unsplash.com/photo-1560100653-3d4184a38762?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80"
-            picture_opacity = "1.2"
-            user = "Jean-Mark BELLEGUEULE"
-            climate = "Fait chaud"
-            location = "Mars"
-            garden_type = "Végétal"
-            created_at = "20/05/2002"
-            updated_at = "20/08/2020"
-          />
+          { followedGardens?.map((garden) => (
+              <GardenCard
+                id = {garden.id}
+                name = {garden.name}
+                picture_url = {garden.picture_url}
+                picture_opacity = {garden.picture_opacity}
+                user = {garden.user}
+                climate = {garden.climate}
+                location = {garden.location}
+                garden_type = {garden.garden_type}
+                created_at = {garden.created_at}
+                updated_at = {garden.updated_at}
+            />
+          ))
 
-          <GardenCard
-            id = "3"
-            name = "Super Jardin"
-            picture_url = "https://images.unsplash.com/photo-1560100653-3d4184a38762?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80"
-            picture_opacity = "1.2"
-            user = "Jean-Mark BELLEGUEULE"
-            climate = "Fait chaud"
-            location = "Mars"
-            garden_type = "Végétal"
-            created_at = "20/05/2002"
-            updated_at = "20/08/2020"
-          />
-
-          <GardenCard
-            id = "3"
-            name = "Super Jardin"
-            picture_url = "https://images.unsplash.com/photo-1560100653-3d4184a38762?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80"
-            picture_opacity = "1.2"
-            user = "Jean-Mark BELLEGUEULE"
-            climate = "Fait chaud"
-            location = "Mars"
-            garden_type = "Végétal"
-            created_at = "20/05/2002"
-            updated_at = "20/08/2020"
-          />
+          }
+          
         </div>
       </section>
     </div>
@@ -101,18 +95,22 @@ const Profile = () => {
         </div>
 
         <div className="gardens">
-          <GardenCard
-            id = "3"
-            name = "Super Jardin"
-            picture_url = "https://images.unsplash.com/photo-1560100653-3d4184a38762?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80"
-            picture_opacity = "1.2"
-            user = "Jean-Mark BELLEGUEULE"
-            climate = "Fait chaud"
-            location = "Mars"
-            garden_type = "Végétal"
-            created_at = "20/05/2002"
-            updated_at = "20/08/2020"
-          />
+          { gardens?.map((garden) => (
+             <GardenCard
+              id = {garden.id}
+              name = {garden.name}
+              picture_url = {garden.picture_url}
+              picture_opacity = {garden.picture_opacity}
+              user = {current_user}
+              climate = {garden.climate}
+              location = {garden.location}
+              garden_type = {garden.garden_type}
+              created_at = {garden.created_at}
+              updated_at = {garden.updated_at}
+           />
+          ))
+
+          }
         </div>
        
       </section>
@@ -123,15 +121,19 @@ const Profile = () => {
         </div>
 
         <div className="posts">
-          <PostCard
-            id
-            title = "Nounours"
-            content = "J'aime les pâtes"
-            garden_id
-            created_at
-            updated_at
-            likes = "25"
-          />
+          { posts?.map((post) => (
+            <PostCard
+              id = {post.id}
+              title = {post.title}
+              content = {post.content}
+              garden_id = {post.garden_id}
+              created_at = {post.created_at}
+              updated_at = {post.updated_at}
+              likes = {post.likes}
+            />
+          ))
+
+          }
         </div>
       </section>
     </div>
