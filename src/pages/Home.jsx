@@ -17,6 +17,7 @@ import useIsLoading from "../hooks/useIsLoading";
 import LoadingAnimation from "../components/LoadingAnimation/index";
 import useMutationObserver from "../hooks/useMutationObserver";
 import useInstantMessages from "../hooks/useIntantMessages";
+import useCurrentUser from "../hooks/useCurrentUser";
 
 const Home = () => {
   const { getJwtToken } = useJwtToken();
@@ -29,26 +30,30 @@ const Home = () => {
 
   const { instantMessages, sendInstantMessage } = useInstantMessages();
 
+  const { current_user } = useCurrentUser();
+
   useEffect(() => {
-    const fetchPageDatas = async () => {
+    const fetchPageDatas = async (current_user) => {
       const testimonies = await getTestimoniesAndRelatedUsers();
       setTestimonies(testimonies);
 
       const posts = await getPosts();
       setLastPosts(posts);
 
-      const userProfile = await getUserDatas(getJwtToken).then((res) =>
-        res.json()
-      );
-
-      if (
-        userProfile?.hasOwnProperty("follows") &&
-        userProfile.follows.length > 0
-      ) {
-        const userFollowedGardens = await getFollowedGardenAndRelatedData(
-          userProfile.follows
+      if (current_user) {
+        const userProfile = await getUserDatas(getJwtToken).then((res) =>
+          res.json()
         );
-        setFollowedGardens(userFollowedGardens);
+
+        if (
+          userProfile?.hasOwnProperty("follows") &&
+          userProfile.follows.length > 0
+        ) {
+          const userFollowedGardens = await getFollowedGardenAndRelatedData(
+            userProfile.follows
+          );
+          setFollowedGardens(userFollowedGardens);
+        }
       } else {
         const selectedGardens = await getGardenSelection();
         setGardenSelection(selectedGardens);
@@ -59,7 +64,7 @@ const Home = () => {
       }
     };
 
-    fetchPageDatas();
+    fetchPageDatas(current_user);
   }, []);
 
   // render
@@ -267,7 +272,6 @@ const Home = () => {
             );
           })}
         </div>
-        {console.log(instantMessages)}
       </div>
     </section>
   );

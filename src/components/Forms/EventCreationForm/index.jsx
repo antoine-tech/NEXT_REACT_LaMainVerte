@@ -2,13 +2,15 @@ import React from "react";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from "../../buttons/LetsGoButton/index";
 import FormGroup from "../../FormGroup/index";
-import Input from "../../Input/index";
+import Moment from "react-moment";
 
-const EventCreationForm = ({id, onClick}) => {
+const EventCreationForm = ({ id, data, onClick }) => {
   const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
     {
       title: "",
       description: "",
+      start_date: data?.start,
+      end_date: data?.end,
     },
     {
       isEmpty: "Ce champ est obligatoire",
@@ -17,19 +19,49 @@ const EventCreationForm = ({id, onClick}) => {
 
   const handleSubmit = () => {};
   return (
-    <div className="grid grid-cols-12 flex items-center" id={id} onClick={()=>onClick()}>
+    <div
+      className="grid grid-cols-12 flex items-center"
+      id={id}
+      onClick={(event) => onClick(event)}
+    >
       <form
         action=""
         className="grid grid-cols-2 col-span-12 md:col-span-6 md:col-start-4 gap-4 my-2"
         onSubmit={handleSubmit}
         style={{ height: "max-content" }}
       >
-        <h2 className="my-4">Ajouter un évenement</h2>
+        <div className="my-4 col-span-2 flex">
+          <h2>
+            Créer un évenement du
+            <Moment format="DD/MM/YYYY">{Date.parse(data.start)}</Moment>
+            au
+            <Moment format="DD/MM/YYYY">{Date.parse(data.end)}</Moment>
+          </h2>
+        </div>
 
-        <p style={{ fontSize: "1rem" }} className="col-span-2">
-          Date de l'évènement :
-        </p>
-        <Input classNames={["col-span-2"]} type="date" name="date" id="date" />
+        <FormGroup
+          colSpan="2 lg:col-span-1"
+          onInput={(value) => handleInput(value)}
+          onBlur={(value) => handleBlur(value)}
+          value={datas.start_date}
+          name="start_date"
+          id="start_date"
+          type="date"
+          labelText="Début"
+          alertMessage={alerts.start_date}
+        />
+
+        <FormGroup
+          colSpan="2 lg:col-span-1"
+          onInput={(value) => handleInput(value)}
+          onBlur={(value) => handleBlur(value)}
+          value={datas.end_date}
+          name="end_date"
+          id="end_date"
+          type="date"
+          labelText="Fin"
+          alertMessage={alerts.end_date}
+        />
         <FormGroup
           colSpan="2"
           onInput={(value) => handleInput(value)}

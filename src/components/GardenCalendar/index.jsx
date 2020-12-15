@@ -9,12 +9,13 @@ const localizer = momentLocalizer(moment);
 
 const GardenCalendar = ({ events }) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [newEvent, setNewEvent] = useState(null);
   const handleSelectEvent = (event) => {
     console.log(event);
   };
 
   const handleSelectDates = (event) => {
-    console.log(event);
+    setNewEvent({ start: event.start.toString(), end: event.end.toString() });
     setModalOpen(true);
   };
   return (
@@ -39,11 +40,11 @@ const GardenCalendar = ({ events }) => {
 
       {isModalOpen && (
         <Modal
-
           id="modal"
           parentNodeId="calendar-container"
           component={EventCreationForm}
           setModalOpen={setModalOpen}
+          data={newEvent}
         />
       )}
     </div>

@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const Modal = ({ id, setModalOpen, parentNodeId, component: Component }) => {
+const Modal = ({ id, data, setModalOpen, parentNodeId, component: Component }) => {
   return ReactDOM.createPortal(
     <Component
       id={id}
-      onClick={() => {
-        setModalOpen(false);
+      data={data}
+      onClick={(event) => {
+        event.target.id === id && setModalOpen(false);
       }}
     />,
     document.getElementById(parentNodeId)
