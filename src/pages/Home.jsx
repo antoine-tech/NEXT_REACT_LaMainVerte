@@ -100,19 +100,12 @@ const Home = () => {
     <section className="grid grid-cols-12 min-h-screen gap-4">
       <div className="hidden md:block md:col-span-1 lg:col-span-2 bg-man relative">
         <div className="fixed h-1/6 flex flex-col justify-around mx-auto p-4">
-          <Button
-            text="Créer un jardin"
-            classNames={[
-              "btn",
-              "btn-md",
-              "bg-blue-dark",
-              "text-white",
-              "p-4",
-              "w-64",
-              "col-span-2",
-              "lg:col-span-1",
-            ]}
-          />
+          <Link
+            to="/gardens/new"
+            className="btn btn-md bg-blue-dark text-white text-center p-4 w-64 col-span-2 lg:col-span-1"
+          >
+            Créer un jardin
+          </Link>
 
           <Button
             text="Mon profil"
@@ -214,6 +207,8 @@ const Home = () => {
 
             <h4 className="my-4"> De merveilleux jardin à découvir...</h4>
 
+            {console.log(gardenSelection)}
+
             {gardenSelection?.map((garden) => {
               let {
                 id,
@@ -223,6 +218,8 @@ const Home = () => {
                 user,
                 climate,
                 location,
+                picture_url,
+                picture_opacity,
                 garden_type,
                 created_at,
                 updated_at,

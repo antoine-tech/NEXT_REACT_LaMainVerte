@@ -23,17 +23,17 @@ const useFormAnalysis = (formDataObj, alertMessages) => {
         password_confirmation: "",
       });
     }
-  };
 
   const handleBlur = (val) => {
     let { value, id } = val;
     const newAlerts = { ...alerts };
 
     value === ""
-      ? (newAlerts[id] = alertMessages.isEmpty)
-      : (newAlerts[id] = "");
+    ? (newAlerts[id] = alertMessages.isEmpty)
+    : (newAlerts[id] = "");
 
     setAlerts(newAlerts);
+
   };
 
   return {

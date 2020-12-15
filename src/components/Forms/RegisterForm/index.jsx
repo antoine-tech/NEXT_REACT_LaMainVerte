@@ -60,7 +60,7 @@ const RegiterForm = ({
         history.push("/login");
       } else {
         setAlertMessage(
-          "Une erreure est survenue veillez contacter le support technique"
+          "Une erreur est survenue veuillez contacter le support technique"
         );
         setAlertType("danger");
         setIsAlertDisplayed(true);
