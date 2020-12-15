@@ -218,8 +218,6 @@ const Home = () => {
                 user,
                 climate,
                 location,
-                picture_url,
-                picture_opacity,
                 garden_type,
                 created_at,
                 updated_at,

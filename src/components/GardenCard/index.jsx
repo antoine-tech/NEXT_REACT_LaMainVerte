@@ -35,11 +35,7 @@ const GardenCard = ({
       <div
         className="card-image"
         style={{
-<<<<<<< HEAD
           backgroundImage: `url(${picture_url})`,
-=======
-          backgroundImage: `url(${image_url})`,
->>>>>>> 55668f0d28cf6d96dbb46d89aa0c7cd851897448
         }}
       >
         <div className="garden-datas">
