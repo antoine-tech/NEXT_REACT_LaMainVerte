@@ -3,7 +3,6 @@ import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from "../../buttons/LetsGoButton/index";
 import FormGroup from "../../FormGroup/index";
 import Moment from "react-moment";
-import { parseDateInput } from "../../../helpers/parseDateInput";
 
 const EventCreationForm = ({ id, data, onClick }) => {
   const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
@@ -17,6 +16,8 @@ const EventCreationForm = ({ id, data, onClick }) => {
       isEmpty: "Ce champ est obligatoire",
     }
   );
+
+
 
   const handleSubmit = () => {};
   return (
@@ -34,9 +35,9 @@ const EventCreationForm = ({ id, data, onClick }) => {
         <div className="my-4 col-span-2 flex">
           <h2>
             Evenement du
-            <Moment className="italic" format=" DD/MM/YYYY ">{Date.parse(datas.start)}</Moment>
+            <Moment className="italic" format=" DD/MM/YYYY ">{datas.start_date}</Moment>
             au
-            <Moment className="italic" format=" DD/MM/YYYY ">{Date.parse(datas.end)}</Moment>
+            <Moment className="italic" format=" DD/MM/YYYY ">{datas.end_date}</Moment>
           </h2>
         </div>
 
@@ -50,8 +51,6 @@ const EventCreationForm = ({ id, data, onClick }) => {
           type="date"
           labelText="Début"
         />
-
-  
 
         <FormGroup
           colSpan="2 lg:col-span-1"
