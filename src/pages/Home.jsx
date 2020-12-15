@@ -267,7 +267,6 @@ const Home = () => {
             );
           })}
         </div>
-        {console.log(instantMessages)}
       </div>
     </section>
   );
