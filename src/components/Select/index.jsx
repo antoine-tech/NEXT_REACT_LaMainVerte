@@ -11,7 +11,9 @@ const Select = ({
   classNames,
 }) => {
   const handleChange = (event) => {
-    return selectedOption(event.target.value);
+    return selectedOption(
+      parseInt(Array.from(event.target.selectedOptions)[0].value)
+    );
   };
   return (
     <div
@@ -33,9 +35,9 @@ const Select = ({
         defaultValue={prompter}
       >
         {options.map((option) => {
-          let { value, text } = option;
+          let { id, text } = option;
           return (
-            <option key={`option-${value}`} value={value}>
+            <option key={`option-${id}`} value={id}>
               {text}
             </option>
           );

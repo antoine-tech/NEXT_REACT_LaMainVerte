@@ -10,12 +10,15 @@ import Select from "../../Select/index";
 import IconClimate from "../../icons/IconClimate/index";
 import { getClimates } from "../../../requests/climates";
 import { getGardenTypes } from "../../../requests/gardens";
+import { getLocations } from "../../../requests/locations";
+import IconLocation from '../../icons/IconLocation/index';
 
 const GardenForm = ({ droppedImage }) => {
   const [climates, setClimates] = useState([]);
   const [gardenTypes, setGardenTypes] = useState([]);
-  const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
-    { name: "", area: "", climate: "", location: "" },
+  const [locations, setLocations] = useState([]);
+  const { datas, alerts, setDatas, handleInput, handleBlur } = useFormAnalysis(
+    { name: "", area: "", climate_id: "", location_id: "" },
     {}
   );
   const { getJwtToken } = useJwtToken();
@@ -40,32 +43,43 @@ const GardenForm = ({ droppedImage }) => {
       }
     };
 
+    const fetchLocations = async () => {
+      try {
+        const fetchedLocations = await getLocations();
+        setLocations(fetchedLocations);
+        console.log(locations);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchGardenTypes();
     fetchClimates();
+    fetchLocations();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const image_url = await uploadToAWS(
-      getJwtToken,
-      droppedImage[0],
-      "la-main-verte"
-    );
+    const image_url = droppedImage
+      ? await uploadToAWS(getJwtToken, droppedImage[0], "la-main-verte")
+      : "";
 
     const newGarden = {
       garden: {
         garden_type_id: isToogled ? 1 : 2,
         name: datas.name,
         area: datas.area,
-        climate: parseInt(datas.climate_id),
-        location: parseInt(datas.location),
-        image_url: image_url,
+        climate_id: datas.climate_id,
+        location_id: datas.location_id,
+        image_url,
       },
     };
 
-    const response = await createGarden(newGarden, getJwtToken);
-    console.log(response);
+    console.log(newGarden);
+
+    // const response = await createGarden(newGarden, getJwtToken);
+    // console.log(response);
   };
 
   return (
@@ -108,26 +122,30 @@ const GardenForm = ({ droppedImage }) => {
 
         <Select
           classNames={["col-span-2"]}
-          name="climate"
-          id="climate"
+          name="climate_id"
+          id="climate_id"
           icon={IconClimate}
           prompter="Quel est votre climat ?"
           options={climates.map((climate) => {
             return { id: climate.id, text: climate.name };
           })}
-          selectedOption={(value) => console.log(value)}
+          selectedOption={(climate_id) =>
+            setDatas({ ...datas, climate_id: climate_id })
+          }
         />
 
-        <FormGroup
-          colSpan="2"
-          value={datas.location}
-          name="location"
-          id="location"
-          type="text"
-          labelText="Lieu"
-          alertMessage={alerts.location}
-          onInput={(value) => handleInput(value)}
-          onBlur={(value) => handleBlur(value)}
+        <Select
+          classNames={["col-span-2"]}
+          name="location_id"
+          id="location_id"
+          icon={IconLocation}
+          prompter="Où vous situez vous ? "
+          options={locations.map((location) => {
+            return { id: location.id, text: location.name };
+          })}
+          selectedOption={(location_id) =>
+            setDatas({ ...datas, location_id: location_id })
+          }
         />
 
         <LetsGoButton backgroundColor="bg-blue" text="C'EST PARTI" />
