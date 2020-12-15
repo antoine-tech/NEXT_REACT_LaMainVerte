@@ -16,7 +16,6 @@ const useFormAnalysis = (formDataObj, alertMessages) => {
         ...alerts,
         password_confirmation: alertMessages.passwordsAreDifferent,
       });
-
     } else {
       setAlerts({
         ...alerts,
@@ -24,23 +23,23 @@ const useFormAnalysis = (formDataObj, alertMessages) => {
       });
     }
 
-  const handleBlur = (val) => {
-    let { value, id } = val;
-    const newAlerts = { ...alerts };
+    const handleBlur = (val) => {
+      let { value, id } = val;
+      const newAlerts = { ...alerts };
 
-    value === ""
-    ? (newAlerts[id] = alertMessages.isEmpty)
-    : (newAlerts[id] = "");
+      value === ""
+        ? (newAlerts[id] = alertMessages.isEmpty)
+        : (newAlerts[id] = "");
 
-    setAlerts(newAlerts);
+      setAlerts(newAlerts);
+    };
 
-  };
-
-  return {
-    datas,
-    alerts,
-    handleInput: (datas) => handleInput(datas),
-    handleBlur: (datas) => handleBlur(datas),
+    return {
+      datas,
+      alerts,
+      handleInput: (datas) => handleInput(datas),
+      handleBlur: (datas) => handleBlur(datas),
+    };
   };
 };
 

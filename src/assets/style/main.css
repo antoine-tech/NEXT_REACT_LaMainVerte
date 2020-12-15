@@ -615,18 +615,16 @@ SLIDER */
   border: solid 2px var(--blue-dark-light);
 }
 
-<<<<<<< HEAD
 /* MODAL */
 
 #modal {
   position: absolute;
   height: 100vh;
   width: 100vw;
-  background-color: rgba(255,255,255,.8);
+  background-color: rgba(255, 255, 255, 0.8);
   padding: 2rem;
   z-index: 1000;
-=======
+}
 .min-h-80vh {
   min-height: 90vh;
->>>>>>> 55668f0d28cf6d96dbb46d89aa0c7cd851897448
 }

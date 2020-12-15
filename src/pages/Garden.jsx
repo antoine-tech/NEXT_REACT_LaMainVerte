@@ -121,12 +121,9 @@ const Garden = () => {
         className="absolute z-10 w-full"
         style={{
           backgroundImage: `url(${gardenData?.garden?.picture_url})`,
-<<<<<<< HEAD
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-=======
->>>>>>> 55668f0d28cf6d96dbb46d89aa0c7cd851897448
         }}
       >
         {isAmmendable ? (
@@ -142,11 +139,7 @@ const Garden = () => {
             alt=""
             className="h-full w-full"
             style={{
-<<<<<<< HEAD
               backgroundColor: `rgba(255,255,255,${gardenData?.garden?.picture_opacity})`,
-=======
-              backgroundColor: `rgba(255,255,255,${gardenData.garden.picture_opacity})`,
->>>>>>> 55668f0d28cf6d96dbb46d89aa0c7cd851897448
             }}
           />
         )}
