@@ -7,7 +7,14 @@ import { useParams } from "react-router-dom";
 import { createEvent } from "../../../requests/events";
 import useJwtToken from "../../../hooks/useJwtToken";
 
-const EventCreationForm = ({ id, data, onClick, events, setEvents }) => {
+const EventCreationForm = ({
+  id,
+  data,
+  onClick,
+  events,
+  setEvents,
+  setModalOpen,
+}) => {
   const { garden_id } = useParams();
   const { getJwtToken } = useJwtToken();
   const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
@@ -38,83 +45,83 @@ const EventCreationForm = ({ id, data, onClick, events, setEvents }) => {
         getJwtToken
       );
       setEvents(newEvent);
-    } catch (error) {
-    }
+      setModalOpen(false);
+    } catch (error) {}
   };
 
-    return (
-      <div
-        className="grid grid-cols-12 flex items-center"
-        id={id}
-        onClick={(event) => onClick(event)}
+  return (
+    <div
+      className="grid grid-cols-12 flex items-center"
+      id={id}
+      onClick={(event) => onClick(event)}
+    >
+      <form
+        action=""
+        className="grid grid-cols-2 col-span-12 md:col-span-6 md:col-start-4 gap-4 my-2"
+        onSubmit={handleSubmit}
+        style={{ height: "max-content" }}
       >
-        <form
-          action=""
-          className="grid grid-cols-2 col-span-12 md:col-span-6 md:col-start-4 gap-4 my-2"
-          onSubmit={handleSubmit}
-          style={{ height: "max-content" }}
-        >
-          <div className="my-4 col-span-2 flex">
-            <h2>
-              Evenement du
-              <Moment className="italic" format=" DD/MM/YYYY ">
-                {datas.start_date}
-              </Moment>
-              au
-              <Moment className="italic" format=" DD/MM/YYYY ">
-                {datas.end_date}
-              </Moment>
-            </h2>
-          </div>
+        <div className="my-4 col-span-2 flex">
+          <h2>
+            Evenement du
+            <Moment className="italic" format=" DD/MM/YYYY ">
+              {datas.start_date}
+            </Moment>
+            au
+            <Moment className="italic" format=" DD/MM/YYYY ">
+              {datas.end_date}
+            </Moment>
+          </h2>
+        </div>
 
-          <FormGroup
-            colSpan="2 lg:col-span-1"
-            onInput={(value) => handleInput(value)}
-            onBlur={(value) => handleBlur(value)}
-            value={datas.start_date}
-            name="start_date"
-            id="start_date"
-            type="date"
-            labelText="Début"
-          />
+        <FormGroup
+          colSpan="2 lg:col-span-1"
+          onInput={(value) => handleInput(value)}
+          onBlur={(value) => handleBlur(value)}
+          value={datas.start_date}
+          name="start_date"
+          id="start_date"
+          type="date"
+          labelText="Début"
+        />
 
-          <FormGroup
-            colSpan="2 lg:col-span-1"
-            onInput={(value) => handleInput(value)}
-            onBlur={(value) => handleBlur(value)}
-            value={datas.end_date}
-            name="end_date"
-            id="end_date"
-            type="date"
-            labelText="Fin"
-          />
-          <FormGroup
-            colSpan="2"
-            onInput={(value) => handleInput(value)}
-            onBlur={(value) => handleBlur(value)}
-            value={datas.name}
-            name="name"
-            id="name"
-            type="name"
-            labelText="Nom :"
-            alertMessage={alerts.name}
-          />
-          <FormGroup
-            colSpan="2"
-            onInput={(value) => handleInput(value)}
-            onBlur={(value) => handleBlur(value)}
-            value={datas.description}
-            name="description"
-            id="description"
-            type="text"
-            labelText="Description :"
-            alertMessage={alerts.description}
-          />
+        <FormGroup
+          colSpan="2 lg:col-span-1"
+          onInput={(value) => handleInput(value)}
+          onBlur={(value) => handleBlur(value)}
+          value={datas.end_date}
+          name="end_date"
+          id="end_date"
+          type="date"
+          labelText="Fin"
+        />
+        <FormGroup
+          colSpan="2"
+          onInput={(value) => handleInput(value)}
+          onBlur={(value) => handleBlur(value)}
+          value={datas.name}
+          name="name"
+          id="name"
+          type="name"
+          labelText="Nom :"
+          alertMessage={alerts.name}
+        />
+        <FormGroup
+          colSpan="2"
+          onInput={(value) => handleInput(value)}
+          onBlur={(value) => handleBlur(value)}
+          value={datas.description}
+          name="description"
+          id="description"
+          type="text"
+          labelText="Description :"
+          alertMessage={alerts.description}
+        />
 
-          <LetsGoButton backgroundColor="bg-green" text="C'EST PARTI" />
-        </form>
-      </div>
-    );
+        <LetsGoButton backgroundColor="bg-green" text="C'EST PARTI" />
+      </form>
+    </div>
+  );
 };
 
 export default EventCreationForm;

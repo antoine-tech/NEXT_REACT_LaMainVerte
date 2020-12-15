@@ -16,6 +16,7 @@ const Modal = ({
       data={data}
       event={events}
       setEvents={(value)=>setEvents(value)}
+      setModalOpen={setModalOpen}
       onClick={(event) => {
         event.target.id === id && setModalOpen(false);
       }}
