@@ -3,6 +3,7 @@ import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from "../../buttons/LetsGoButton/index";
 import FormGroup from "../../FormGroup/index";
 import Moment from "react-moment";
+import { parseDateInput } from "../../../helpers/parseDateInput";
 
 const EventCreationForm = ({ id, data, onClick }) => {
   const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
@@ -32,10 +33,10 @@ const EventCreationForm = ({ id, data, onClick }) => {
       >
         <div className="my-4 col-span-2 flex">
           <h2>
-            Créer un évenement du
-            <Moment format="DD/MM/YYYY">{Date.parse(data.start)}</Moment>
+            Evenement du
+            <Moment className="italic" format=" DD/MM/YYYY ">{Date.parse(datas.start)}</Moment>
             au
-            <Moment format="DD/MM/YYYY">{Date.parse(data.end)}</Moment>
+            <Moment className="italic" format=" DD/MM/YYYY ">{Date.parse(datas.end)}</Moment>
           </h2>
         </div>
 
@@ -48,8 +49,9 @@ const EventCreationForm = ({ id, data, onClick }) => {
           id="start_date"
           type="date"
           labelText="Début"
-          alertMessage={alerts.start_date}
         />
+
+  
 
         <FormGroup
           colSpan="2 lg:col-span-1"
@@ -60,7 +62,6 @@ const EventCreationForm = ({ id, data, onClick }) => {
           id="end_date"
           type="date"
           labelText="Fin"
-          alertMessage={alerts.end_date}
         />
         <FormGroup
           colSpan="2"
