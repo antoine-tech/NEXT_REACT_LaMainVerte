@@ -16,7 +16,7 @@ import Button from "../components/Button/index";
 import useIsLoading from "../hooks/useIsLoading";
 import LoadingAnimation from "../components/LoadingAnimation/index";
 import useMutationObserver from "../hooks/useMutationObserver";
-import useInstantMessages from "../hooks/useIntantMessages";
+//import useInstantMessages from "../hooks/useIntantMessages";
 import useCurrentUser from "../hooks/useCurrentUser";
 import { Link } from "react-router-dom";
 import usePageStatus from "../hooks/usePageStatus";
@@ -31,7 +31,7 @@ const Home = () => {
   const [testimonies, setTestimonies] = useState([]);
   const viewItems = useMutationObserver();
 
-  const { instantMessages, sendInstantMessage } = useInstantMessages();
+  //const { instantMessages, sendInstantMessage } = useInstantMessages();
 
   const { current_user } = useCurrentUser();
 
