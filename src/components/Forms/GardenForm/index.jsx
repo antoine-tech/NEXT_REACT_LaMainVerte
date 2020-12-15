@@ -94,10 +94,9 @@ const GardenForm = ({ droppedImage }) => {
       },
     };
 
-    console.log(newGarden);
-
-    // const response = await createGarden(newGarden, getJwtToken);
-    // console.log(response);
+    const response = await createGarden(newGarden, getJwtToken);
+    const createdGardenId = response.id;
+    history.push(`/garden/${createdGardenId}`);
   };
 
   if (pageStatus === "loading") {

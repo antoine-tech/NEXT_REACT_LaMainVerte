@@ -2,9 +2,6 @@ import { useState } from "react";
 
 const useFormAnalysis = (formDataObj, alertMessages) => {
   const [datas, setDatas] = useState(formDataObj);
-
-  console.log(datas)
-
   const [alerts, setAlerts] = useState(formDataObj);
 
   const handleInput = (val) => {
@@ -41,7 +38,7 @@ const useFormAnalysis = (formDataObj, alertMessages) => {
   return {
     datas,
     alerts,
-    setDatas, 
+    setDatas,
     handleInput: (datas) => handleInput(datas),
     handleBlur: (datas) => handleBlur(datas),
   };
