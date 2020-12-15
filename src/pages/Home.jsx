@@ -33,35 +33,53 @@ const Home = () => {
   const { current_user } = useCurrentUser();
 
   useEffect(() => {
-    const fetchPageDatas = async (current_user) => {
+    const fetchAndSetGardenSelection = async () => {
+      const selectedGardens = await getGardenSelection();
+      setGardenSelection(selectedGardens);
+    };
+
+    const fetchAndSetTestimonies = async () => {
       const testimonies = await getTestimoniesAndRelatedUsers();
       setTestimonies(testimonies);
+    };
 
+    const fetchAndSetPosts = async () => {
       const posts = await getPosts();
       setLastPosts(posts);
+    };
+
+    const fetchUserProfile = async () => {
+      const userProfile = await getUserDatas(getJwtToken).then((res) =>
+        res.json()
+      );
+
+      return userProfile;
+    };
+
+    const fetchAndSetFollowedGarden = async (userProfile) => {
+      const userFollowedGardens = await getFollowedGardenAndRelatedData(
+        userProfile.follows
+      );
+
+      if (userFollowedGardens.length) {
+        setFollowedGardens(userFollowedGardens);
+      } else {
+        fetchAndSetGardenSelection();
+      }
+    };
+
+    const fetchPageDatas = async (current_user) => {
+      fetchAndSetPosts();
+      fetchAndSetTestimonies();
 
       if (current_user) {
-        const userProfile = await getUserDatas(getJwtToken).then((res) =>
-          res.json()
-        );
-
-        if (
-          userProfile?.hasOwnProperty("follows") &&
-          userProfile.follows.length > 0
-        ) {
-          const userFollowedGardens = await getFollowedGardenAndRelatedData(
-            userProfile.follows
-          );
-          setFollowedGardens(userFollowedGardens);
-        }
+        const userProfile = await fetchUserProfile();
+        fetchAndSetFollowedGarden(userProfile);
       } else {
-        const selectedGardens = await getGardenSelection();
-        setGardenSelection(selectedGardens);
+        fetchAndSetGardenSelection();
       }
 
-      if (testimonies.length > 0 && posts.length > 0) {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     };
 
     fetchPageDatas(current_user);
@@ -120,13 +138,13 @@ const Home = () => {
       </div>
       <div className="col-span-12 lg:col-span-6 px-4" id="wall">
         <SearchEngine />
-        <h4 className="my-4">Sélectionné pour vous ....</h4>
+        <h4 className="my-4">Sélectionné pour vous ...</h4>
 
         <AvatarSlider />
 
         {followedGardens?.length > 0 ? (
           <>
-            <h4 className="my-4">Vos jardins préférés ....</h4>
+            <h4 className="my-4">Vos jardins préférés ...</h4>
 
             {followedGardens.map((followedGarden) => {
               let {
@@ -194,7 +212,7 @@ const Home = () => {
               </div>
             </div>
 
-            <h4 className="my-4"> ....</h4>
+            <h4 className="my-4"> De merveilleux jardin à découvir...</h4>
 
             {gardenSelection?.map((garden) => {
               let {
