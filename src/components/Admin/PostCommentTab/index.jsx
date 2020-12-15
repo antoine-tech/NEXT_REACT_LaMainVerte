@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { find, deletion } from "../../../sevices/Api";
 import TrashIcon from "../../../assets/icons/trash.svg";
 
-const GardenTab = () => {
-	const [gardens, setGardens] = useState([]);
+const PostCommentTab = () => {
+	const [postComments, setPostComments] = useState([]);
 
-	const handleGardens = async () => {
-		const response = await find("/gardens");
-		setGardens(response);
-	};
+	// const handleGardenComments = async () => {
+	// 	const response = await find("/gardens");
+	// 	setGardens(response);
+	// };
 
 	return (
 		<div className="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">
@@ -19,41 +19,29 @@ const GardenTab = () => {
 							#
 						</th>
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-							Name
+							Post_id
 						</th>
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-							Owner (user_id)
+							User_id
 						</th>
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-							Likes
-						</th>
-						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-							Location
-						</th>
-						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-							Climate
-						</th>
-						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-							Area (m²)
+							Content
 						</th>
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"></th>
 					</tr>
 				</thead>
 				<tbody>
-					{gardens.map((garden) => (
+					{postComments.map((postComment) => (
 						<tr>
-							<th scope="row">{garden.id}</th>
-							<td>{garden.name}</td>
-							<td>{garden.user_id}</td>
-							<td>{garden.likes.length}</td>
-							<td>{garden.location}</td>
-							<td>{garden.climate}</td>
-							<td>{garden.area}</td>
+							<th scope="row">{postComment.id}</th>
+							<td>{postComment.post_id}</td>
+							<td>{postComment.user_id}</td>
+							<td>{postComment.content}</td>
 							<td>
 								<a href="#">
 									<img
 										src={TrashIcon}
-										alt="Delete a garden"
+										alt="Delete a post comment"
 										width="25"
 										height="25"
 										// onClick={() => deleteUser(user)}
@@ -68,4 +56,4 @@ const GardenTab = () => {
 	);
 };
 
-export default GardenTab;
+export default PostCommentTab;
