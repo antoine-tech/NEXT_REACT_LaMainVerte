@@ -628,3 +628,10 @@ SLIDER */
 .min-h-80vh {
   min-height: 90vh;
 }
+
+
+/* CALENDAR */
+
+.rbc-event{
+  background-color:var(--greeen)
+}

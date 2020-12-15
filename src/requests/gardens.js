@@ -158,6 +158,11 @@ const unlikeGarden = async (gardenLikeId, jwt_token) =>
     .then((res) => res.text())
     .catch((error) => error);
 
+const getEvents = async (garden_id) => {
+  const {events} = await find(`/gardens/${garden_id}/`).then((res) => res.json());
+  return events;
+};
+
 export {
   getClimate,
   getLocation,
@@ -165,6 +170,7 @@ export {
   getGardenTypes,
   getGarden,
   getGardens,
+  getEvents,
   getFollowedGardenAndRelatedData,
   getGardenSelection,
   follow,

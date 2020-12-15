@@ -69,12 +69,12 @@ const App = () => {
         />
         <Route
           exact
-          path="/garden/:id/events"
+          path="/garden/:garden_id/events"
           component={GardenHistory}
         />
         <Route
           exact
-          path="/garden/:id"
+          path="/garden/:garden_id"
           component={Garden}
         />
         <AuthRoute
