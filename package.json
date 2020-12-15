@@ -24,14 +24,14 @@
     "serve": "^11.3.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1",
     "postcss": "^7.0.35",
-    "postcss-cli": "^8.3.0"
+    "postcss-cli": "^8.3.0",
+    "autoprefixer": "^9.8.6"
   },
   "devDependencies": {
     "@craco/craco": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "autoprefixer": "^9.8.6"
+    "@testing-library/user-event": "^12.1.10"
   },
   "scripts": {
     "dev": "react-scripts start",
