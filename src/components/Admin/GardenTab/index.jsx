@@ -43,9 +43,12 @@ const GardenTab = () => {
 					{gardens.map((garden) => (
 						<tr>
 							<th scope="row">{garden.id}</th>
-							<td>{garden.first_name}</td>
-							<td>{garden.last_name}</td>
-							<td>{garden.email}</td>
+							<td>{garden.name}</td>
+							<td>{garden.user_id}</td>
+							<td>{garden.likes.length}</td>
+							<td>{garden.location}</td>
+							<td>{garden.climate}</td>
+							<td>{garden.area}</td>
 							<td>
 								<a href="#">
 									<img
