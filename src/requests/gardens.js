@@ -10,10 +10,22 @@ const getLocation = async (garden_location_id) =>
     .then((res) => res.json())
     .catch((error) => error);
 
+const getGardenTypes = async () =>
+  find("/garden_types/")
+    .then((res) => res.json())
+    .catch((error) => error);
+
 const getGardenType = async (garden_type_id) =>
   find("/garden_types/" + garden_type_id)
     .then((res) => res.json())
     .catch((error) => error);
+
+const createGarden = async (gardenData, userToken) => {
+  const response = await create(gardenData, "/gardens", true, userToken)
+    .then((res) => res.json())
+    .catch((error) => error);
+  return response;
+};
 
 const getGarden = async (garden_id) =>
   find("/gardens/" + garden_id)
@@ -59,6 +71,8 @@ const getFollowedGardenAndRelatedData = async (gardens) => {
       created_at,
       climate,
       location,
+      picture_url,
+      picture_opacity,
       garden_type: type,
       user,
     };
@@ -148,6 +162,7 @@ export {
   getClimate,
   getLocation,
   getGardenType,
+  getGardenTypes,
   getGarden,
   getGardens,
   getFollowedGardenAndRelatedData,
@@ -156,4 +171,5 @@ export {
   unfollow,
   likeGarden,
   unlikeGarden,
+  createGarden,
 };
