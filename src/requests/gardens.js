@@ -71,8 +71,6 @@ const getFollowedGardenAndRelatedData = async (gardens) => {
       created_at,
       climate,
       location,
-      picture_url,
-      picture_opacity,
       garden_type: type,
       user,
     };
@@ -163,8 +161,8 @@ const getEvents = async (garden_id) => {
   return events;
 };
 
-const search = async (ressource,key,value) => {
-  return await find(`/${ressource}?${key}=${value}`).then((res) => res.json());
+const search = async (ressource,params) => {
+  return await find(`/${ressource}?${params}`).then((res) => res.json());
 };
 
 export {

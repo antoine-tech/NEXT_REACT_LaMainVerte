@@ -11,7 +11,7 @@ const SearchEngine = ({getSearchResult}) => {
 
   const handleInput = async (event) =>
   {
-      const searchResult = await search(event.target.value);
+      const searchResult = await search('gardens', `name=${event.target.value}`);
       getSearchResult(searchResult)
   }
 

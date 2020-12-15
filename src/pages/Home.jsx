@@ -13,13 +13,12 @@ import { getPosts } from "../requests/posts";
 import { getTestimoniesAndRelatedUsers } from "../requests/testimonies";
 import TestimonyCard from "../components/TestimonyCard/index";
 import Button from "../components/Button/index";
-import useIsLoading from "../hooks/useIsLoading";
 import LoadingAnimation from "../components/LoadingAnimation/index";
-import useMutationObserver from "../hooks/useMutationObserver";
-import useInstantMessages from "../hooks/useIntantMessages";
 import useCurrentUser from "../hooks/useCurrentUser";
 import { Link } from "react-router-dom";
 import usePageStatus from "../hooks/usePageStatus";
+// import useMutationObserver from "../hooks/useMutationObserver";
+// import useInstantMessages from "../hooks/useIntantMessages";
 
 const Home = () => {
   const { pageStatus, setPageStatus } = usePageStatus("loading");
@@ -28,8 +27,8 @@ const Home = () => {
   const [testimonies, setTestimonies] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
   const [displayedGardens, setDisplayedGardens] = useState([]);
-  const viewItems = useMutationObserver();
-  const { instantMessages, sendInstantMessage } = useInstantMessages();
+  // const viewItems = useMutationObserver();
+  // const { instantMessages, sendInstantMessage } = useInstantMessages();
 
   const { current_user } = useCurrentUser();
 
@@ -74,6 +73,7 @@ const Home = () => {
     };
 
     fetchPageDatas(current_user);
+    
   }, []);
 
   if (pageStatus === "loading") {
@@ -123,7 +123,7 @@ const Home = () => {
           </div>
         </div>
         <div className="col-span-12 lg:col-span-6 px-4" id="wall">
-          <SearchEngine getSearchResult={(value) => console.log(value)} />
+          <SearchEngine getSearchResult={(gardens) => setDisplayedGardens(gardens)} />
           <h4 className="my-4">Sélectionné pour vous ...</h4>
 
           <AvatarSlider />
