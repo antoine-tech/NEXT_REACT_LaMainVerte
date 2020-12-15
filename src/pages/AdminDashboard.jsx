@@ -19,12 +19,48 @@ const AdminDashboard = () => {
 	return (
 		<div className="">
 			<h1 className="">Tableau de commande</h1>
-			<div className="">
-				<button onClick={() => switchDashboard("users")} className="">
-					Utilisateurs
+			<div className="flex justify-center items-baseline flex-wrap">
+				<button
+					onClick={() => switchDashboard("users")}
+					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 rounded-l h-12"
+				>
+					Users
 				</button>
-				<button onClick={() => switchDashboard("gardens")} className="">
-					Jardins
+				<button
+					onClick={() => switchDashboard("gardens")}
+					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
+				>
+					Gardens
+				</button>
+				<button
+					onClick={() => switchDashboard("gardens")}
+					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
+				>
+					Garden comments
+				</button>
+				<button
+					onClick={() => switchDashboard("gardens")}
+					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
+				>
+					Events
+				</button>
+				<button
+					onClick={() => switchDashboard("gardens")}
+					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
+				>
+					Posts
+				</button>
+				<button
+					onClick={() => switchDashboard("gardens")}
+					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
+				>
+					Post comments
+				</button>
+				<button
+					onClick={() => switchDashboard("gardens")}
+					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12 rounded-r"
+				>
+					Testimonies
 				</button>
 			</div>
 			{display()}
