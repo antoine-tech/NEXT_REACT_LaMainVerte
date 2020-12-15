@@ -17,6 +17,7 @@ import useIsLoading from "../hooks/useIsLoading";
 import LoadingAnimation from "../components/LoadingAnimation/index";
 import useMutationObserver from "../hooks/useMutationObserver";
 import useInstantMessages from "../hooks/useIntantMessages";
+import {Link} from "react-router-dom";
 
 const Home = () => {
   const { getJwtToken } = useJwtToken();
@@ -91,19 +92,12 @@ const Home = () => {
             ]}
           />
 
-          <Button
-            text="Mon profil"
-            classNames={[
-              "btn",
-              "btn-md",
-              "bg-blue-dark",
-              "text-white",
-              "p-4",
-              "w-64",
-              "col-span-2",
-              "lg:col-span-1",
-            ]}
-          />
+          <Link 
+            to="/profile"
+            className="btn btn-md bg-blue-dark text-white p-4 w-64 col-span-2 lg:col-span-1 text-center"
+          >
+            Mon profil
+          </Link>
 
           {/* <button
             onClick={() => sendInstantMessage({ message: "hello world" })}

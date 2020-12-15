@@ -555,3 +555,99 @@ SLIDER */
 .rc-slider-handle {
   border: solid 2px var(--blue-dark-light);
 }
+
+/*
+PROFILE */
+#user-informations {
+  width: 600px;
+  min-width: 300px;
+  margin-top: 12vh;
+  padding-bottom: 4vh;
+  overflow: visible;
+}
+#user-informations .avatar-img {
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 2px;
+  height: 200px;
+  width: 200px;
+  transform: translateY(-70px);
+  background: var(--red-gradient);
+  padding: 10px;
+  transition: transform 200ms 100ms ease;
+}
+#user-informations  h1 {
+  font-size: 30px;
+  transform: translateY(-40px );
+}
+#user-informations form input {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-top: 3px solid #F6DCA2;
+  border-left: 3px solid #F6DCA2;
+  border-bottom: none;
+  border-radius: 2px;
+  background-color: #f7e9c9;
+  color: #3A405A;
+}
+#user-informations form button {
+  margin-top: 30px;
+  padding: 10px;
+}
+#user-informations form button#delete-profile {
+  border: 1px solid #FF6B6B;
+  border-radius: 4px;
+  color:  #FF6B6B;
+  transition: all 100ms 200ms ease;
+}
+#user-informations form button#delete-profile:hover {
+  color: white;
+  background-color: #FF6B6B;
+}
+#user-informations form button#edit-profile {
+  border-radius: 4px;
+  background-color:  #3A405A;
+  color: white;
+  transition: all 200ms 100ms ease-in-out;
+}
+#user-informations form button#edit-profile:hover {
+  transform: scale(1.05);
+}
+#followed-gardens {
+  margin-top: 4vh;
+  width: 600px;
+  min-width: 300px;
+}
+#followed-gardens div.gardens{
+  overflow-y: scroll;
+  max-height: 700px;
+}
+#followed-gardens h1 {
+  font-size: 20px;
+  margin-left: 15px;
+}
+#user-gardens {
+  margin-top: 4vh;
+  width: 600px;
+  min-width: 300px;
+}
+#user-gardens div.gardens{
+  overflow-y: scroll;
+  max-height: 800px;
+}
+#user-gardens h1 {
+  font-size: 20px;
+}
+#user-posts {
+  margin-top: 4vh;
+  width: 600px;
+  min-width: 300px;
+}
+#user-posts div.posts{
+  overflow-y: scroll;
+  max-height: 700px;
+}
+#user-posts h1 {
+  font-size: 20px;
+}
