@@ -24,7 +24,6 @@ import usePageStatus from "../hooks/usePageStatus";
 const Home = () => {
   const { pageStatus, setPageStatus } = usePageStatus("loading");
   const { getJwtToken } = useJwtToken();
-  const { isLoading, setIsLoading } = useIsLoading();
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
@@ -73,7 +72,7 @@ const Home = () => {
       }
       setPageStatus("loaded");
     };
-    
+
     fetchPageDatas(current_user);
   }, []);
 
