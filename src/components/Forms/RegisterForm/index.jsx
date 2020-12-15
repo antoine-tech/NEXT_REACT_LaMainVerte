@@ -11,7 +11,20 @@ const RegiterForm = ({
   setIsAlertDisplayed,
   setAlertType,
 }) => {
-  const { userDatas, alerts, handleInput, handleBlur } = useFormAnalysis();
+  const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
+    {
+      firstname: "",
+      lastname: "",
+      username: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+    },
+    {
+      isEmpty: "Ce champ est obligatoire",
+      passwordsAreDifferent: "Les mots de passes ne sont pas similaires",
+    }
+  );
   const history = useHistory();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,7 +35,7 @@ const RegiterForm = ({
       firstname,
       lastname,
       username,
-    } = userDatas;
+    } = datas;
 
     if (
       password_confirmation === password &&
@@ -44,10 +57,10 @@ const RegiterForm = ({
         setAlertMessage("Compte crée avec succès");
         setAlertType("success");
         setIsAlertDisplayed(true);
-        history.push('/login');
+        history.push("/login");
       } else {
         setAlertMessage(
-          "Une erreure est survenue veillez contacter le support technique"
+          "Une erreur est survenue veuillez contacter le support technique"
         );
         setAlertType("danger");
         setIsAlertDisplayed(true);
@@ -67,7 +80,7 @@ const RegiterForm = ({
           colSpan="2 md:col-span-1"
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
-          value={userDatas.lastname}
+          value={datas.lastname}
           name="lastname"
           id="lastname"
           type="text"
@@ -79,7 +92,7 @@ const RegiterForm = ({
           colSpan="2 md:col-span-1"
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
-          value={userDatas.firstname}
+          value={datas.firstname}
           name="firstname"
           id="firstname"
           type="text"
@@ -91,7 +104,7 @@ const RegiterForm = ({
           colSpan="2"
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
-          value={userDatas.username}
+          value={datas.username}
           name="username"
           id="username"
           type="text"
@@ -103,7 +116,7 @@ const RegiterForm = ({
           colSpan="2"
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
-          value={userDatas.email}
+          value={datas.email}
           name="email"
           id="email"
           type="text"
@@ -114,7 +127,7 @@ const RegiterForm = ({
           colSpan="2"
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
-          value={userDatas.password}
+          value={datas.password}
           name="password"
           id="password"
           type="password"
@@ -125,7 +138,7 @@ const RegiterForm = ({
           colSpan="2"
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
-          value={userDatas.password_confirmation}
+          value={datas.password_confirmation}
           name="password_confirmation"
           id="password_confirmation"
           type="password"

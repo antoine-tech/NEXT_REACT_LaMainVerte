@@ -68,6 +68,8 @@ const Garden = () => {
       } catch (error) {
         console.error(error);
       }
+    } else {
+      history.push("/login");
     }
   };
 
@@ -82,6 +84,8 @@ const Garden = () => {
       }
       const garden = await getGarden(id);
       setGardenData(garden);
+    } else {
+      history.push("/login");
     }
   };
 
@@ -117,6 +121,9 @@ const Garden = () => {
         className="absolute z-10 w-full"
         style={{
           backgroundImage: `url(${gardenData?.garden?.picture_url})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
         }}
       >
         {isAmmendable ? (
@@ -149,25 +156,27 @@ const Garden = () => {
             Par {gardenData?.user?.fist_name} {gardenData?.user?.last_name}
           </h2>
 
-          <Button
-            content={IconPen}
-            classNames={[
-              "h-20",
-              "w-20",
-              "flex",
-              "items-center",
-              "justify-center",
-              "justify-self-end",
-              "p-2",
-              "col-span-1",
-              "bg-blue-dark",
-              "text-white",
-              "text-center",
-              "rounded-full",
-              "hover-animate-bounce",
-            ]}
-            onclick={() => setIsAmmendable()}
-          />
+          {current_user && current_user.id === gardenData?.user?.id && (
+            <Button
+              content={IconPen}
+              classNames={[
+                "h-20",
+                "w-20",
+                "flex",
+                "items-center",
+                "justify-center",
+                "justify-self-end",
+                "p-2",
+                "col-span-1",
+                "bg-blue-dark",
+                "text-white",
+                "text-center",
+                "rounded-full",
+                "hover-animate-bounce",
+              ]}
+              onclick={() => setIsAmmendable()}
+            />
+          )}
 
           {isAmmendable ? (
             <input
@@ -352,7 +361,11 @@ const Garden = () => {
           )}
 
           <div className="my-8 col-span-4">
-            <h3 className="my-4">Les posts</h3>
+            {gardenData?.posts?.length > 0 ? (
+              <h3 className="my-4">Les posts</h3>
+            ) : (
+              <h3 className="my-4">Rien pour le moment ...</h3>
+            )}
 
             {gardenData?.posts?.map((post) => {
               let {

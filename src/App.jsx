@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Garden from "./pages/Garden";
 import AdminDashboard from "./pages/AdminDashboard";
+import NewGarden from "./pages/NewGarden";
 import useCurrentUser from "./hooks/useCurrentUser";
 import { getUserDatas } from "./requests/user";
 import useJwtToken from "./hooks/useJwtToken";
@@ -41,6 +42,8 @@ const App = () => {
 			: setNavbarPresent(true);
 	}, [pathname]);
 
+	console.log(current_user);
+
 	return (
 		<>
 			{isNavbarPresent && <Navbar />}
@@ -55,29 +58,23 @@ const App = () => {
 					path="/register"
 					component={Register}
 				/>
-				<AuthRoute
-					current_user={current_user}
-					exact
-					path="/"
-					component={Home}
-				></AuthRoute>
+				<Route exact path="/">
+					<Home />
+				</Route>
+
 				<AuthRoute
 					current_user={current_user}
 					exact
 					path="/profile"
 					component={Profile}
 				/>
+				<Route exact path="/garden/:id/events" component={GardenHistory} />
+				<Route exact path="/garden/:id" component={Garden} />
 				<AuthRoute
 					current_user={current_user}
 					exact
-					path="/garden/:id/events"
-					component={GardenHistory}
-				/>
-				<AuthRoute
-					current_user={current_user}
-					exact
-					path="/garden/:id"
-					component={Garden}
+					path="/gardens/new"
+					component={NewGarden}
 				/>
 				<Route path="/admin">
 					<AdminDashboard />

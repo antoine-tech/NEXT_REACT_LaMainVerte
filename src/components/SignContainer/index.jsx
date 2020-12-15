@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import AbstractShape from "../AbstractShape/index";
 import Alert from "../Alert";
 
-const SignContainer = ({ backgroundGradient, component: Component }) => {
+
+const SignContainer = ({
+  backgroundGradient,
+  component: Component
+}) => {
   const [isAlertDisplayed, setIsAlertDisplayed] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");

@@ -5,7 +5,7 @@ import GardenCommentTab from "../components/Admin/GardenCommentTab/";
 import EventTab from "../components/Admin/EventTab/";
 import PostTab from "../components/Admin/PostTab/";
 import PostCommentTab from "../components/Admin/PostCommentTab/";
-import TestimonyTab from "../components/Admin/TestimonyTab/";
+import TestimonyTab»  from "../components/Admin/TestimonyTab» /";
 
 const AdminDashboard = () => {
 	const [dashboardStatus, setDashboardStatus] = useState("users");
@@ -28,7 +28,7 @@ const AdminDashboard = () => {
 		} else if (dashboardStatus === "postComments") {
 			return <PostCommentTab />;
 		} else if (dashboardStatus === "testimonies") {
-			return <TestimonyTab />;
+			return <TestimonyTab»  />;
 		}
 	};
 	return (

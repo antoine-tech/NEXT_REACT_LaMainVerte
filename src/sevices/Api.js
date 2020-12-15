@@ -38,4 +38,25 @@ const deletion = (endpoint, authenticated = true, jwt_token = null) =>
 const find = (endpoint, authenticated = true, jwt_token = null) =>
   request("GET", endpoint, null, authenticated, jwt_token);
 
-export { request, create, update, deletion, find };
+const uploadToAWS = async (jwt_token, file, directory) => {
+  const { post_url, get_url } = await find(
+    `/upload?filename=${file.name}&fileType=${file.type}&directory=${directory}`,
+    true,
+    jwt_token
+  ).then((resp) => resp.json());
+
+  const headers = { "Content-Type": file.type, acl: "public-read" };
+  const options = {
+    method: "PUT",
+    headers,
+    body: file,
+  };
+
+  const uploadImageStatus = await fetch(post_url, options)
+    .then((resp) => resp.status)
+    .catch((err) => err);
+
+  return uploadImageStatus === 200 ? get_url : uploadImageStatus;
+};
+
+export { request, create, update, deletion, find, uploadToAWS };

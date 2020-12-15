@@ -4,7 +4,10 @@ import SignContainer from '../components/SignContainer/index';
 
 const Register = () => {
   return (
-    <SignContainer backgroundGradient="bg-red-gradient" component={RegisterForm}/>
+    <SignContainer
+      backgroundGradient="bg-red-gradient"
+      component={RegisterForm}
+    />
   );
 }
 

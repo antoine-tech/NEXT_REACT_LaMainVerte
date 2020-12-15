@@ -117,20 +117,31 @@ const PostCard = ({
           <p className="col-span-2 my-2">{content}</p>
         </div>
 
-        <div className="col-start-11 col-span-1 flex items-center justify-end">
-          <IconComment
-            onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
-          />
-        </div>
-
-        <div className="col-span-1 flex items-center justify-end">
-          <IconHeart
-            id={id}
-            fillColor={myLike ? "#ff6b6b" : "#3A405A"}
-            onclick={(value) => handleLike(value)}
-          />
-          <span className="ml-2"> {postData?.likes?.length}</span>
-        </div>
+        {current_user ? (
+          <>
+            <div className="col-start-11 col-span-1 flex items-center justify-end">
+              <IconComment
+                onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
+              />
+            </div>
+            <div className="col-span-1 flex items-center justify-end">
+              <IconHeart
+                id={id}
+                fillColor={myLike ? "#ff6b6b" : "#3A405A"}
+                onclick={(value) => handleLike(value)}
+              />
+              <span className="ml-2"> {postData?.likes?.length}</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="col-start-12 col-span-1 flex items-center justify-end">
+              <IconComment
+                onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
+              />
+            </div>
+          </>
+        )}
       </div>
       {areCommentDisplayed && (
         <>
@@ -147,32 +158,34 @@ const PostCard = ({
               );
             })}
 
-          <div
-            className="col-span-12 justify-center grid grid-cols-12 p-4 my-2 bg-white border-gray-200"
-            style={{ borderWidth: "1px" }}
-          >
-            <TextArea
-              id="post-creation"
-              name="post-creation"
-              cols="30"
-              rows="10"
-              classNames={["col-span-12"]}
-              oninput={(event) => handleCommentInput(event)}
-              value={newCommentValue}
-            />
+          {current_user && (
+            <div
+              className="col-span-12 justify-center grid grid-cols-12 p-4 my-2 bg-white border-gray-200"
+              style={{ borderWidth: "1px" }}
+            >
+              <TextArea
+                id="post-creation"
+                name="post-creation"
+                cols="30"
+                rows="10"
+                classNames={["col-span-12"]}
+                oninput={(event) => handleCommentInput(event)}
+                value={newCommentValue}
+              />
 
-            <Button
-              onclick={() => handleCommentCreation(id)}
-              text="ENVOYER"
-              classNames={[
-                "border-blue-dark-light",
-                "col-span-12",
-                "p-4",
-                "lg:col-span-12",
-                "mt-4",
-              ]}
-            />
-          </div>
+              <Button
+                onclick={() => handleCommentCreation(id)}
+                text="ENVOYER"
+                classNames={[
+                  "border-blue-dark-light",
+                  "col-span-12",
+                  "p-4",
+                  "lg:col-span-12",
+                  "mt-4",
+                ]}
+              />
+            </div>
+          )}
         </>
       )}
     </>
