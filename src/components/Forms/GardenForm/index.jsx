@@ -11,9 +11,15 @@ import IconClimate from "../../icons/IconClimate/index";
 import { getClimates } from "../../../requests/climates";
 import { getGardenTypes } from "../../../requests/gardens";
 import { getLocations } from "../../../requests/locations";
-import IconLocation from '../../icons/IconLocation/index';
+import IconLocation from "../../icons/IconLocation/index";
+import LoadingAnimation from "../../LoadingAnimation/index";
+import usePageStatus from "../../../hooks/usePageStatus";
+import { useHistory } from "react-router-dom";
 
 const GardenForm = ({ droppedImage }) => {
+
+  const history = useHistory();
+  const { pageStatus, setPageStatus } = usePageStatus();
   const [climates, setClimates] = useState([]);
   const [gardenTypes, setGardenTypes] = useState([]);
   const [locations, setLocations] = useState([]);
@@ -56,7 +62,19 @@ const GardenForm = ({ droppedImage }) => {
     fetchGardenTypes();
     fetchClimates();
     fetchLocations();
+
+    setPageStatus("loaded");
   }, []);
+
+  useEffect(() => {
+    if (locations.length > 0 && climates.length > 0) {
+      setDatas({
+        ...datas,
+        location_id: locations[0].id,
+        climate_id: climates[0].id,
+      });
+    }
+  }, [locations, climates]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,75 +100,81 @@ const GardenForm = ({ droppedImage }) => {
     // console.log(response);
   };
 
-  return (
-    <div>
-      <h1 className="my-5">Partager mon jardin</h1>
+  if (pageStatus === "loading") {
+    return <LoadingAnimation />;
+  } else if (pageStatus === "loaded") {
+    return (
+      <div>
+        <h1 className="my-5">Partager mon jardin</h1>
 
-      <form className="grid grid-cols-2 gap-4 my-2" onSubmit={handleSubmit}>
-        <ul className="garden-toogle">
-          <li>Urban</li>
-          <li>
-            <div className="toogleSwitch toogleGarden">
-              <input type="checkbox" onChange={handleChange}></input>
-              <div className="switch"></div>
-            </div>
-          </li>
-          <li>Rural</li>
-        </ul>
-        <FormGroup
-          colSpan="2"
-          value={datas.name}
-          name="name"
-          id="name"
-          type="text"
-          labelText="Nom du potager :"
-          alertMessage={alerts.name}
-          onInput={(value) => handleInput(value)}
-          onBlur={(value) => handleBlur(value)}
-        />
-        <FormGroup
-          colSpan="2"
-          value={datas.area}
-          name="area"
-          id="area"
-          type="text"
-          labelText="Superficie (en m2)"
-          alertMessage={alerts.area}
-          onInput={(value) => handleInput(value)}
-          onBlur={(value) => handleBlur(value)}
-        />
+        <form className="grid grid-cols-2 gap-4 my-2" onSubmit={handleSubmit}>
+          <ul className="garden-toogle">
+            <li>Urban</li>
+            <li>
+              <div className="toogleSwitch toogleGarden">
+                <input type="checkbox" onChange={handleChange}></input>
+                <div className="switch"></div>
+              </div>
+            </li>
+            <li>Rural</li>
+          </ul>
+          <FormGroup
+            colSpan="2"
+            value={datas.name}
+            name="name"
+            id="name"
+            type="text"
+            labelText="Nom du potager :"
+            alertMessage={alerts.name}
+            onInput={(value) => handleInput(value)}
+            onBlur={(value) => handleBlur(value)}
+          />
+          <FormGroup
+            colSpan="2"
+            value={datas.area}
+            name="area"
+            id="area"
+            type="text"
+            labelText="Superficie (en m2)"
+            alertMessage={alerts.area}
+            onInput={(value) => handleInput(value)}
+            onBlur={(value) => handleBlur(value)}
+          />
 
-        <Select
-          classNames={["col-span-2"]}
-          name="climate_id"
-          id="climate_id"
-          icon={IconClimate}
-          prompter="Quel est votre climat ?"
-          options={climates.map((climate) => {
-            return { id: climate.id, text: climate.name };
-          })}
-          selectedOption={(climate_id) =>
-            setDatas({ ...datas, climate_id: climate_id })
-          }
-        />
+          <Select
+            classNames={["col-span-2"]}
+            name="climate_id"
+            id="climate_id"
+            icon={IconClimate}
+            prompter="Quel est votre climat ?"
+            options={climates.map((climate) => {
+              return { id: climate.id, text: climate.name };
+            })}
+            selectedOption={(climate_id) =>
+              setDatas({ ...datas, climate_id: climate_id })
+            }
+          />
 
-        <Select
-          classNames={["col-span-2"]}
-          name="location_id"
-          id="location_id"
-          icon={IconLocation}
-          prompter="Où vous situez vous ? "
-          options={locations.map((location) => {
-            return { id: location.id, text: location.name };
-          })}
-          selectedOption={(location_id) =>
-            setDatas({ ...datas, location_id: location_id })
-          }
-        />
+          <Select
+            classNames={["col-span-2"]}
+            name="location_id"
+            id="location_id"
+            icon={IconLocation}
+            prompter="Où vous situez vous ? "
+            options={locations.map((location) => {
+              return { id: location.id, text: location.name };
+            })}
+            selectedOption={(location_id) =>
+              setDatas({ ...datas, location_id: location_id })
+            }
+          />
 
-        <LetsGoButton backgroundColor="bg-blue" text="C'EST PARTI" />
-      </form>
-    </div>
-  );
+          <LetsGoButton backgroundColor="bg-blue" text="C'EST PARTI" />
+        </form>
+      </div>
+    );
+  } else if (pageStatus === "error") {
+    // ERROR
+  }
 };
 export default GardenForm;
