@@ -35,11 +35,12 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
+    "start": "npm run watch:css && serve -s build",
+    "build": "npm run watch:css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "watch:css": "postcss src/assets/style/tailwind.css -o src/assets/style/main.css"
   },
   "eslintConfig": {
     "extends": [
