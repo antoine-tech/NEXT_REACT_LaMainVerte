@@ -37,7 +37,14 @@ const getFollowedGardenAndRelatedData = async (gardens) => {
   // reformating object
   const followedGardens = gardensDatas.map((gardenData) => {
     let {
-      garden: { id, name, updated_at, created_at },
+      garden: {
+        id,
+        name,
+        picture_url,
+        picture_opacity,
+        updated_at,
+        created_at,
+      },
       climate,
       location,
       type,
@@ -46,6 +53,8 @@ const getFollowedGardenAndRelatedData = async (gardens) => {
     return {
       id,
       name,
+      picture_url,
+      picture_opacity,
       updated_at,
       created_at,
       climate,
@@ -74,7 +83,14 @@ const getGardenSelection = async () => {
   // reformating object
   const selectedGardens = gardensData.map((gardenData) => {
     let {
-      garden: { id, name, updated_at, created_at },
+      garden: {
+        id,
+        name,
+        picture_url,
+        picture_opacity,
+        updated_at,
+        created_at,
+      },
       climate,
       location,
       type,
@@ -83,6 +99,8 @@ const getGardenSelection = async () => {
     return {
       id,
       name,
+      picture_url,
+      picture_opacity,
       updated_at,
       created_at,
       climate,

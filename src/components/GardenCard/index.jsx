@@ -10,6 +10,8 @@ import Moment from "react-moment";
 const GardenCard = ({
   id,
   name,
+  picture_url,
+  picture_opacity,
   user,
   climate,
   location,
@@ -32,7 +34,7 @@ const GardenCard = ({
       <div
         className="card-image"
         style={{
-          backgroundImage: `url(https://images.pexels.com/photos/827518/pexels-photo-827518.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)`,
+          backgroundImage: `url(${picture_url})`,
         }}
       >
         <div className="garden-datas">

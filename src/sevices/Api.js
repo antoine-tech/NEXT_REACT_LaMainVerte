@@ -26,17 +26,16 @@ const request = async (
     .then((error) => error);
 };
 
-const create = (datas, endpoint, authenticated = false, jwt_token = null) => {
-  return request("POST", endpoint, datas, authenticated, jwt_token);
-};
-const update = (datas, endpoint, authenticated = true, jwt_token = null) => {
-  return request("PUT", endpoint, datas, authenticated, jwt_token);
-};
-const deletion = (endpoint, authenticated = true, jwt_token = null) => {
-  return request("DELETE", endpoint, null, authenticated, jwt_token);
-};
-const find = (endpoint, authenticated = true, jwt_token = null) => {
-  return request("GET", endpoint, null, authenticated, jwt_token);
-};
+const create = (datas, endpoint, authenticated = false, jwt_token = null) =>
+  request("POST", endpoint, datas, authenticated, jwt_token);
+
+const update = (datas, endpoint, authenticated = true, jwt_token = null) =>
+  request("PUT", endpoint, datas, authenticated, jwt_token);
+
+const deletion = (endpoint, authenticated = true, jwt_token = null) =>
+  request("DELETE", endpoint, null, authenticated, jwt_token);
+
+const find = (endpoint, authenticated = true, jwt_token = null) =>
+  request("GET", endpoint, null, authenticated, jwt_token);
 
 export { request, create, update, deletion, find };

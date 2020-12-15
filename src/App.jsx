@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Switch, useLocation } from "react-router-dom";
+import { Switch, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -54,7 +54,12 @@ const App = () => {
           path="/register"
           component={Register}
         />
-        <AuthRoute current_user={current_user} exact path="/" component={Home}></AuthRoute>
+        <AuthRoute
+          current_user={current_user}
+          exact
+          path="/"
+          component={Home}
+        ></AuthRoute>
         <AuthRoute
           current_user={current_user}
           exact
@@ -73,6 +78,7 @@ const App = () => {
           path="/garden/:id"
           component={Garden}
         />
+
       </Switch>
     </>
   );
