@@ -31,10 +31,9 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "dev": "craco start",
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "npm run watch:css && react-scripts start",
+    "build": "npm run watch:css && react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
   },
