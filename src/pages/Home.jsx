@@ -18,6 +18,7 @@ import LoadingAnimation from "../components/LoadingAnimation/index";
 import useMutationObserver from "../hooks/useMutationObserver";
 import useInstantMessages from "../hooks/useIntantMessages";
 import useCurrentUser from "../hooks/useCurrentUser";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const { getJwtToken } = useJwtToken();

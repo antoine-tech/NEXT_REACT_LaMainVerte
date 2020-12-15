@@ -14,7 +14,10 @@ import { getGardenTypes } from "../../../requests/gardens";
 const GardenForm = ({ droppedImage }) => {
   const [climates, setClimates] = useState([]);
   const [gardenTypes, setGardenTypes] = useState([]);
-  const { gardenData, alerts, handleInput, handleBlur } = useFormAnalysis();
+  const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
+    { name: "", area: "", climate: "", location: "" },
+    {}
+  );
   const { getJwtToken } = useJwtToken();
   const { isToogled, handleChange } = useIsToogled();
 
@@ -53,10 +56,10 @@ const GardenForm = ({ droppedImage }) => {
     const newGarden = {
       garden: {
         garden_type_id: isToogled ? 1 : 2,
-        name: gardenData.name,
-        area: gardenData.area,
-        climate: parseInt(gardenData.climate_id),
-        location: parseInt(gardenData.location),
+        name: datas.name,
+        area: datas.area,
+        climate: parseInt(datas.climate_id),
+        location: parseInt(datas.location),
         image_url: image_url,
       },
     };
@@ -82,7 +85,7 @@ const GardenForm = ({ droppedImage }) => {
         </ul>
         <FormGroup
           colSpan="2"
-          value={gardenData.name}
+          value={datas.name}
           name="name"
           id="name"
           type="text"
@@ -93,7 +96,7 @@ const GardenForm = ({ droppedImage }) => {
         />
         <FormGroup
           colSpan="2"
-          value={gardenData.area}
+          value={datas.area}
           name="area"
           id="area"
           type="text"
@@ -117,7 +120,7 @@ const GardenForm = ({ droppedImage }) => {
 
         <FormGroup
           colSpan="2"
-          value={gardenData.location}
+          value={datas.location}
           name="location"
           id="location"
           type="text"

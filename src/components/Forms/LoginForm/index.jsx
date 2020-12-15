@@ -84,5 +84,4 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
     </>
   );
 };
-
 export default LoginForm;
