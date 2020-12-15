@@ -68,6 +68,8 @@ const Garden = () => {
       } catch (error) {
         console.error(error);
       }
+    } else {
+      history.push("/login");
     }
   };
 
@@ -82,6 +84,8 @@ const Garden = () => {
       }
       const garden = await getGarden(id);
       setGardenData(garden);
+    } else {
+      history.push("/login");
     }
   };
 
@@ -117,9 +121,9 @@ const Garden = () => {
         className="absolute z-10 w-full"
         style={{
           backgroundImage: `url(${gardenData?.garden?.picture_url})`,
-          backgroundSize:'cover',
-          backgroundRepeat:'no-repeat',
-          backgroundPosition:'center'
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
         }}
       >
         {isAmmendable ? (
@@ -355,7 +359,11 @@ const Garden = () => {
           )}
 
           <div className="my-8 col-span-4">
-            <h3 className="my-4">Les posts</h3>
+            {gardenData?.posts?.length > 0 ? (
+              <h3 className="my-4">Les posts</h3>
+            ) : (
+              <h3 className="my-4">Rien pour le moment ...</h3>
+            )}
 
             {gardenData?.posts?.map((post) => {
               let {

@@ -64,14 +64,12 @@ const App = () => {
           path="/profile"
           component={Profile}
         />
-        <AuthRoute
-          current_user={current_user}
+        <Route
           exact
           path="/garden/:id/events"
           component={GardenHistory}
         />
-        <AuthRoute
-          current_user={current_user}
+        <Route
           exact
           path="/garden/:id"
           component={Garden}

@@ -4,10 +4,14 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import Modal from "../Modal";
 import EventCreationForm from "../Forms/EventCreationForm/index";
+import useCurrentUser from '../../hooks/useCurrentUser';
+import { useHistory } from "react-router-dom";
 
 const localizer = momentLocalizer(moment);
 
 const GardenCalendar = ({ events }) => {
+  const {current_user} = useCurrentUser();
+  const history = useHistory();
   const [isModalOpen, setModalOpen] = useState(false);
   const [newEvent, setNewEvent] = useState(null);
   const handleSelectEvent = (event) => {
@@ -15,8 +19,13 @@ const GardenCalendar = ({ events }) => {
   };
 
   const handleSelectDates = (event) => {
-    setNewEvent({ start: event.start.toString(), end: event.end.toString() });
-    setModalOpen(true);
+    if (current_user)
+    {
+      setNewEvent({ start: event.start.toString(), end: event.end.toString() });
+      setModalOpen(true);
+    }else{
+      history.push('/login')
+    }
   };
   return (
     <div
@@ -33,7 +42,7 @@ const GardenCalendar = ({ events }) => {
         onSelectEvent={(event) => {
           handleSelectEvent(event);
         }}
-        onSelectSlot={(event) => handleSelectDates(event)}
+        onSelectSlot={(event) => handleSelectDates(event, current_user)}
         selectable
         className="col-span-8 col-start-3 bg-white m-8"
       />
