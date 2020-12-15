@@ -40,7 +40,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build",
-    "build:css": "postcss src/assets/style/main.css -o src/assets/style/tailwind.css"
+    "build:css": "postcss src/assets/style/tailwind.css -o src/assets/style/main.css"
   },
   "eslintConfig": {
     "extends": [
