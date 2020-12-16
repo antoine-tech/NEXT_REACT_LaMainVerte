@@ -624,16 +624,52 @@ PROFILE */
   padding-bottom: 4vh;
   overflow: visible;
 }
-#user-informations .avatar-img {
-  border-radius: 50%;
+#user-informations div.img {
+  display: grid;
   cursor: pointer;
+}
+#user-informations .avatar-img {
+  grid-column: 1;
+  grid-row: 1;
+  border-radius: 50%;
   padding: 2px;
   height: 200px;
   width: 200px;
   transform: translateY(-70px);
   background: var(--red-gradient);
   padding: 10px;
-  transition: transform 200ms 100ms ease;
+  transition: all 200ms 100ms ease;
+}
+#user-informations #picture-img {
+  display: grid;
+  transform: translateY(-70px);
+  margin: auto;
+  z-index: 2;
+  opacity: 0%;
+  grid-column: 1;
+  grid-row: 1;
+  width: 70px;
+  transition: all 200ms 100ms ease;
+}
+#user-informations #picture-img img {
+  cursor: pointer;
+  grid-column: 1;
+  grid-row: 1;
+}
+#user-informations #picture-img input {
+  padding-top: 15px;
+  cursor: pointer;
+  opacity: 0%;
+  grid-column: 1;
+  grid-row: 1;
+}
+#user-informations div.img:hover .avatar-img{
+  transform: translateY(-80px);
+  filter: brightness(70%);
+}
+#user-informations div.img:hover #picture-img{
+  transform: translateY(-80px);
+  opacity: 100%;
 }
 #user-informations  h1 {
   font-size: 30px;

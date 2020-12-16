@@ -41,6 +41,7 @@ const editUserProfile = async (
   last_name,
   username,
   email,
+  avatar_url,
   password,
   password_confirmation,
   user_id,
@@ -53,10 +54,21 @@ const editUserProfile = async (
         last_name,
         username,
         email,
+        avatar_url,
         password,
         password_confirmation,
       },
     },
+    `/users/${user_id}`,
+    true,
+    jwtToken
+  );
+
+const removeProfile = async (
+  user_id,
+  jwtToken
+) =>
+  await deletion(
     `/users/${user_id}`,
     true,
     jwtToken
@@ -77,4 +89,4 @@ const findUserDatas = async (userId) =>
     .then((res) => res.json())
     .catch((error) => error);
 
-export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout, editUserProfile };
+export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout, editUserProfile, removeProfile };

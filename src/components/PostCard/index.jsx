@@ -95,7 +95,7 @@ const PostCard = ({
             className="suggestion-avatar-half"
             onClick={() => handleClick(garden_id)}
           >
-            <div className="avatar-img"></div>
+            <div className="avatar-img" />
           </div>
 
           <p className="my-4 font-blue-dark-light font-sm ml-2">
