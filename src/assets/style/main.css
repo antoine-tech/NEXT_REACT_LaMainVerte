@@ -68,7 +68,7 @@
 /* GENERAL TYPOS */
 
 *, *:focus{
-  outline: none;
+  outline: 0;
 }
 
 
@@ -239,10 +239,6 @@ textarea {
 }
 
 /* INPUTS SELECT */
-
-select, input[type='text'], input[type='number']{
-  -webkit-appearance: none;
-}
 select {
   border-bottom: 1px solid var(--blue-dark-light);
   border-top: 1px solid var(--blue-dark-light);
