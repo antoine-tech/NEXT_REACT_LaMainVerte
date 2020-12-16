@@ -3,11 +3,23 @@ import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from "../../buttons/LetsGoButton/index";
 import FormGroup from "../../FormGroup/index";
 import Moment from "react-moment";
+import { useParams } from "react-router-dom";
+import { createEvent } from "../../../requests/events";
+import useJwtToken from "../../../hooks/useJwtToken";
 
-const EventCreationForm = ({ id, data, onClick }) => {
+const EventCreationForm = ({
+  id,
+  data,
+  onClick,
+  events,
+  setEvents,
+  setModalOpen,
+}) => {
+  const { garden_id } = useParams();
+  const { getJwtToken } = useJwtToken();
   const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
     {
-      title: "",
+      name: "",
       description: "",
       start_date: data?.start,
       end_date: data?.end,
@@ -17,7 +29,26 @@ const EventCreationForm = ({ id, data, onClick }) => {
     }
   );
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const newEvent = await createEvent(
+        garden_id,
+        {
+          event: {
+            name: datas.name,
+            description: datas.description,
+            start_date: datas.start_date,
+            end_date: datas.end_date,
+          },
+        },
+        getJwtToken
+      );
+      setEvents(newEvent);
+      setModalOpen(false);
+    } catch (error) {}
+  };
+
   return (
     <div
       className="grid grid-cols-12 flex items-center"
@@ -32,10 +63,14 @@ const EventCreationForm = ({ id, data, onClick }) => {
       >
         <div className="my-4 col-span-2 flex">
           <h2>
-            Créer un évenement du
-            <Moment format="DD/MM/YYYY">{Date.parse(data.start)}</Moment>
+            Evenement du
+            <Moment className="italic" format=" DD/MM/YYYY ">
+              {datas.start_date}
+            </Moment>
             au
-            <Moment format="DD/MM/YYYY">{Date.parse(data.end)}</Moment>
+            <Moment className="italic" format=" DD/MM/YYYY ">
+              {datas.end_date}
+            </Moment>
           </h2>
         </div>
 
@@ -48,7 +83,6 @@ const EventCreationForm = ({ id, data, onClick }) => {
           id="start_date"
           type="date"
           labelText="Début"
-          alertMessage={alerts.start_date}
         />
 
         <FormGroup
@@ -60,18 +94,17 @@ const EventCreationForm = ({ id, data, onClick }) => {
           id="end_date"
           type="date"
           labelText="Fin"
-          alertMessage={alerts.end_date}
         />
         <FormGroup
           colSpan="2"
           onInput={(value) => handleInput(value)}
           onBlur={(value) => handleBlur(value)}
-          value={datas.title}
-          name="title"
-          id="title"
-          type="text"
-          labelText="Titre :"
-          alertMessage={alerts.title}
+          value={datas.name}
+          name="name"
+          id="name"
+          type="name"
+          labelText="Nom :"
+          alertMessage={alerts.name}
         />
         <FormGroup
           colSpan="2"

@@ -3,7 +3,6 @@ import FormGroup from "../../FormGroup/index";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import LetsGoButton from "../../buttons/LetsGoButton/index";
 import RegistrationLinks from "../../RegistrationLinks";
-import useJwtToken from "../../../hooks/useJwtToken";
 import { signUserIn } from "../../../requests/user";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import { useHistory } from "react-router-dom";
@@ -19,29 +18,20 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
     }
   );
   const { setCurrentUser } = useCurrentUser();
-  const { setJwtToken } = useJwtToken();
-
   const history = useHistory();
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { email, password } = datas;
     if (email !== "" && password !== "") {
-      const response = await signUserIn(email, password).then((res) => {
-        if (res.headers.get("Authorization")) {
-          setJwtToken(res.headers.get("Authorization"));
-        }
-        return res.json();
-      });
+      const response = await signUserIn(email, password);
 
-      if (response.hasOwnProperty("data")) {
-        setCurrentUser(response.data);
+      if (response) {
+        setCurrentUser(response);
         history.push("/");
       } else {
         setAlertMessage("Les informations fournies ne sont pas correctes");
         setAlertType("danger");
         setIsAlertDisplayed(true);
-        console.error(response);
       }
     }
   };

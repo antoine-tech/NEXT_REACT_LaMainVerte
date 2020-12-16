@@ -38,6 +38,7 @@ const getGardens = async () =>
     .catch((error) => error);
 
 const getFollowedGardenAndRelatedData = async (gardens) => {
+
   // fetching each of the gardens available data to gather all related data to a garden at once
   let gardensDataPromises = await gardens.map((garden) => getGarden(garden.id));
 
@@ -71,8 +72,6 @@ const getFollowedGardenAndRelatedData = async (gardens) => {
       created_at,
       climate,
       location,
-      picture_url,
-      picture_opacity,
       garden_type: type,
       user,
     };
@@ -134,13 +133,13 @@ const follow = async (garden_id, jwt_token) => {
     },
   };
   return await create(data, "/follows", true, jwt_token).then((res) =>
-    res.text()
+    res.json()
   );
 };
 
 const unfollow = async (follow_id, jwt_token) => {
   return await deletion("/follows/" + follow_id, true, jwt_token).then((res) =>
-    res.json()
+    res.text()
   );
 };
 
@@ -158,6 +157,56 @@ const unlikeGarden = async (gardenLikeId, jwt_token) =>
     .then((res) => res.text())
     .catch((error) => error);
 
+const getEvents = async (garden_id) => {
+  const { events } = await find(`/gardens/${garden_id}/`).then((res) =>
+    res.json()
+  );
+  return events;
+};
+
+const search = async (ressource, params) => {
+  const searchResults = await find(`/${ressource}?${params}`).then((res) =>
+    res.json()
+  );
+
+  const gardenPromises = await searchResults?.map((searchResult) =>
+    getGarden(searchResult.id)
+  );
+
+  const gardens = await Promise.all(gardenPromises);
+
+  const selectedGardens = gardens.map((gardenData) => {
+    let {
+      garden: {
+        id,
+        name,
+        picture_url,
+        picture_opacity,
+        updated_at,
+        created_at,
+      },
+      climate,
+      location,
+      type,
+      user,
+    } = gardenData;
+    return {
+      id,
+      name,
+      picture_url,
+      picture_opacity,
+      updated_at,
+      created_at,
+      climate,
+      location,
+      garden_type: type,
+      user,
+    };
+  });
+
+  return selectedGardens;
+};
+
 export {
   getClimate,
   getLocation,
@@ -165,6 +214,7 @@ export {
   getGardenTypes,
   getGarden,
   getGardens,
+  getEvents,
   getFollowedGardenAndRelatedData,
   getGardenSelection,
   follow,
@@ -172,4 +222,5 @@ export {
   likeGarden,
   unlikeGarden,
   createGarden,
+  search,
 };

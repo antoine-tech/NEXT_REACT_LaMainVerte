@@ -29,7 +29,7 @@ const Garden = () => {
   const { current_user } = useCurrentUser();
   const { getJwtToken } = useJwtToken();
   const { isAmmendable, setIsAmmendable } = useIsAmmendable();
-  const { id } = useParams();
+  const { garden_id } = useParams();
   const [gardenData, setGardenData] = useState({});
   const [gardenFollow, setGardenFollow] = useState(null);
   const history = useHistory();
@@ -42,7 +42,7 @@ const Garden = () => {
   };
 
   const handleClickEventHistory = () => {
-    history.push("/garden/" + id + "/events");
+    history.push("/garden/" + garden_id + "/events");
   };
 
   const handleLike = async (idRessource) => {
@@ -63,7 +63,7 @@ const Garden = () => {
         }
       }
       try {
-        const garden = await getGarden(id);
+        const garden = await getGarden(garden_id);
         setGardenData(garden);
       } catch (error) {
         console.error(error);
@@ -82,7 +82,7 @@ const Garden = () => {
         const followGarden = await follow(garden_id, getJwtToken);
         setGardenFollow(followGarden);
       }
-      const garden = await getGarden(id);
+      const garden = await getGarden(garden_id);
       setGardenData(garden);
     } else {
       history.push("/login");
@@ -90,30 +90,30 @@ const Garden = () => {
   };
 
   const handleChangeGardenLocation = (value) => {
-    console.log(value);
+    //console.log(value);
   };
 
   useEffect(() => {
     const fetchGardenData = async () => {
-      const garden = await getGarden(id);
+      const garden = await getGarden(garden_id);
       setGardenData(garden);
     };
 
     fetchGardenData();
-  }, [id]);
+  }, [garden_id]);
 
   useEffect(() => {
     const userLike = gardenData?.likes?.find(
-      (el) => el.garden_id === parseInt(id) && el.user_id === current_user?.id
+      (el) => el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
     );
 
     const userFollow = gardenData?.follows?.find(
-      (el) => el.garden_id === parseInt(id) && el.user_id === current_user?.id
+      (el) => el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
     );
 
     userFollow && setGardenFollow(userFollow);
     userLike && setMyLike(userLike);
-  }, [gardenData]);
+  }, [gardenData, current_user]);
 
   return (
     <section className="relative">
@@ -297,6 +297,7 @@ const Garden = () => {
             )}
           </div>
 
+      
           {gardenFollow !== null ? (
             <Button
               text="Ne plus suivre"
@@ -310,7 +311,7 @@ const Garden = () => {
                 "col-span-4",
                 "lg:col-span-2",
               ]}
-              onclick={() => handleFollow(id)}
+              onclick={() => handleFollow(garden_id)}
             />
           ) : (
             <Button
@@ -325,7 +326,7 @@ const Garden = () => {
                 "col-span-4",
                 "lg:col-span-2",
               ]}
-              onclick={() => handleFollow(id)}
+              onclick={() => handleFollow(garden_id)}
             />
           )}
           {myLike !== null ? (
@@ -341,7 +342,7 @@ const Garden = () => {
                 "col-span-4",
                 "lg:col-span-2",
               ]}
-              onclick={() => handleLike(id)}
+              onclick={() => handleLike(garden_id)}
             />
           ) : (
             <Button
@@ -356,7 +357,7 @@ const Garden = () => {
                 "col-span-4",
                 "lg:col-span-2",
               ]}
-              onclick={() => handleLike(id)}
+              onclick={() => handleLike(garden_id)}
             />
           )}
 

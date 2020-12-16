@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import IconArrowDown from "../icons/IconArrowDown/index";
 
 const Select = ({
@@ -10,9 +10,13 @@ const Select = ({
   selectedOption,
   classNames,
 }) => {
+  useEffect(() => {
+    selectedOption("");
+  }, []);
+
   const handleChange = (event) => {
     return selectedOption(
-      parseInt(Array.from(event.target.selectedOptions)[0].value)
+      Array.from(event.target.selectedOptions)[0].value
     );
   };
   return (
@@ -21,9 +25,6 @@ const Select = ({
         classNames ? classNames.join() : ""
       }`}
     >
-      <p style={{ fontSize: "1rem" }} className="col-span-12 my-4">
-        {prompter}
-      </p>
       <div className="prepend col-span-1 flex items-center justify-center">
         <Icon />
       </div>
@@ -34,7 +35,8 @@ const Select = ({
         onChange={handleChange}
         defaultValue={prompter}
       >
-        {options.map((option) => {
+        <option value="">{prompter}</option>
+        {options?.map((option, index) => {
           let { id, text } = option;
           return (
             <option key={`option-${id}`} value={id}>

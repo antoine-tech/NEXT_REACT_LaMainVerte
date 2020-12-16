@@ -21,9 +21,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1"
-  },
-  "devDependencies": {
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1",
     "@craco/craco": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -31,6 +29,8 @@
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.35",
     "postcss-cli": "^8.3.0"
+  },
+  "devDependencies": {
   },
   "scripts": {
     "dev": "craco start",
