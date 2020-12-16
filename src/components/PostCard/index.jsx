@@ -84,7 +84,7 @@ const PostCard = ({
     userLike && setMyLike(userLike);
 
     setIsLoading(false);
-  }, [postData]);
+  }, []);
 
   return isLoading ? (
     <LoadingSpinner />
