@@ -38,6 +38,7 @@ const getGardens = async () =>
     .catch((error) => error);
 
 const getFollowedGardenAndRelatedData = async (gardens) => {
+
   // fetching each of the gardens available data to gather all related data to a garden at once
   let gardensDataPromises = await gardens.map((garden) => getGarden(garden.id));
 

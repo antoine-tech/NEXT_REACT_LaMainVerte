@@ -30,16 +30,16 @@ const Home = () => {
   const [displayedGardens, setDisplayedGardens] = useState([]);
   const { current_user } = useCurrentUser();
 
+  useEffect(() => console.log(current_user), [current_user]);
+
   useEffect(() => {
     const fetchGardenSelection = async () => await getGardenSelection();
 
-    const fetchAndSetTestimonies = async () =>
-      await getTestimoniesAndRelatedUsers();
+    const fetchTestimonies = async () => await getTestimoniesAndRelatedUsers();
 
     const fetchAndSetPosts = async () => await getPosts();
 
-    const fetchAndSetUserProfile = async () =>
-      await getUserDatas(getJwtToken).then((res) => res.json());
+    const fetchUserProfile = async () => await getUserDatas(getJwtToken);
 
     const fetchFollowedGarden = async (userProfile) => {
       const userFollowedGardens = await getFollowedGardenAndRelatedData(
@@ -56,11 +56,11 @@ const Home = () => {
     const fetchPageDatas = async (current_user) => {
       const fetchedPosts = await fetchAndSetPosts();
       setLastPosts(fetchedPosts);
-      const fetchedTestimonies = await fetchAndSetTestimonies();
+      const fetchedTestimonies = await fetchTestimonies();
       setTestimonies(fetchedTestimonies);
 
       if (current_user) {
-        const userProfile = await fetchAndSetUserProfile();
+        const userProfile = await fetchUserProfile();
         const followedGarden = await fetchFollowedGarden(userProfile);
         setDisplayedGardens(followedGarden);
       } else {

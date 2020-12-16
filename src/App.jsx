@@ -22,10 +22,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchUserDatas = async () => {
-      const response = await getUserDatas(getJwtToken).then((res) =>
-        res.json()
-      );
-
+      const response = await getUserDatas(getJwtToken)
       response.user && setCurrentUser(response.user);
       return response;
     };
