@@ -113,7 +113,7 @@ const Garden = () => {
 
     userFollow && setGardenFollow(userFollow);
     userLike && setMyLike(userLike);
-  }, [gardenData]);
+  }, [gardenData, current_user]);
 
   return (
     <section className="relative">
@@ -297,6 +297,7 @@ const Garden = () => {
             )}
           </div>
 
+      
           {gardenFollow !== null ? (
             <Button
               text="Ne plus suivre"

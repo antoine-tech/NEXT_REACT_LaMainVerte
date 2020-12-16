@@ -132,13 +132,13 @@ const follow = async (garden_id, jwt_token) => {
     },
   };
   return await create(data, "/follows", true, jwt_token).then((res) =>
-    res.text()
+    res.json()
   );
 };
 
 const unfollow = async (follow_id, jwt_token) => {
   return await deletion("/follows/" + follow_id, true, jwt_token).then((res) =>
-    res.json()
+    res.text()
   );
 };
 

@@ -71,7 +71,7 @@ const Home = () => {
     };
 
     fetchPageDatas(current_user);
-  }, []);
+  }, [current_user]);
 
   if (pageStatus === "loading") {
     return (
