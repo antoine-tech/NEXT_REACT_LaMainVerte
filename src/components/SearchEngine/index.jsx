@@ -1,42 +1,69 @@
 import React, { useEffect, useState } from "react";
-import { getClimates } from "../../requests/climates";
-import { getTags } from "../../requests/tags";
-import SearchFilter from "../SearchFilter/index";
+import useGardenRelatedAttributes from "../../hooks/useGardenRelatedAttributes";
+import Select from "../Select/index";
+import IconClimate from "../icons/IconClimate/index";
+import IconLocation from "../icons/IconLocation/index";
+import IconLabel from "../icons/IconLabel/index";
+import Button from "../Button/index";
+import { search } from "../../requests/gardens";
+import { parseQueryParams } from "../../helpers/parseQueryParams";
 
-const SearchEngine = () => {
-  const [filters, setFilters] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [climates, setClimates] = useState([]);
+const SearchEngine = ({
+  getSearchResult,
+  getFilterDisplayed,
+  filterDisplay,
+  setSearchResultDisplayed,
+}) => {
+  const {
+    tags,
+    climates,
+    gardenTypes,
+    locations,
+  } = useGardenRelatedAttributes();
 
-  const handleCheckBoxChange = (object) => {
-    if (
-      filters.find(
-        (element) => element.id === object.id && element.type === object.type
-      )
-    ) {
-      setFilters(
-        filters.filter(
-          (element) => element.type !== object.id && element.id !== object.id
-        )
-      );
-    } else {
-      setFilters([...filters, object]);
-    }
+  const [inputValue, setInputValue] = useState("");
+  const [selectedGardenType, setSelectedGardenType] = useState("");
+  const [selectedClimate, setSelectedClimate] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedTag, setSelectedTag] = useState("");
+
+  const handleToogleFilters = () => {
+    getFilterDisplayed(!filterDisplay);
+  };
+
+  const handleInput = async (
+    event,
+    selectedGardenType,
+    selectedClimate,
+    selectedLocation,
+    selectedTag
+  ) => {
+    setInputValue(event.target.value);
+    setSearchResultDisplayed(true);
   };
 
   useEffect(() => {
-    const fetchClimates = async () => {
-      const climates = await getClimates();
-      setClimates(climates);
-    };
-    const fetchTags = async () => {
-      const tags = await getTags();
-      setTags(tags);
+    const fetchSearchResults = async () => {
+      const queryString = parseQueryParams(
+        inputValue,
+        selectedGardenType,
+        selectedClimate,
+        selectedLocation,
+        selectedTag
+      );
+      const searchResults = await search("gardens", queryString);
+
+      getSearchResult(searchResults);
     };
 
-    fetchTags();
-    fetchClimates();
-  }, []);
+    fetchSearchResults();
+  }, [
+    selectedClimate,
+    selectedGardenType,
+    selectedLocation,
+    selectedTag,
+    inputValue,
+  ]);
 
   return (
     <div id="search-zone">
@@ -45,40 +72,92 @@ const SearchEngine = () => {
         id="search"
         className="w-full"
         placeholder="A la recherche du jardin des espérides ? "
+        onInput={(event) =>
+          handleInput(
+            event,
+            selectedGardenType,
+            selectedClimate,
+            selectedLocation,
+            selectedTag
+          )
+        }
       />
-      <p className="mt-4">Filtres :</p>
 
-      <div className="filter-zone flex justify-start flex-wrap">
-        {tags &&
-          tags.map((tag) => {
-            let { id, name } = tag;
-            return (
-              <SearchFilter
-                key={`tag-${id}`}
-                id={id}
-                name={id}
-                label={name}
-                onChange={(tag) => handleCheckBoxChange(tag)}
-                type="tag"
-              />
-            );
-          })}
+      <Button
+        text={filterDisplay ? "Cacher les filtres" : "Voir les filtres :"}
+        classNames={[
+          "h-50",
+          "w-100",
+          "flex",
+          "items-center",
+          "justify-center",
+          "justify-self-end",
+          "p-4",
+          "col-span-1",
+          "bg-blue-dark",
+          "text-white",
+          "text-center",
+          "rounded-full",
+          "hover-animate-bounce",
+          "mt-4",
+        ]}
+        onclick={handleToogleFilters}
+      />
 
-        {climates &&
-          climates.map((climate) => {
-            let { id, name } = climate;
-            return (
-              <SearchFilter
-                key={`climate-${id}`}
-                id={id}
-                name={id}
-                label={name}
-                onChange={(climate) => handleCheckBoxChange(climate)}
-                type="climate"
-              />
-            );
-          })}
-      </div>
+      {filterDisplay && (
+        <div className="filter-zone flex justify-start flex-wrap">
+          <Select
+            classNames={["col-span-2"]}
+            name="gardenType_id"
+            id="gardenType_id"
+            icon={IconLabel}
+            prompter="Type de jardin :"
+            options={gardenTypes}
+            selectedOption={(gardenType_id) => {
+              setSearchResultDisplayed(true);
+              setSelectedGardenType(gardenType_id);
+            }}
+          />
+
+          <Select
+            classNames={["col-span-2"]}
+            name="tag_id"
+            id="tag_id"
+            icon={IconLabel}
+            prompter="Tag :"
+            options={tags}
+            selectedOption={(tag) => {
+              setSearchResultDisplayed(true);
+              setSelectedTag(tag);
+            }}
+          />
+          <Select
+            classNames={["col-span-2"]}
+            name="climate_id"
+            id="climate_id"
+            icon={IconClimate}
+            prompter="Climats"
+            options={climates}
+            selectedOption={(climate_id) => {
+              setSearchResultDisplayed(true);
+              setSelectedClimate(climate_id);
+            }}
+          />
+
+          <Select
+            classNames={["col-span-2"]}
+            name="location_id"
+            id="location_id"
+            icon={IconLocation}
+            prompter="Localisation :"
+            options={locations}
+            selectedOption={(location_id) => {
+              setSearchResultDisplayed(true);
+              setSelectedLocation(location_id);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };

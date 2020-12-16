@@ -22,10 +22,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchUserDatas = async () => {
-      const response = await getUserDatas(getJwtToken).then((res) =>
-        res.json()
-      );
-
+      const response = await getUserDatas(getJwtToken)
       response.user && setCurrentUser(response.user);
       return response;
     };
@@ -41,7 +38,6 @@ const App = () => {
       : setNavbarPresent(true);
   }, [pathname]);
 
-        console.log(current_user);
 
   return (
     <>
@@ -69,12 +65,12 @@ const App = () => {
         />
         <Route
           exact
-          path="/garden/:id/events"
+          path="/garden/:garden_id/events"
           component={GardenHistory}
         />
         <Route
           exact
-          path="/garden/:id"
+          path="/garden/:garden_id"
           component={Garden}
         />
         <AuthRoute

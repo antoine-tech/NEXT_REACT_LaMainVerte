@@ -67,6 +67,11 @@
 
 /* GENERAL TYPOS */
 
+*, *:focus{
+  outline: 0;
+}
+
+
 h1,
 h2,
 h3,
@@ -627,4 +632,11 @@ SLIDER */
 }
 .min-h-80vh {
   min-height: 90vh;
+}
+
+
+/* CALENDAR */
+
+.rbc-event{
+  background-color:var(--greeen)
 }

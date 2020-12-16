@@ -53,7 +53,6 @@ const GardenForm = ({ droppedImage }) => {
       try {
         const fetchedLocations = await getLocations();
         setLocations(fetchedLocations);
-        console.log(locations);
       } catch (error) {
         console.error(error);
       }

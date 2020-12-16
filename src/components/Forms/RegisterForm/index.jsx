@@ -23,7 +23,8 @@ const RegiterForm = ({
     {
       isEmpty: "Ce champ est obligatoire",
       passwordsAreDifferent: "Les mots de passes ne sont pas similaires",
-    }
+    },
+    
   );
   const history = useHistory();
   const handleSubmit = async (event) => {
