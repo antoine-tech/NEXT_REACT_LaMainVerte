@@ -7,7 +7,9 @@ import reducer from "./redux/reducers/reducer";
 import reduxThunk from "redux-thunk";
 import App from "./App";
 
+import "./assets/style/tailwind.css";
 import "./assets/style/main.css";
+
 
 const store = createStore(reducer, applyMiddleware(reduxThunk));
 
