@@ -15,7 +15,7 @@ const GardenCalendar = ({ events, setEvents }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [newEvent, setNewEvent] = useState(null);
   const handleSelectEvent = (event) => {
-    console.log(event);
+    //console.log(event);
   };
 
   const handleSelectDates = (event) => {

@@ -41,7 +41,6 @@ const App = () => {
       : setNavbarPresent(true);
   }, [pathname]);
 
-        console.log(current_user);
 
   return (
     <>

@@ -53,7 +53,6 @@ const GardenForm = ({ droppedImage }) => {
       try {
         const fetchedLocations = await getLocations();
         setLocations(fetchedLocations);
-        console.log(locations);
       } catch (error) {
         console.error(error);
       }
@@ -93,8 +92,6 @@ const GardenForm = ({ droppedImage }) => {
         image_url,
       },
     };
-
-    console.log(newGarden);
 
     // const response = await createGarden(newGarden, getJwtToken);
     // console.log(response);

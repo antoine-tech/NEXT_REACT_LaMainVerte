@@ -157,12 +157,53 @@ const unlikeGarden = async (gardenLikeId, jwt_token) =>
     .catch((error) => error);
 
 const getEvents = async (garden_id) => {
-  const {events} = await find(`/gardens/${garden_id}/`).then((res) => res.json());
+  const { events } = await find(`/gardens/${garden_id}/`).then((res) =>
+    res.json()
+  );
   return events;
 };
 
-const search = async (ressource,params) => {
-  return await find(`/${ressource}?${params}`).then((res) => res.json());
+const search = async (ressource, params) => {
+  const searchResults = await find(`/${ressource}?${params}`).then((res) =>
+    res.json()
+  );
+
+  const gardenPromises = await searchResults?.map((searchResult) =>
+    getGarden(searchResult.id)
+  );
+
+  const gardens = await Promise.all(gardenPromises);
+
+  const selectedGardens = gardens.map((gardenData) => {
+    let {
+      garden: {
+        id,
+        name,
+        picture_url,
+        picture_opacity,
+        updated_at,
+        created_at,
+      },
+      climate,
+      location,
+      type,
+      user,
+    } = gardenData;
+    return {
+      id,
+      name,
+      picture_url,
+      picture_opacity,
+      updated_at,
+      created_at,
+      climate,
+      location,
+      garden_type: type,
+      user,
+    };
+  });
+
+  return selectedGardens;
 };
 
 export {
@@ -180,5 +221,5 @@ export {
   likeGarden,
   unlikeGarden,
   createGarden,
-  search
+  search,
 };

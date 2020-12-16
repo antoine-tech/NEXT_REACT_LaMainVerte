@@ -90,7 +90,7 @@ const Garden = () => {
   };
 
   const handleChangeGardenLocation = (value) => {
-    console.log(value);
+    //console.log(value);
   };
 
   useEffect(() => {

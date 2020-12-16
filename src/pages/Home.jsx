@@ -172,7 +172,7 @@ const Home = () => {
             </>
           )}
 
-          {displayedGardens.map((displayedGarden) => {
+          {displayedGardens?.map((displayedGarden) => {
             let {
               id,
               name,
