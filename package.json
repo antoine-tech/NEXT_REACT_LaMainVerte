@@ -35,7 +35,7 @@
     "@testing-library/user-event": "^12.1.10"
   },
   "scripts": {
-    "dev": "craco start",
+    "dev": "react-scripts build",
     "start": "npm run build:css && serve -s build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
