@@ -82,6 +82,7 @@ const GardenForm = ({ droppedImage }) => {
       ? await uploadToAWS(getJwtToken, droppedImage[0], "la-main-verte")
       : "";
 
+
     const newGarden = {
       garden: {
         garden_type_id: isToogled ? 1 : 2,
@@ -89,7 +90,7 @@ const GardenForm = ({ droppedImage }) => {
         area: datas.area,
         climate_id: datas.climate_id,
         location_id: datas.location_id,
-        image_url,
+        picture_url:image_url,
       },
     };
 

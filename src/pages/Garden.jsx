@@ -17,6 +17,8 @@ import TextArea from "../components/TextArea/index";
 import Select from "../components/Select/index";
 import SliderInput from "../components/SliderInput/index";
 import Input from "../components/Input/index";
+import FormGroup from "../components/FormGroup/index";
+import PostCreation from "../components/Forms/PostCreation/index";
 import {
   getGarden,
   follow,
@@ -104,11 +106,13 @@ const Garden = () => {
 
   useEffect(() => {
     const userLike = gardenData?.likes?.find(
-      (el) => el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
+      (el) =>
+        el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
     );
 
     const userFollow = gardenData?.follows?.find(
-      (el) => el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
+      (el) =>
+        el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
     );
 
     userFollow && setGardenFollow(userFollow);
@@ -155,7 +159,6 @@ const Garden = () => {
           <h2 className="italic col-span-3">
             Par {gardenData?.user?.fist_name} {gardenData?.user?.last_name}
           </h2>
-
           {current_user && current_user.id === gardenData?.user?.id && (
             <Button
               content={IconPen}
@@ -177,7 +180,6 @@ const Garden = () => {
               onclick={() => setIsAmmendable()}
             />
           )}
-
           {isAmmendable ? (
             <input
               type="text"
@@ -195,7 +197,6 @@ const Garden = () => {
               {gardenData?.garden?.name.toUpperCase()}
             </h1>
           )}
-
           <div className="col-span-4 main-data-container flex flex-wrap justify-between mt-8">
             {isAmmendable ? (
               <>
@@ -261,90 +262,70 @@ const Garden = () => {
             )}
           </div>
 
-          <div className="my-8 col-span-4">
-            <h3 className="my-4">Description :</h3>
-
-            {isAmmendable ? (
-              <TextArea
-                value={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              cursus et mattis pulvinar neque mauris nunc lacinia. Blandit
-              quis non eu pretium varius quis enim. Sed eu sit in nulla
-              aliquet a. Molestie ut felis suscipit donec nunc mauris. Diam
-              sit tempus, interdum blandit nascetur lorem. Arcu dictum sociis
-              nec vitae vel et leo, cum. Volutpat nullam volutpat non duis
-              lectus morbi sed. Cras gravida lectus sapien porttitor duis. Ac,
-              ut viverra consectetur ac est. Sed blandit neque nulla
-              pellentesque in vestibulum eget. Elit nec quis eget elementum
-              nulla pellentesque nibh dictum elementum.`}
-                rows="10"
-                id="garden-description"
-                name="garden-description"
-                classNames={["w-full border-gray-500"]}
-              />
-            ) : (
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-                cursus et mattis pulvinar neque mauris nunc lacinia. Blandit
-                quis non eu pretium varius quis enim. Sed eu sit in nulla
-                aliquet a. Molestie ut felis suscipit donec nunc mauris. Diam
-                sit tempus, interdum blandit nascetur lorem. Arcu dictum sociis
-                nec vitae vel et leo, cum. Volutpat nullam volutpat non duis
-                lectus morbi sed. Cras gravida lectus sapien porttitor duis. Ac,
-                ut viverra consectetur ac est. Sed blandit neque nulla
-                pellentesque in vestibulum eget. Elit nec quis eget elementum
-                nulla pellentesque nibh dictum elementum.
-              </p>
-            )}
-          </div>
-
-      
-          {gardenFollow !== null ? (
-            <Button
-              text="Ne plus suivre"
-              classNames={[
-                "btn",
-                "btn-lg",
-                "bg-blue-dark",
-                "text-white",
-                "p-4",
-                "w-full",
-                "col-span-4",
-                "lg:col-span-2",
-              ]}
-              onclick={() => handleFollow(garden_id)}
-            />
-          ) : (
-            <Button
-              text="Suivre"
-              classNames={[
-                "btn",
-                "btn-lg",
-                "bg-blue-dark",
-                "text-white",
-                "p-4",
-                "w-full",
-                "col-span-4",
-                "lg:col-span-2",
-              ]}
-              onclick={() => handleFollow(garden_id)}
-            />
+          
+          {current_user && current_user.id === gardenData?.user?.id && (
+            <PostCreation />
           )}
-          {myLike !== null ? (
-            <Button
-              text="Je n'aime plus"
-              classNames={[
-                "btn",
-                "btn-lg",
-                "border-blue-dark",
-                "text-dark",
-                "p-4",
-                "w-full",
-                "col-span-4",
-                "lg:col-span-2",
-              ]}
-              onclick={() => handleLike(garden_id)}
-            />
-          ) : (
+
+          {current_user &&
+            current_user.id !== gardenData?.user?.id &&
+            gardenFollow !== null && (
+              <Button
+                text="Ne plus suivre"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "bg-blue-dark",
+                  "text-white",
+                  "p-4",
+                  "w-full",
+                  "col-span-4",
+                  "lg:col-span-2",
+                ]}
+                onclick={() => handleFollow(garden_id)}
+              />
+            )}
+
+          {current_user &&
+            current_user.id !== gardenData?.user?.id &&
+            gardenFollow ===
+              null(
+                <Button
+                  text="Suivre"
+                  classNames={[
+                    "btn",
+                    "btn-lg",
+                    "bg-blue-dark",
+                    "text-white",
+                    "p-4",
+                    "w-full",
+                    "col-span-4",
+                    "lg:col-span-2",
+                  ]}
+                  onclick={() => handleFollow(garden_id)}
+                />
+              )}
+
+          {current_user &&
+            current_user.id !== gardenData?.user?.id &&
+            myLike !== null && (
+              <Button
+                text="Je n'aime plus"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "border-blue-dark",
+                  "text-dark",
+                  "p-4",
+                  "w-full",
+                  "col-span-4",
+                  "lg:col-span-2",
+                ]}
+                onclick={() => handleLike(garden_id)}
+              />
+            )}
+
+          {current_user && current_user.id !== gardenData?.user?.id && (
             <Button
               text="J'aime ce jardin"
               classNames={[

@@ -102,7 +102,7 @@ const Home = () => {
             </Link>
             <Link
               to="/profil"
-              className="btn btn-md bg-blue-dark text-white p-4 w-64 col-span-2 lg:col-span-1"
+              className="btn btn-md bg-blue-dark text-white p-4 w-64 col-span-2 lg:col-span-1 text-center"
             >
               Mon profil
             </Link>
@@ -149,8 +149,8 @@ const Home = () => {
               <div className="h-66vh w-full bg-start-to-grow relative">
                 <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4 bg-light-white">
                  
-                 <Link to='/gardens/new' className='btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1'>Créer un jardin</Link>
-                 <Link to='/' className='btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1'>Rechercher un jardin</Link>
+                 <Link to='/gardens/new' className='btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1 text-center'>Créer un jardin</Link>
+                 <Link to='/' className='btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1 text-center'>Rechercher un jardin</Link>
 
                 </div>
               </div>

@@ -574,6 +574,9 @@ nav .nav-brand {
   top: 20%;
   border: dotted var(--light-white) 3px;
   border-radius: var(--radius);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .realDropzone:hover {
   cursor: pointer;
