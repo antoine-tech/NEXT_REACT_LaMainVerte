@@ -620,7 +620,6 @@ PROFILE */
   min-width: 300px;
 }
 #followed-gardens div.gardens{
-  overflow-y: scroll;
   max-height: 700px;
 }
 #followed-gardens h1 {
@@ -633,11 +632,21 @@ PROFILE */
   min-width: 300px;
 }
 #user-gardens div.gardens{
-  overflow-y: scroll;
-  max-height: 800px;
+  max-height: 700px;
 }
 #user-gardens h1 {
   font-size: 20px;
+}
+#user-gardens a#create-garden {
+  padding: 10px;
+  border: 1px solid #615C5F;
+  border-radius: 4px;
+  color:  #615C5F;
+  transition: all 100ms 200ms ease;
+}
+#user-gardens a#create-garden:hover {
+  color: white;
+  background-color: #615C5F;
 }
 #user-posts {
   margin-top: 4vh;
@@ -645,7 +654,6 @@ PROFILE */
   min-width: 300px;
 }
 #user-posts div.posts{
-  overflow-y: scroll;
   max-height: 700px;
 }
 #user-posts h1 {

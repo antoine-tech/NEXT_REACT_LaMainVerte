@@ -1,4 +1,4 @@
-import { find, create, deletion } from "../sevices/Api";
+import { find, create, deletion, update } from "../sevices/Api";
 import jwtDecode from "jwt-decode";
 
 const signUserIn = async (email, password, jwt_token) =>
@@ -36,6 +36,32 @@ const signUserUp = async (
     false
   );
 
+const editUserProfile = async (
+  first_name,
+  last_name,
+  username,
+  email,
+  password,
+  password_confirmation,
+  user_id,
+  jwtToken
+) => 
+  await update(
+    {
+      user: {
+        first_name,
+        last_name,
+        username,
+        email,
+        password,
+        password_confirmation,
+      },
+    },
+    `/users/${user_id}`,
+    true,
+    jwtToken
+  );
+
 const logout = async (jwtToken) =>
   await deletion("/logout", true, jwtToken)
     .then((res) => res.text())
@@ -51,4 +77,4 @@ const findUserDatas = async (userId) =>
     .then((res) => res.json())
     .catch((error) => error);
 
-export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout };
+export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout, editUserProfile };
