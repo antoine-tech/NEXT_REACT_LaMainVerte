@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AvatarSlider from "../components/AvatarSlider/index";
 import GardenCard from "../components/GardenCard/index";
 import SearchEngine from "../components/SearchEngine/index";
-import { getUserDatas } from "../requests/user";
+import { getUserDatas, getUsers } from "../requests/user";
 import useJwtToken from "../hooks/useJwtToken";
 import {
   getFollowedGardenAndRelatedData,
@@ -20,6 +20,7 @@ import usePageStatus from "../hooks/usePageStatus";
 import empty_result from "../assets/backgrounds/empty_result.svg";
 
 const Home = () => {
+  const [sliderData, setSLiderData] = useState(null);
   const [areFiltersDisplayed, setFiltersDisplayed] = useState(false);
   const [isSearchResultDisplayed, setSearchResultDisplayed] = useState(false);
   const { pageStatus, setPageStatus } = usePageStatus("loading");
@@ -61,11 +62,14 @@ const Home = () => {
 
       if (current_user) {
         const userProfile = await fetchUserProfile();
+        setSLiderData(userProfile.selected_users);
         const followedGarden = await fetchFollowedGarden(userProfile);
         setDisplayedGardens(followedGarden);
       } else {
         const gardenSelection = await fetchGardenSelection();
         setDisplayedGardens(gardenSelection);
+        const users = await getUsers();
+        setSLiderData(users);
       }
       setPageStatus("loaded");
     };
@@ -123,7 +127,7 @@ const Home = () => {
           />
           <h4 className="my-4">Sélectionné pour vous ...</h4>
 
-          <AvatarSlider />
+          <AvatarSlider sliderData={sliderData} />
 
           {isSearchResultDisplayed ? (
             <>
