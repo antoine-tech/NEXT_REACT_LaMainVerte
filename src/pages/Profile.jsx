@@ -21,6 +21,7 @@ const Profile = () => {
   const {setCurrentUser} = useCurrentUser();
   const [droppedImage, setDroppedImage] = useState();
   const { getJwtToken } = useJwtToken();
+  const [displayErrors, setDisplayErrors] = useState(false);
   const history = useHistory()
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
@@ -49,7 +50,8 @@ const Profile = () => {
     let password_confirmation = formData.get("password_confirmation");
     
     if(!password || !password_confirmation || password != password_confirmation) {
-      return
+      setDisplayErrors(true);
+      return;
     }
 
     let avatar_url = droppedImage
@@ -149,6 +151,11 @@ const Profile = () => {
           </div>
            
         <h1 className="text-center">Mes informations</h1>
+        { displayErrors &&
+          <p className="text-red-400 text-center" onClick={() => setDisplayErrors(false)}>
+            - Erreur lors de la saisie des mots de passe
+          </p>
+        }
         { droppedImage && 
             <p className="text-center">{`avatar uploadé: ${droppedImage[0].name}`}</p>
         }
