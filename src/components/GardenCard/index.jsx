@@ -13,6 +13,7 @@ const GardenCard = ({
   picture_url,
   picture_opacity,
   user,
+  image_url,
   climate,
   location,
   garden_type,

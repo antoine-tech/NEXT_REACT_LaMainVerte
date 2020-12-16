@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import LaMainVerteBrandNav from "../icons/LaMainVerteBrandNav/index";
 import SettingIcon from "../icons/SettingIcon";
 import ToogleSwitch from "../ToogleSwitch/index";
@@ -9,14 +9,19 @@ import useCurrentUser from "../../hooks/useCurrentUser";
 
 const Navbar = () => {
   const { getJwtToken, unSetJwtToken } = useJwtToken();
-  const { setCurrentUser } = useCurrentUser();
-  const handleLogout = async () => {
-    try {
-      await logout(getJwtToken);
-      setCurrentUser(null);
-      unSetJwtToken();
-    } catch (error) {
-      console.error(error);
+  const { setCurrentUser, current_user } = useCurrentUser();
+  const history = useHistory();
+  const handleSignAction = async (current_user) => {
+    if (current_user) {
+      try {
+        await logout(getJwtToken);
+        setCurrentUser(null);
+        unSetJwtToken();
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      history.push("/login");
     }
   };
   return (
@@ -27,7 +32,7 @@ const Navbar = () => {
 
       <ul className="flex">
         <li className="mx-4 flex flex-col justify-center">
-          <ToogleSwitch onchange={handleLogout} />
+          <ToogleSwitch onchange={()=>handleSignAction(current_user)} />
         </li>
         <li>
           <Link to="/" title="home">
