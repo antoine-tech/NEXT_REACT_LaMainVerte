@@ -5,10 +5,15 @@ import IconClimate from "../icons/IconClimate/index";
 import IconLocation from "../icons/IconLocation/index";
 import IconLabel from "../icons/IconLabel/index";
 import Button from "../Button/index";
-import {  search } from "../../requests/gardens";
+import { search } from "../../requests/gardens";
 import { parseQueryParams } from "../../helpers/parseQueryParams";
 
-const SearchEngine = ({ getSearchResult, getFilterDisplayed, filterDisplay}) => {
+const SearchEngine = ({
+  getSearchResult,
+  getFilterDisplayed,
+  filterDisplay,
+  setSearchResultDisplayed,
+}) => {
   const {
     tags,
     climates,
@@ -22,7 +27,6 @@ const SearchEngine = ({ getSearchResult, getFilterDisplayed, filterDisplay}) => 
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
 
-
   const handleToogleFilters = () => {
     getFilterDisplayed(!filterDisplay);
   };
@@ -35,6 +39,7 @@ const SearchEngine = ({ getSearchResult, getFilterDisplayed, filterDisplay}) => 
     selectedTag
   ) => {
     setInputValue(event.target.value);
+    setSearchResultDisplayed(true);
   };
 
   useEffect(() => {
@@ -49,7 +54,6 @@ const SearchEngine = ({ getSearchResult, getFilterDisplayed, filterDisplay}) => 
       const searchResults = await search("gardens", queryString);
 
       getSearchResult(searchResults);
-
     };
 
     fetchSearchResults();
@@ -109,9 +113,10 @@ const SearchEngine = ({ getSearchResult, getFilterDisplayed, filterDisplay}) => 
             icon={IconLabel}
             prompter="Type de jardin :"
             options={gardenTypes}
-            selectedOption={(gardenType_id) =>
-              setSelectedGardenType(gardenType_id)
-            }
+            selectedOption={(gardenType_id) => {
+              setSearchResultDisplayed(true);
+              setSelectedGardenType(gardenType_id);
+            }}
           />
 
           <Select
@@ -121,7 +126,10 @@ const SearchEngine = ({ getSearchResult, getFilterDisplayed, filterDisplay}) => 
             icon={IconLabel}
             prompter="Tag :"
             options={tags}
-            selectedOption={(tag) => setSelectedTag(tag)}
+            selectedOption={(tag) => {
+              setSearchResultDisplayed(true);
+              setSelectedTag(tag);
+            }}
           />
           <Select
             classNames={["col-span-2"]}
@@ -130,7 +138,10 @@ const SearchEngine = ({ getSearchResult, getFilterDisplayed, filterDisplay}) => 
             icon={IconClimate}
             prompter="Climats"
             options={climates}
-            selectedOption={(climate_id) => setSelectedClimate(climate_id)}
+            selectedOption={(climate_id) => {
+              setSearchResultDisplayed(true);
+              setSelectedClimate(climate_id);
+            }}
           />
 
           <Select
@@ -140,7 +151,10 @@ const SearchEngine = ({ getSearchResult, getFilterDisplayed, filterDisplay}) => 
             icon={IconLocation}
             prompter="Localisation :"
             options={locations}
-            selectedOption={(location_id) => setSelectedLocation(location_id)}
+            selectedOption={(location_id) => {
+              setSearchResultDisplayed(true);
+              setSelectedLocation(location_id);
+            }}
           />
         </div>
       )}
