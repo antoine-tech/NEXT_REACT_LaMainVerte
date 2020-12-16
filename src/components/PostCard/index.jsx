@@ -26,6 +26,7 @@ const PostCard = ({
   updated_at,
   likes,
 }) => {
+
   const [postData, setPostData] = useState([]);
   const [areCommentDisplayed, setAreCommentDiplayed] = useState(false);
   const history = useHistory();
@@ -83,7 +84,7 @@ const PostCard = ({
     userLike && setMyLike(userLike);
 
     setIsLoading(false);
-  }, []);
+  }, [postData]);
 
   return isLoading ? (
     <LoadingSpinner />
