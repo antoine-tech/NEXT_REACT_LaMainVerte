@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { uploadToAWS } from "../sevices/Api";
 import useJwtToken from "../hooks/useJwtToken";
+import { useHistory } from "react-router-dom";
 
 const Profile = () => {
   const [gardens, setGardens] = useState([]);
@@ -20,6 +21,7 @@ const Profile = () => {
   const {setCurrentUser} = useCurrentUser();
   const [droppedImage, setDroppedImage] = useState();
   const { getJwtToken } = useJwtToken();
+  const history = useHistory()
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedImages) => {
@@ -46,8 +48,9 @@ const Profile = () => {
     let password = formData.get("password");
     let password_confirmation = formData.get("password_confirmation");
     
-    if(!password) return
-    if(!password_confirmation) return
+    if(!password || !password_confirmation || password != password_confirmation) {
+      return
+    }
 
     let avatar_url = droppedImage
     ? await uploadToAWS(getJwtToken, droppedImage[0], "la-main-verte")
@@ -88,8 +91,11 @@ const Profile = () => {
         user.id,
         Cookies.get("jwt_token")
       ).then((res) => {
+      setCurrentUser(null);
+      Cookies.remove("jwt_token");
+      history.push("/");
       return res.json();
-    });
+      });
     }
   }
 
@@ -165,6 +171,7 @@ const Profile = () => {
             <button id="edit-profile" type="submit">Modifier mes informations</button>
           </div>
         </form>
+        
       </section>
 
       <section id="followed-gardens" className="flex flex-col">

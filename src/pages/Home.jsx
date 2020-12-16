@@ -25,7 +25,6 @@ const Home = () => {
   const [isSearchResultDisplayed, setSearchResultDisplayed] = useState(false);
   const { pageStatus, setPageStatus } = usePageStatus("loading");
   const { getJwtToken } = useJwtToken();
-  const { isLoading, setIsLoading } = useIsLoading();
   const [followedGardens, setFollowedGardens] = useState([]);
   const [gardenSelection, setGardenSelection] = useState([]);
   const [user, setUser] = useState(useSelector(state=>state.current_user));
@@ -103,28 +102,12 @@ const Home = () => {
               Créer un jardin
             </Link>
 
-<<<<<<< HEAD
             <Link 
               to="/profile" 
               className = "btn btn-md bg-blue-dark text-white text-center p-4 w-64 col-span-2 lg:col-span-1"
             >
               Mon profil
             </Link>
-=======
-            <Button
-              text="Mon profil"
-              classNames={[
-                "btn",
-                "btn-md",
-                "bg-blue-dark",
-                "text-white",
-                "p-4",
-                "w-64",
-                "col-span-2",
-                "lg:col-span-1",
-              ]}
-            />
->>>>>>> d06aaac4a006ff8e8893be89dd79b6b6c03e2c10
           </div>
           }
         </div>
