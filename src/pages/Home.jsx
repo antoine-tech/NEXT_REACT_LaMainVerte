@@ -17,19 +17,16 @@ import LoadingAnimation from "../components/LoadingAnimation/index";
 import useCurrentUser from "../hooks/useCurrentUser";
 import { Link } from "react-router-dom";
 import usePageStatus from "../hooks/usePageStatus";
-// import useMutationObserver from "../hooks/useMutationObserver";
-// import useInstantMessages from "../hooks/useIntantMessages";
 
 const Home = () => {
+
+  const [areFiltersDisplayed, setFiltersDisplayed] = useState(false)
   const { pageStatus, setPageStatus } = usePageStatus("loading");
   const { getJwtToken } = useJwtToken();
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
   const [displayedGardens, setDisplayedGardens] = useState([]);
-  // const viewItems = useMutationObserver();
-  // const { instantMessages, sendInstantMessage } = useInstantMessages();
-
   const { current_user } = useCurrentUser();
 
   useEffect(() => {
@@ -113,17 +110,10 @@ const Home = () => {
                 "lg:col-span-1",
               ]}
             />
-
-            {/* <button
-            onClick={() => sendInstantMessage({ message: "hello world" })}
-            className="btn btn-md bg-blue-dark text-white p-4 w-64 col-span-2 lg:col-span-1"
-          >
-            TEST WS
-          </button> */}
           </div>
         </div>
         <div className="col-span-12 lg:col-span-6 px-4" id="wall">
-          <SearchEngine getSearchResult={(gardens) => setDisplayedGardens(gardens)} />
+          <SearchEngine getSearchResult={(gardens) => setDisplayedGardens(gardens)} filterDisplay={areFiltersDisplayed} getFilterDisplayed={(value)=>setFiltersDisplayed(value)} />
           <h4 className="my-4">Sélectionné pour vous ...</h4>
 
           <AvatarSlider />
@@ -133,43 +123,45 @@ const Home = () => {
               <h4 className="my-4">Vos jardins préférés ...</h4>
             </>
           ) : (
-            <>
-              <h4 className="my-4">Votre aventure commence ici !</h4>
-
-              <div className="h-66vh w-full bg-start-to-grow relative">
-                <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4 bg-light-white">
-                  <Button
-                    text="Créer un jardin"
-                    classNames={[
-                      "btn",
-                      "btn-lg",
-                      "bg-blue-dark",
-                      "text-white",
-                      "p-4",
-                      "w-full",
-                      "col-span-2",
-                      "lg:col-span-1",
-                    ]}
-                  />
-
-                  <Button
-                    text="Rechecher un jardin"
-                    classNames={[
-                      "btn",
-                      "btn-lg",
-                      "bg-blue-dark",
-                      "text-white",
-                      "p-4",
-                      "w-full",
-                      "col-span-2",
-                      "lg:col-span-1",
-                    ]}
-                  />
+              !areFiltersDisplayed && (
+                <>
+                <h4 className="my-4">Votre aventure commence ici !</h4>
+  
+                <div className="h-66vh w-full bg-start-to-grow relative">
+                  <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4 bg-light-white">
+                    <Button
+                      text="Créer un jardin"
+                      classNames={[
+                        "btn",
+                        "btn-lg",
+                        "bg-blue-dark",
+                        "text-white",
+                        "p-4",
+                        "w-full",
+                        "col-span-2",
+                        "lg:col-span-1",
+                      ]}
+                    />
+  
+                    <Button
+                      text="Rechecher un jardin"
+                      classNames={[
+                        "btn",
+                        "btn-lg",
+                        "bg-blue-dark",
+                        "text-white",
+                        "p-4",
+                        "w-full",
+                        "col-span-2",
+                        "lg:col-span-1",
+                      ]}
+                    />
+                  </div>
                 </div>
-              </div>
-
-              <h4 className="my-4"> De merveilleux jardin à découvir...</h4>
-            </>
+  
+                <h4 className="my-4"> De merveilleux jardin à découvir...</h4>
+              </>
+              )
           )}
 
           {displayedGardens?.map((displayedGarden) => {

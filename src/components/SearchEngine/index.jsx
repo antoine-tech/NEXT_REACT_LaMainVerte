@@ -1,38 +1,30 @@
 import React, { useEffect, useState } from "react";
-import SearchFilter from "../SearchFilter/index";
 import useGardenRelatedAttributes from "../../hooks/useGardenRelatedAttributes";
 import Select from "../Select/index";
 import IconClimate from "../icons/IconClimate/index";
 import IconLocation from "../icons/IconLocation/index";
 import IconLabel from "../icons/IconLabel/index";
 import Button from "../Button/index";
-import IconPen from "../icons/IconPen/index";
-import { getGarden, search } from "../../requests/gardens";
+import {  search } from "../../requests/gardens";
 import { parseQueryParams } from "../../helpers/parseQueryParams";
 
-const SearchEngine = ({ getSearchResult }) => {
+const SearchEngine = ({ getSearchResult, getFilterDisplayed, filterDisplay}) => {
   const {
     tags,
     climates,
     gardenTypes,
     locations,
-    pageStatus,
-    // setTags,
-    // setClimates,
-    // setGardenTypes,
-    // setLocations,
-    setPageStatus,
   } = useGardenRelatedAttributes();
 
   const [inputValue, setInputValue] = useState("");
-  const [areFiltersDisplayed, setFiltersDisplayed] = useState(false);
   const [selectedGardenType, setSelectedGardenType] = useState("");
   const [selectedClimate, setSelectedClimate] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
 
+
   const handleToogleFilters = () => {
-    setFiltersDisplayed(!areFiltersDisplayed);
+    getFilterDisplayed(!filterDisplay);
   };
 
   const handleInput = async (
@@ -57,6 +49,7 @@ const SearchEngine = ({ getSearchResult }) => {
       const searchResults = await search("gardens", queryString);
 
       getSearchResult(searchResults);
+
     };
 
     fetchSearchResults();
@@ -87,7 +80,7 @@ const SearchEngine = ({ getSearchResult }) => {
       />
 
       <Button
-        text={areFiltersDisplayed ? "Cacher les filtres" : "Voir les filtres :"}
+        text={filterDisplay ? "Cacher les filtres" : "Voir les filtres :"}
         classNames={[
           "h-50",
           "w-100",
@@ -107,7 +100,7 @@ const SearchEngine = ({ getSearchResult }) => {
         onclick={handleToogleFilters}
       />
 
-      {areFiltersDisplayed && (
+      {filterDisplay && (
         <div className="filter-zone flex justify-start flex-wrap">
           <Select
             classNames={["col-span-2"]}

@@ -9,7 +9,6 @@ const useGardenRelatedAttributes = () => {
   const [climates, setClimates] = useState([]);
   const [gardenTypes, setGardenTypes] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [pageStatus, setPageStatus] = useState("loading");
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -83,8 +82,6 @@ const useGardenRelatedAttributes = () => {
         };
       });
       setLocations(fetchedLocations);
-
-      setPageStatus("loaded");
     };
 
     fetchGardenRelatedAttributes();
@@ -95,12 +92,6 @@ const useGardenRelatedAttributes = () => {
     climates: climates,
     gardenTypes: gardenTypes,
     locations: locations,
-    pageStatus: pageStatus,
-    setTags: (value) => setTags(value),
-    setClimates: (value) => setClimates(value),
-    setGardenTypes: (value) => setGardenTypes(value),
-    setLocations: (value) => setLocations(value),
-    setPageStatus: (value) => setPageStatus(value),
   };
 };
 
