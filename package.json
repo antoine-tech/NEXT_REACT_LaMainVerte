@@ -35,7 +35,7 @@
     "@testing-library/user-event": "^12.1.10"
   },
   "scripts": {
-    "dev": "react-scripts build",
+    "dev": "react-scripts start",
     "start": "npm run build:css && serve -s build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
