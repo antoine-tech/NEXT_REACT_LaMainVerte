@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Garden from "./pages/Garden";
 import NewGarden from './pages/NewGarden';
+import Concept from './pages/Concept';
 import useCurrentUser from "./hooks/useCurrentUser";
 import { getUserDatas } from "./requests/user";
 import useJwtToken from "./hooks/useJwtToken";
@@ -67,6 +68,11 @@ const App = () => {
           exact
           path="/garden/:garden_id/events"
           component={GardenHistory}
+        />
+        <Route
+          exact
+          path="/concept"
+          component={Concept}
         />
         <Route
           exact
