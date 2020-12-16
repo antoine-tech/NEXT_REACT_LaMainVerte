@@ -67,9 +67,10 @@
 
 /* GENERAL TYPOS */
 
-*{
+*, *:focus{
   outline: none;
 }
+
 
 h1,
 h2,
