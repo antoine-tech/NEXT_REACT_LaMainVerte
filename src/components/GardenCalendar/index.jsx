@@ -19,7 +19,7 @@ const GardenCalendar = ({ events, setEvents, garden_owner }) => {
   };
 
   const handleSelectDates = (event) => {
-    if (current_user.id === garden_owner.id) {
+    if (current_user?.id === garden_owner.id) {
       setNewEvent({ start: event.start.toString(), end: event.end.toString() });
       setModalOpen(true);
     }

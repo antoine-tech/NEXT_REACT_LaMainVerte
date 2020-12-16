@@ -100,20 +100,12 @@ const Home = () => {
             >
               Créer un jardin
             </Link>
-
-            <Button
-              text="Mon profil"
-              classNames={[
-                "btn",
-                "btn-md",
-                "bg-blue-dark",
-                "text-white",
-                "p-4",
-                "w-64",
-                "col-span-2",
-                "lg:col-span-1",
-              ]}
-            />
+            <Link
+              to="/profil"
+              className="btn btn-md bg-blue-dark text-white p-4 w-64 col-span-2 lg:col-span-1"
+            >
+              Mon profil
+            </Link>
           </div>
         </div>
         <div className="col-span-12 lg:col-span-6 px-4" id="wall">
@@ -156,33 +148,10 @@ const Home = () => {
 
               <div className="h-66vh w-full bg-start-to-grow relative">
                 <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4 bg-light-white">
-                  <Button
-                    text="Créer un jardin"
-                    classNames={[
-                      "btn",
-                      "btn-lg",
-                      "bg-blue-dark",
-                      "text-white",
-                      "p-4",
-                      "w-full",
-                      "col-span-2",
-                      "lg:col-span-1",
-                    ]}
-                  />
+                 
+                 <Link to='/gardens/new' className='btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1'>Créer un jardin</Link>
+                 <Link to='/' className='btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1'>Rechercher un jardin</Link>
 
-                  <Button
-                    text="Rechecher un jardin"
-                    classNames={[
-                      "btn",
-                      "btn-lg",
-                      "bg-blue-dark",
-                      "text-white",
-                      "p-4",
-                      "w-full",
-                      "col-span-2",
-                      "lg:col-span-1",
-                    ]}
-                  />
                 </div>
               </div>
 
