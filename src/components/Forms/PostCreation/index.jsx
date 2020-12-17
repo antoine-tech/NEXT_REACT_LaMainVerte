@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { uploadToAWS } from "../../../sevices/Api";
+import { createPost } from "../../../requests/posts";
+import useJwtToken from "../../../hooks/useJwtToken";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import FormGroup from "../../FormGroup/index";
 import Dropzone from "../../PostDropZone/index";
-import Button from '../../base_components/Button/index';
-import TextArea from '../../base_components/TextArea/index';
-import IconAdd from '../../base_components/icons/IconAdd/index';
-import IconRemove from '../../base_components/icons/IconRemove/index';
+import Button from "../../base_components/Button/index";
+import TextArea from "../../base_components/TextArea/index";
+import IconAdd from "../../base_components/icons/IconAdd/index";
+import IconRemove from "../../base_components/icons/IconRemove/index";
+import NewGarden from '../../../pages/NewGarden';
 
-const PostCreation = () => {
+const PostCreation = ({ setGardenData, gardenData, setNewPostZoneDisplayed }) => {
+  const { getJwtToken } = useJwtToken();
+
+  const { garden_id } = useParams();
+
   const [imageFields, setImageFields] = useState([
     { id: "image1", file: null },
   ]);
@@ -28,6 +37,28 @@ const PostCreation = () => {
       (imageField) => imageField.id !== value.id
     );
     setImageFields([...newImagesFields, value]);
+  };
+
+  const handleSubmit = async () => {
+    const imagesUrlsPromises = await imageFields.map((field) =>
+      uploadToAWS(getJwtToken, field.file, "la-main-verte")
+    );
+
+    const imagesUrls = await Promise.all(imagesUrlsPromises).then(
+      (result) => result
+    );
+
+    const newPost = await createPost(
+      getJwtToken,
+      garden_id,
+      datas.title,
+      datas.content,
+      imagesUrls
+    );
+
+    const newGardenData = {...gardenData, posts: [...gardenData.posts, newPost]}
+    setGardenData(newGardenData);
+    setNewPostZoneDisplayed(false);
   };
 
   useEffect(() => {
@@ -72,7 +103,7 @@ const PostCreation = () => {
       <div className="col-span-4 h-auto grid grid-cols-2 gap-4 overflow-auto">
         {imageFields.map((imageField) => {
           return (
-            <div className="col-span-2 lg:col-span-2 bg-blue-gradient border-blue-dark w-full p-4">
+            <div className="col-span-2 lg:col-span-2 bg-blue-gradient border-blue-dark w-full p-4 h-60">
               <Dropzone
                 id={imageField.id}
                 droppedImage={imageField.file}
@@ -128,7 +159,7 @@ const PostCreation = () => {
           "w-full",
           "col-span-4",
         ]}
-        onclick={() => console.log("")}
+        onclick={handleSubmit}
       />
     </>
   );
