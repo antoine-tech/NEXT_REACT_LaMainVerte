@@ -1,5 +1,6 @@
 import React from "react";
-import Input from "../Input/index";
+import Input from '../base_components/Input/index';
+
 
 const FormGroup = ({
   colSpan,

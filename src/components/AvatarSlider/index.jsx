@@ -1,5 +1,7 @@
 import React from "react";
 import Slider from "infinite-react-carousel";
+import Avatar from '../Avatar/index';
+import "./index.scss";
 
 const AvatarSlider = ({ sliderData }) => {
   const settings = {
@@ -17,16 +19,9 @@ const AvatarSlider = ({ sliderData }) => {
       <Slider {...settings}>
         {sliderData?.map((user) => (
           <div>
-            <div className="suggestion-avatar">
-              <div className="avatar-img" >
-                <img
-                  title={user?.username}
-                  src={user?.avatar_url}
-                  className="h-full w-full rounded-full"
-                  alt="avatar"
-                />
-              </div>
-            </div>
+
+            <Avatar imageSrc={user?.avatar_url} />
+          
           </div>
         ))}
       </Slider>

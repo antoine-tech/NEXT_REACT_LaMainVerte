@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./index.scss";
 
 const Modal = ({
   id,
@@ -15,7 +16,7 @@ const Modal = ({
       id={id}
       data={data}
       event={events}
-      setEvents={(value)=>setEvents(value)}
+      setEvents={(value) => setEvents(value)}
       setModalOpen={setModalOpen}
       onClick={(event) => {
         event.target.id === id && setModalOpen(false);

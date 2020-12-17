@@ -1,6 +1,7 @@
+import React from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import React from "react";
+import "./index.scss";
 
 const wrapperStyle = { width: "100%" };
 
@@ -27,7 +28,7 @@ const SliderInput = ({ classNames, label, opacityValue }) => {
           100: 100,
         }}
         step={null}
-        onChange={(value)=>opacityValue(value)}
+        onChange={(value) => opacityValue(value)}
       />
     </div>
   );

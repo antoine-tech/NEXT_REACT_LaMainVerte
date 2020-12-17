@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import FormGroup from "../../FormGroup/index";
-import useFormAnalysis from "../../../hooks/useFormAnalysis";
-import LetsGoButton from "../../buttons/LetsGoButton/index";
-import RegistrationLinks from "../../RegistrationLinks";
-import { signUserUp } from "../../../requests/user";
+import React from "react";
 import { useHistory } from "react-router-dom";
+import { signUserUp } from "../../../requests/user";
+import useFormAnalysis from "../../../hooks/useFormAnalysis";
+import FormGroup from "../../FormGroup/index";
+import RegistrationLinks from "../../RegistrationLinks";
+import LetsGoButton from '../../base_components/buttons/LetsGoButton/index';
 
 const RegiterForm = ({
   setAlertMessage,

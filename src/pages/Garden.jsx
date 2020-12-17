@@ -1,22 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import MaskImage from "../assets/backgrounds/mask_image.png";
-import CardIndicator from "../components/CardIndicator/index";
-import IconClimate from "../components/icons/IconClimate/index";
-import IconLabel from "../components/icons/IconLabel/index";
-import IconLocation from "../components/icons/IconLocation/index";
-import IconUpdate from "../components/icons/IconUpdate/index";
-import PostCard from "../components/PostCard";
 import Moment from "react-moment";
-import Button from "../components/Button/index";
-import useJwtToken from "../hooks/useJwtToken";
-import useCurrentUser from "../hooks/useCurrentUser";
-import IconPen from "../components/icons/IconPen/index";
-import useIsAmmendable from "../hooks/useIsAmmendable";
-import TextArea from "../components/TextArea/index";
-import Select from "../components/Select/index";
-import SliderInput from "../components/SliderInput/index";
-import Input from "../components/Input/index";
 import {
   getGarden,
   follow,
@@ -24,18 +8,33 @@ import {
   unlikeGarden,
   likeGarden,
 } from "../requests/gardens";
+import useJwtToken from "../hooks/useJwtToken";
+import useCurrentUser from "../hooks/useCurrentUser";
+import useIsAmmendable from "../hooks/useIsAmmendable";
+import SliderInput from "../components/SliderInput/index";
+import PostCard from "../components/PostCard";
+import PostCreation from "../components/Forms/PostCreation/index";
+import Input from "../components/base_components/Input/index";
+import Select from "../components/base_components/Select/index";
+import Button from "../components/base_components/Button/index";
+import CardIndicator from "../components/CardIndicator/index";
+import IconPen from "../components/base_components/icons/IconPen/index";
+import IconLabel from "../components/base_components/icons/IconLabel/index";
+import IconClimate from "../components/base_components/icons/IconClimate/index";
+import IconUpdate from "../components/base_components/icons/IconUpdate/index";
+import IconLocation from "../components/base_components/icons/IconLocation/index";
+import MaskImage from "../assets/backgrounds/mask_image.png";
 
 const Garden = () => {
-  const { current_user } = useCurrentUser();
-  const { getJwtToken } = useJwtToken();
-  const { isAmmendable, setIsAmmendable } = useIsAmmendable();
-  const { garden_id } = useParams();
   const [gardenData, setGardenData] = useState({});
   const [gardenFollow, setGardenFollow] = useState(null);
   const history = useHistory();
   const [myLike, setMyLike] = useState(null);
-
-  const [opacityValue, setOpacityValue] = useState(0.1);
+  const [opacityValue, setOpacityValue] = useState(1);
+  const { current_user } = useCurrentUser();
+  const { getJwtToken } = useJwtToken();
+  const { isAmmendable, setIsAmmendable } = useIsAmmendable();
+  const { garden_id } = useParams();
 
   const handleOpacityValue = (value) => {
     setOpacityValue(1 - value / 100);
@@ -104,11 +103,13 @@ const Garden = () => {
 
   useEffect(() => {
     const userLike = gardenData?.likes?.find(
-      (el) => el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
+      (el) =>
+        el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
     );
 
     const userFollow = gardenData?.follows?.find(
-      (el) => el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
+      (el) =>
+        el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
     );
 
     userFollow && setGardenFollow(userFollow);
@@ -155,7 +156,6 @@ const Garden = () => {
           <h2 className="italic col-span-3">
             Par {gardenData?.user?.fist_name} {gardenData?.user?.last_name}
           </h2>
-
           {current_user && current_user.id === gardenData?.user?.id && (
             <Button
               content={IconPen}
@@ -177,7 +177,6 @@ const Garden = () => {
               onclick={() => setIsAmmendable()}
             />
           )}
-
           {isAmmendable ? (
             <input
               type="text"
@@ -195,7 +194,6 @@ const Garden = () => {
               {gardenData?.garden?.name.toUpperCase()}
             </h1>
           )}
-
           <div className="col-span-4 main-data-container flex flex-wrap justify-between mt-8">
             {isAmmendable ? (
               <>
@@ -261,90 +259,68 @@ const Garden = () => {
             )}
           </div>
 
-          <div className="my-8 col-span-4">
-            <h3 className="my-4">Description :</h3>
-
-            {isAmmendable ? (
-              <TextArea
-                value={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              cursus et mattis pulvinar neque mauris nunc lacinia. Blandit
-              quis non eu pretium varius quis enim. Sed eu sit in nulla
-              aliquet a. Molestie ut felis suscipit donec nunc mauris. Diam
-              sit tempus, interdum blandit nascetur lorem. Arcu dictum sociis
-              nec vitae vel et leo, cum. Volutpat nullam volutpat non duis
-              lectus morbi sed. Cras gravida lectus sapien porttitor duis. Ac,
-              ut viverra consectetur ac est. Sed blandit neque nulla
-              pellentesque in vestibulum eget. Elit nec quis eget elementum
-              nulla pellentesque nibh dictum elementum.`}
-                rows="10"
-                id="garden-description"
-                name="garden-description"
-                classNames={["w-full border-gray-500"]}
-              />
-            ) : (
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-                cursus et mattis pulvinar neque mauris nunc lacinia. Blandit
-                quis non eu pretium varius quis enim. Sed eu sit in nulla
-                aliquet a. Molestie ut felis suscipit donec nunc mauris. Diam
-                sit tempus, interdum blandit nascetur lorem. Arcu dictum sociis
-                nec vitae vel et leo, cum. Volutpat nullam volutpat non duis
-                lectus morbi sed. Cras gravida lectus sapien porttitor duis. Ac,
-                ut viverra consectetur ac est. Sed blandit neque nulla
-                pellentesque in vestibulum eget. Elit nec quis eget elementum
-                nulla pellentesque nibh dictum elementum.
-              </p>
-            )}
-          </div>
-
-      
-          {gardenFollow !== null ? (
-            <Button
-              text="Ne plus suivre"
-              classNames={[
-                "btn",
-                "btn-lg",
-                "bg-blue-dark",
-                "text-white",
-                "p-4",
-                "w-full",
-                "col-span-4",
-                "lg:col-span-2",
-              ]}
-              onclick={() => handleFollow(garden_id)}
-            />
-          ) : (
-            <Button
-              text="Suivre"
-              classNames={[
-                "btn",
-                "btn-lg",
-                "bg-blue-dark",
-                "text-white",
-                "p-4",
-                "w-full",
-                "col-span-4",
-                "lg:col-span-2",
-              ]}
-              onclick={() => handleFollow(garden_id)}
-            />
+          {current_user && current_user?.id === gardenData?.user?.id && (
+            <PostCreation />
           )}
-          {myLike !== null ? (
-            <Button
-              text="Je n'aime plus"
-              classNames={[
-                "btn",
-                "btn-lg",
-                "border-blue-dark",
-                "text-dark",
-                "p-4",
-                "w-full",
-                "col-span-4",
-                "lg:col-span-2",
-              ]}
-              onclick={() => handleLike(garden_id)}
-            />
-          ) : (
+
+          {current_user &&
+            current_user.id !== gardenData?.user?.id &&
+            gardenFollow && (
+              <Button
+                text="Ne plus suivre"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "bg-blue-dark",
+                  "text-white",
+                  "p-4",
+                  "w-full",
+                  "col-span-4",
+                  "lg:col-span-2",
+                ]}
+                onclick={() => handleFollow(garden_id)}
+              />
+            )}
+
+          {current_user &&
+            current_user.id !== gardenData?.user?.id &&
+            gardenFollow === null && (
+              <Button
+                text="Suivre"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "bg-blue-dark",
+                  "text-white",
+                  "p-4",
+                  "w-full",
+                  "col-span-4",
+                  "lg:col-span-2",
+                ]}
+                onclick={() => handleFollow(garden_id)}
+              />
+            )}
+
+          {current_user &&
+            current_user?.id !== gardenData?.user?.id &&
+            myLike !== null && (
+              <Button
+                text="Je n'aime plus"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "border-blue-dark",
+                  "text-dark",
+                  "p-4",
+                  "w-full",
+                  "col-span-4",
+                  "lg:col-span-2",
+                ]}
+                onclick={() => handleLike(garden_id)}
+              />
+            )}
+
+          {current_user && current_user.id !== gardenData?.user?.id && (
             <Button
               text="J'aime ce jardin"
               classNames={[
