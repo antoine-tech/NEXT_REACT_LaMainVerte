@@ -8,7 +8,7 @@ const Concept = () => {
             <section id="section1" className="flex flex-wrap justify-around">
                 <img src="https://image.freepik.com/free-vector/weed-control-abstract-concept-illustration-gardening-maintenance-pest-control-spray-chemicals-weed-killer-lawn-care-service-herbicide-pesticide_335657-585.jpg" />
                 <div id="main-text" className="text-xl my-auto">
-                    <h1 className="text-gray-900">Apprendre ensemble,<br/>Partager.</h1>
+                    <h1 className="text-gray-900">Cultiver la connaissance,<br/>Partager.</h1>
                     <p className="text-gray-400">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas, numquam et eligendi ab maxime excepturi ut ex perferendis, quasi exercitationem, aliquam reiciendis explicabo! Sunt at perferendis aperiam, a laboriosam corporis?
                     </p>
@@ -71,11 +71,6 @@ const Concept = () => {
                 <img src="https://image.freepik.com/free-vector/cultivating-soil-abstract-concept-vector-illustration-gardening-growing-vegetables-tilling-ground-remove-weeds-loosening-soil-air-water-nutrients-penetration-abstract-metaphor_335657-1658.jpg" />
             </section>
 
-            <footer>
-                <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil, vitae soluta. Ipsum quae quis, in, incidunt neque maxime reprehenderit sit illum numquam nobis similique nisi nemo, autem corrupti sed. Amet!
-                </p>
-            </footer>
         </ div>
     )
 }
