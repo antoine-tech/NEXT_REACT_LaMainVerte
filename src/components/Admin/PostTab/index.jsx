@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { find, deletion } from "../../../sevices/Api";
 import TrashIcon from "../../../assets/icons/trash.svg";
 
 const PostTab = () => {
 	const [posts, setPosts] = useState([]);
 
-	// const handleGardenComments = async () => {
-	// 	const response = await find("/gardens");
-	// 	setGardens(response);
-	// };
+	const handlePosts = async () => {
+		let response = await fetch(
+			"https://api-master-lamainverte.herokuapp.com/api/posts",
+		);
+		let json = await response.json();
+
+		setPosts(json);
+	};
+
+	useEffect(() => {
+		handlePosts();
+	}, []);
 
 	return (
 		<div className="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">
@@ -41,7 +48,7 @@ const PostTab = () => {
 						<tr>
 							<th scope="row">{post.id}</th>
 							<td>{post.garden_id}</td>
-							<td>{post.user_id}</td>
+							<td>{post.title}</td>
 							<td>{post.content}</td>
 							<td>
 								<a href="#">

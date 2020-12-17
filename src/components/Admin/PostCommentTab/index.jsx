@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { find, deletion } from "../../../sevices/Api";
 import TrashIcon from "../../../assets/icons/trash.svg";
 
 const PostCommentTab = () => {
 	const [postComments, setPostComments] = useState([]);
 
-	// const handleGardenComments = async () => {
-	// 	const response = await find("/gardens");
-	// 	setGardens(response);
+	// const handlePostComments = async () => {
+	// 	let response = await fetch(
+	// 		`https://api-master-lamainverte.herokuapp.com/api/posts/${post_id}/post_comments`, // must add a simpler URL to the API
+	// 	);
+	// 	let json = await response.json();
+
+	// 	setPostComments(json);
 	// };
+
+	useEffect(() => {
+		// handlePostComments();
+	}, []);
 
 	return (
 		<div className="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">

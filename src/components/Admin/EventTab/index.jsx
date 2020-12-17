@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { find, deletion } from "../../../sevices/Api";
 import TrashIcon from "../../../assets/icons/trash.svg";
 
 const EventTab = () => {
