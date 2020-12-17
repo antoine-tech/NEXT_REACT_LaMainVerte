@@ -28,16 +28,16 @@ import {
 } from "../requests/gardens";
 
 const Garden = () => {
-  const { current_user } = useCurrentUser();
-  const { getJwtToken } = useJwtToken();
-  const { isAmmendable, setIsAmmendable } = useIsAmmendable();
-  const { garden_id } = useParams();
+
   const [gardenData, setGardenData] = useState({});
   const [gardenFollow, setGardenFollow] = useState(null);
   const history = useHistory();
   const [myLike, setMyLike] = useState(null);
-
-  const [opacityValue, setOpacityValue] = useState(0.1);
+  const [opacityValue, setOpacityValue] = useState(1);
+  const { current_user } = useCurrentUser();
+  const { getJwtToken } = useJwtToken();
+  const { isAmmendable, setIsAmmendable } = useIsAmmendable();
+  const { garden_id } = useParams();
 
   const handleOpacityValue = (value) => {
     setOpacityValue(1 - value / 100);
@@ -262,14 +262,13 @@ const Garden = () => {
             )}
           </div>
 
-          
-          {current_user && current_user.id === gardenData?.user?.id && (
+          {current_user && current_user?.id === gardenData?.user?.id && (
             <PostCreation />
           )}
 
           {current_user &&
             current_user.id !== gardenData?.user?.id &&
-            gardenFollow !== null && (
+            gardenFollow && (
               <Button
                 text="Ne plus suivre"
                 classNames={[
@@ -288,26 +287,25 @@ const Garden = () => {
 
           {current_user &&
             current_user.id !== gardenData?.user?.id &&
-            gardenFollow ===
-              null(
-                <Button
-                  text="Suivre"
-                  classNames={[
-                    "btn",
-                    "btn-lg",
-                    "bg-blue-dark",
-                    "text-white",
-                    "p-4",
-                    "w-full",
-                    "col-span-4",
-                    "lg:col-span-2",
-                  ]}
-                  onclick={() => handleFollow(garden_id)}
-                />
-              )}
+            gardenFollow === null && (
+              <Button
+                text="Suivre"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "bg-blue-dark",
+                  "text-white",
+                  "p-4",
+                  "w-full",
+                  "col-span-4",
+                  "lg:col-span-2",
+                ]}
+                onclick={() => handleFollow(garden_id)}
+              />
+            )}
 
           {current_user &&
-            current_user.id !== gardenData?.user?.id &&
+            current_user?.id !== gardenData?.user?.id &&
             myLike !== null && (
               <Button
                 text="Je n'aime plus"

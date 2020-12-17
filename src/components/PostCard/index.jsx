@@ -17,31 +17,17 @@ import IconComment from "../icons/IconComment/index";
 import Button from "../Button/index";
 import TextArea from "../TextArea/index";
 
-const PostCard = ({
-  id,
-  title,
-  content,
-  garden_id,
-  created_at,
-  updated_at,
-  likes,
-}) => {
-
+const PostCard = ({ id }) => {
   const [postData, setPostData] = useState([]);
-  const [areCommentDisplayed, setAreCommentDiplayed] = useState(false);
-  const history = useHistory();
-
-  const { current_user } = useCurrentUser();
-
-  const { getJwtToken } = useJwtToken();
-
   const [myLike, setMyLike] = useState(null);
-
-  const { isLoading, setIsLoading } = useIsLoading();
-
   const [newCommentValue, setNewCommentValue] = useState(
     "Votre avis compte, laissez un commentaire !"
   );
+  const [areCommentDisplayed, setAreCommentDiplayed] = useState(false);
+  const history = useHistory();
+  const { current_user } = useCurrentUser();
+  const { getJwtToken } = useJwtToken();
+  const { isLoading, setIsLoading } = useIsLoading();
 
   const handleClick = (garden_id) => {
     history.push("/garden/" + garden_id);
@@ -72,11 +58,11 @@ const PostCard = ({
   };
 
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchAndSetPost = async () => {
       const post = await getPost(id);
       setPostData(post);
     };
-    fetchPost();
+    fetchAndSetPost();
 
     const userLike = postData?.likes?.find(
       (el) => el.post_id === id && el.user_id === current_user?.id
@@ -84,7 +70,7 @@ const PostCard = ({
     userLike && setMyLike(userLike);
 
     setIsLoading(false);
-  }, []);
+  }, [id]);
 
   return isLoading ? (
     <LoadingSpinner />
@@ -94,9 +80,15 @@ const PostCard = ({
         <div className="flex col-span-2 items-center">
           <div
             className="suggestion-avatar-half"
-            onClick={() => handleClick(garden_id)}
+            onClick={() => handleClick(postData?.garden?.id)}
           >
-            <div className="avatar-img"><img src={postData?.user?.avatar_url} className="h-full w-full rounded-full" alt="avatar"/></div>
+            <div className="avatar-img">
+              <img
+                src={postData?.user?.avatar_url}
+                className="h-full w-full rounded-full"
+                alt="avatar"
+              />
+            </div>
           </div>
 
           <p className="my-4 font-blue-dark-light font-sm ml-2">
@@ -109,13 +101,13 @@ const PostCard = ({
             format="DD/MM/YYYY à hh:mm:ss"
             className="block w-full text-right italic font-blue-dark-light font-sm"
           >
-            {created_at}
+            {postData?.post?.created_at}
           </Moment>
         </h5>
 
         <div className="col-span-12 lg:col-span-12 flex flex-col justify-center grid grid-cols-2">
-          <h5 className="col-span-1 ">{title}</h5>
-          <p className="col-span-2 my-2">{content}</p>
+          <h5 className="col-span-1 ">{postData?.post?.title}</h5>
+          <p className="col-span-2 my-2">{postData?.post?.content}</p>
         </div>
 
         {current_user ? (

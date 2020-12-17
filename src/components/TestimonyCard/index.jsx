@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Moment from "react-moment";
+import useIsLoading from "../../hooks/useIsLoading";
+import LoadingSpinner from "../LoadingSpinner/index";
 
 const TestimonyCard = ({ id, content, user, created_at, updated_at }) => {
-  return (
+  const { isLoading, setIsLoading } = useIsLoading();
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [id]);
+  return isLoading ? (
+    <LoadingSpinner />
+  ) : (
     <div
       className="testimony-card grid grid-cols-12 p-4 my-4"
       id={`testimony-${id}`}
     >
       <div className="flex col-span-2 items-center">
         <div className="suggestion-avatar-half">
-          <div className="avatar-img"><img src={user?.avatar_url} className="h-full w-full rounded-full" alt="avatar"/></div>
+          <div className="avatar-img">
+            <img
+              src={user?.avatar_url}
+              className="h-full w-full rounded-full"
+              alt="avatar"
+            />
+          </div>
         </div>
 
         <p className="my-4 font-blue-dark-light font-sm ml-2">
