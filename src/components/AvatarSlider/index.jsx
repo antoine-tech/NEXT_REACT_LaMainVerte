@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "infinite-react-carousel";
-import {Link} from "react-router-dom";
-import Avatar from '../Avatar/index';
+import { Link } from "react-router-dom";
+import Avatar from "../Avatar/index";
 import "./index.scss";
 
 const AvatarSlider = ({ sliderData }) => {
@@ -19,7 +19,7 @@ const AvatarSlider = ({ sliderData }) => {
     <div>
       <Slider {...settings}>
         {sliderData?.map((user) => (
-          <Link to={`/user/${user.id}`}>
+          <Link to={`/user/${user.id}`} key={`avatar-${user.id}`}>
             <div>
               <Avatar imageSrc={user?.avatar_url} />
             </div>

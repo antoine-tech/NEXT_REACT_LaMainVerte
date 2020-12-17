@@ -16,7 +16,7 @@ const PostSlider = ({ sliderData, classNames }) => {
     <div className={classNames ? classNames.join(' ') : ''}>
       <Slider {...settings}>
         {sliderData?.map((image) => (
-          <div>
+          <div key={image}>
             <img src={image} alt="post" className="h-full w-full" />
           </div>
         ))}
