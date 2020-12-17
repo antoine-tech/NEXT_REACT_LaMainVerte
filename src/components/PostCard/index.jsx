@@ -25,6 +25,7 @@ const PostCard = ({ id }) => {
   const [postData, setPostData] = useState([]);
   const [myLike, setMyLike] = useState(null);
   const [postWarning, setPostWarning] = useState(false);
+  const [commentPostWarning, setCommentPostWarning] = useState(false);
   const [newCommentValue, setNewCommentValue] = useState(
     "Votre avis compte, laissez un commentaire !"
   );
@@ -53,6 +54,10 @@ const PostCard = ({ id }) => {
   const handleCommentInput = (value) => {
     setNewCommentValue(value);
   };
+
+  const updateCommentWarning = () => {
+    setCommentPostWarning(true);
+  }
 
   const handleCommentCreation = async (postId) => {
     const comment = await commentPost(postId, newCommentValue, getJwtToken);
@@ -87,7 +92,7 @@ const PostCard = ({ id }) => {
     userLike && setMyLike(userLike);
 
     setIsLoading(false);
-  }, [id, postWarning]);
+  }, [id, postWarning, commentPostWarning]);
 
   return isLoading ? (
     <LoadingSpinner />
@@ -166,7 +171,7 @@ const PostCard = ({ id }) => {
         <>
           {postData?.comments?.length > 0 &&
             postData.comments.map((comment) => {
-              let { id, content, user_id, warning } = comment;
+              let { id, content, user_id, warning, post_id } = comment;
               return (
                 <Comment
                   key={`comment-${id}`}
@@ -174,6 +179,8 @@ const PostCard = ({ id }) => {
                   user_id={user_id}
                   content={content}
                   warning={warning}
+                  post_id={post_id}
+                  updateWarning={updateCommentWarning}
                 />
               );
             })}

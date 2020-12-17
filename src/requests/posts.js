@@ -32,6 +32,15 @@ const commentPost = async (postId, content, jwtToken) => {
   ).then((res) => res.json());
 };
 
+const signalCommentPost = async (postId, content, jwtToken, id) => {
+  const data = { post_comment: { content: content, warning: true } };
+  return await update(
+    data,
+    `/post_comments/${id}`,
+    true,
+    jwtToken
+  ).then((res) => res.json());
+}
 
 const createPost = async (jwtToken, garden_id, title, content, pictures_url ) =>
 {
@@ -75,4 +84,4 @@ const signalPost = async (garden_id, title, content, pictures_url, jwtToken, pos
 
 
 }
-export { getPosts, getPost, likePost, unlikePost, commentPost, createPost, signalPost };
+export { getPosts, getPost, likePost, unlikePost, commentPost, createPost, signalPost, signalCommentPost };
