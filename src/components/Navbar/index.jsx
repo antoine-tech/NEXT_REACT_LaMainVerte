@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="flex w-full justify-between items-center p-4 relative">
-        <Link to="/" title="home">
+        <Link to="/news_feed" title="fil d'actualité">
           <LaMainVerteBrandNav />
         </Link>
 

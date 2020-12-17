@@ -1,4 +1,4 @@
-import { find, create, deletion } from "../sevices/Api";
+import { find, create, deletion, update } from "../sevices/Api";
 
 const getPosts = async () =>
   await find("/posts", false).then((res) => res.json());
@@ -53,4 +53,26 @@ const createPost = async (garden_id, title, content, pictures_url, jwtToken, ) =
 
 
 }
-export { getPosts, getPost, likePost, unlikePost, commentPost, createPost };
+
+const signalPost = async (garden_id, title, content, pictures_url, jwtToken, post_id) =>
+{
+  const data ={
+    'post':{
+      garden_id,
+      title,
+      content,
+      pictures_url,
+      warning: true,
+    }
+  }
+
+  return await update(
+    data,
+    `/posts/${post_id}`,
+    true,
+    jwtToken
+  ).then((res) => res.json());
+
+
+}
+export { getPosts, getPost, likePost, unlikePost, commentPost, createPost, signalPost };

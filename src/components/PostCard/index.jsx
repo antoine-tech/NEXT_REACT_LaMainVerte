@@ -6,6 +6,7 @@ import {
   likePost,
   unlikePost,
   commentPost,
+  signalPost
 } from "../../requests/posts";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import useJwtToken from "../../hooks/useJwtToken";
@@ -22,6 +23,7 @@ import Avatar from "../Avatar/index";
 const PostCard = ({ id }) => {
   const [postData, setPostData] = useState([]);
   const [myLike, setMyLike] = useState(null);
+  const [postWarning, setPostWarning] = useState(false);
   const [newCommentValue, setNewCommentValue] = useState(
     "Votre avis compte, laissez un commentaire !"
   );
@@ -34,6 +36,18 @@ const PostCard = ({ id }) => {
   const handleClick = (garden_id) => {
     history.push("/garden/" + garden_id);
   };
+
+  const warningPost = async () => {
+    const post = await signalPost(
+      postData.post.garden_id, 
+      postData.post.title, 
+      postData.post.content,
+      postData.post.pictures_url,
+      getJwtToken,
+      postData.post.id
+    )
+    setPostWarning(true);
+  }
 
   const handleCommentInput = (value) => {
     setNewCommentValue(value);
@@ -72,7 +86,7 @@ const PostCard = ({ id }) => {
     userLike && setMyLike(userLike);
 
     setIsLoading(false);
-  }, [id]);
+  }, [id, postWarning]);
 
   return isLoading ? (
     <LoadingSpinner />
@@ -103,7 +117,7 @@ const PostCard = ({ id }) => {
 
         {current_user ? (
           <>
-            <div className="col-start-11 col-span-1 flex items-center justify-end">
+            <div className="col-start-10 col-span-1 flex items-center justify-end">
               <IconComment
                 onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
               />
@@ -116,6 +130,20 @@ const PostCard = ({ id }) => {
                 onclick={(value) => handleLike(value)}
               />
               <span className="ml-2"> {postData?.likes?.length}</span>
+            </div>
+            <div className="col-span-1 flex items-center justify-end" 
+              title={
+                postData?.post?.warning?
+                  "ce post a été signalé comme contenu indésirable, il va être passé en revue par un administrateur"
+                :
+                  "signaler"
+                } 
+                onClick={warningPost}
+                id="warning-icon"
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" clipRule="evenodd" d="M0.5 16H17.5L9 1L0.5 16ZM10 14H8V12H10V14ZM10 11H8V7H10V11Z" fill={postData?.post?.warning? "#ff6b6b" : "#c9cbd2"}/>
+              </svg>
             </div>
           </>
         ) : (
