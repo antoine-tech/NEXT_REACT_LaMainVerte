@@ -112,6 +112,7 @@ const PostCard = ({ id }) => {
               <IconComment
                 onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
               />
+              <span className="mx-2"> {postData?.comments?.length}</span>
             </div>
             <div className="col-span-1 flex items-center justify-end">
               <IconHeart
@@ -128,6 +129,7 @@ const PostCard = ({ id }) => {
               <IconComment
                 onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
               />
+              <span className="mx-2"> {postData?.comments?.length}</span>
             </div>
           </>
         )}
