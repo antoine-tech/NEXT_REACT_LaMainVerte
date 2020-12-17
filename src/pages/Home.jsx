@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { getUserDatas, getUsers } from "../requests/user";
 import { getGardens } from "../requests/gardens";
 import { getPosts } from "../requests/posts";
@@ -13,27 +13,30 @@ import useJwtToken from "../hooks/useJwtToken";
 import PostCard from "../components/PostCard";
 import TestimonyCard from "../components/TestimonyCard/index";
 import empty_result from "../assets/backgrounds/empty_result.svg";
-import LoadingAnimation from '../components/loaders/LoadingAnimation/index';
+import LoadingAnimation from "../components/loaders/LoadingAnimation/index";
+import Button from "../components/base_components/Button/index";
+
 
 const Home = () => {
+  const history = useHistory();
+  const [currentPage, setCurrentPage] = useState(1);
   const [sliderData, setSLiderData] = useState(null);
   const [areFiltersDisplayed, setFiltersDisplayed] = useState(false);
   const [isSearchResultDisplayed, setSearchResultDisplayed] = useState(false);
-  const { pageStatus, setPageStatus } = usePageStatus("loading");
-  const { getJwtToken } = useJwtToken();
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
   const [displayedGardens, setDisplayedGardens] = useState([]);
+  const { pageStatus, setPageStatus } = usePageStatus("loading");
+  const { getJwtToken } = useJwtToken();
   const { current_user } = useCurrentUser();
-
-  useEffect(() => console.log(current_user), [current_user]);
 
   useEffect(() => {
     const fetchTestimonies = async () => await getTestimonies();
     const fetchAndSetPosts = async () => await getPosts();
-    const fetchUserProfile = async () => await getUserDatas(getJwtToken);
-    
+    const fetchUserProfile = async () =>
+      await getUserDatas(getJwtToken, currentPage);
+
     const fetchPageDatas = async (current_user) => {
       const fetchedPosts = await fetchAndSetPosts();
       setLastPosts(fetchedPosts);
@@ -47,6 +50,7 @@ const Home = () => {
           ? userProfile.follows
           : await getGardens();
         setDisplayedGardens(followedGarden);
+        setCurrentPage(1);
       } else {
         const gardenSelection = await getGardens();
         setDisplayedGardens(gardenSelection);
@@ -58,6 +62,15 @@ const Home = () => {
 
     fetchPageDatas(current_user);
   }, [current_user]);
+
+  const handleClickLoadMoreButton = async () => {
+    if (current_user)
+    {const userData = await getUserDatas(getJwtToken, currentPage + 1);
+    setDisplayedGardens([...displayedGardens, ...userData.follows]);
+    setCurrentPage(currentPage + 1);}else{
+      history.push('/login')
+    }
+  };
 
   if (pageStatus === "loading") {
     return (
@@ -75,25 +88,28 @@ const Home = () => {
     return (
       <section className="grid grid-cols-12 min-h-screen gap-4">
         <div className="hidden md:block md:col-span-1 lg:col-span-2 bg-man relative">
-         { current_user &&
-         <div className="fixed h-1/6 flex flex-col justify-around mx-auto p-4">
-            <Link
-              to="/gardens/new"
-              className="btn btn-md bg-blue-dark text-white text-center p-4 w-64 col-span-2 lg:col-span-1"
-            >
-              Créer un jardin
-            </Link>
+          {current_user && (
+            <div className="fixed h-1/6 flex flex-col justify-around mx-auto p-4">
+              <Link
+                to="/gardens/new"
+                className="btn btn-md bg-blue-dark text-white text-center p-4 w-64 col-span-2 lg:col-span-1"
+              >
+                Créer un jardin
+              </Link>
 
-            <Link 
-              to="/profile" 
-              className = "btn btn-md bg-blue-dark text-white text-center p-4 w-64 col-span-2 lg:col-span-1"
-            >
-              Mon profil
-            </Link>
-          </div>
-          }
+              <Link
+                to="/profile"
+                className="btn btn-md bg-blue-dark text-white text-center p-4 w-64 col-span-2 lg:col-span-1"
+              >
+                Mon profil
+              </Link>
+            </div>
+          )}
         </div>
-        <div className="col-span-12 lg:col-span-6 px-4" id="wall">
+        <div
+          className="flex flex-col justify-center col-span-12 lg:col-span-6 px-4"
+          id="wall"
+        >
           <SearchEngine
             getSearchResult={(gardens) => setDisplayedGardens(gardens)}
             filterDisplay={areFiltersDisplayed}
@@ -160,6 +176,16 @@ const Home = () => {
               />
             );
           })}
+
+        
+            <Button
+              classNames={[
+                "btn btn-md bg-red mb-4 text-white text-center p-8 w-5/6 align-self-center justify-self-center mx-auto",
+              ]}
+              text="VOIR PLUS DE JARDINS"
+              onclick={handleClickLoadMoreButton}
+            />
+      
         </div>
         <div className="hidden lg:block lg:col-span-4">
           <h4 className="mb-4 text-center">Les derniers posts</h4>

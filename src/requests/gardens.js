@@ -1,4 +1,4 @@
-import { find, create, deletion } from "../sevices/Api";
+import { find, create, deletion, update } from "../sevices/Api";
 
 const getFollowedGardenAndRelatedData = async (gardens) => {
 
@@ -70,6 +70,18 @@ const createGarden = async (gardenData, userToken) => {
   return response;
 };
 
+const updateGarden = async (garden_id, gardenData, userToken) => {
+  const response = await update(
+    gardenData,
+    `/gardens/${garden_id}`,
+    true,
+    userToken
+  )
+    .then((res) => res.json())
+    .catch((error) => error);
+  return response;
+};
+
 const getGarden = async (garden_id) =>
   find("/gardens/" + garden_id)
     .then((res) => res.json())
@@ -79,7 +91,6 @@ const getGardens = async () =>
   find("/gardens")
     .then((res) => res.json())
     .catch((error) => error);
-
 
 const follow = async (garden_id, jwt_token) => {
   const data = {
@@ -176,5 +187,6 @@ export {
   unlikeGarden,
   createGarden,
   search,
+  updateGarden,
   getFollowedGardenAndRelatedData
 };

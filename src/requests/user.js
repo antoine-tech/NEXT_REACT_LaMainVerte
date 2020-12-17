@@ -92,10 +92,10 @@ const logout = async (jwtToken) =>
     .then((res) => res.text())
     .catch((error) => error);
 
-const getUserDatas = async (jwt_token) => {
+const getUserDatas = async (jwt_token, page) => {
   const userId = jwtDecode(jwt_token);
   const userData = await find(
-    `/users/${userId.sub}`,
+    `/users/${userId.sub}?follows_page=${page}`,
     true,
     jwt_token
   ).then((res) => res.json());

@@ -11,11 +11,8 @@ import {
 import useJwtToken from "../hooks/useJwtToken";
 import useCurrentUser from "../hooks/useCurrentUser";
 import useIsAmmendable from "../hooks/useIsAmmendable";
-import SliderInput from "../components/SliderInput/index";
 import PostCard from "../components/PostCard";
 import PostCreation from "../components/Forms/PostCreation/index";
-import Input from "../components/base_components/Input/index";
-import Select from "../components/base_components/Select/index";
 import Button from "../components/base_components/Button/index";
 import CardIndicator from "../components/CardIndicator/index";
 import IconPen from "../components/base_components/icons/IconPen/index";
@@ -25,23 +22,25 @@ import IconUpdate from "../components/base_components/icons/IconUpdate/index";
 import IconLocation from "../components/base_components/icons/IconLocation/index";
 import MaskImage from "../assets/backgrounds/mask_image.png";
 import IconCreate from "../components/base_components/icons/IconCreate";
-
-
+import GardenEditionForm from "../components/Forms/GardenEditionForm";
 
 const Garden = () => {
+  const history = useHistory();
   const [gardenData, setGardenData] = useState({});
   const [gardenFollow, setGardenFollow] = useState(null);
   const [isNewPostZoneDisplayed, setNewPostZoneDisplayed] = useState(false);
-  const history = useHistory();
   const [myLike, setMyLike] = useState(null);
-  const [opacityValue, setOpacityValue] = useState(1);
   const { current_user } = useCurrentUser();
   const { getJwtToken } = useJwtToken();
   const { isAmmendable, setIsAmmendable } = useIsAmmendable();
   const { garden_id } = useParams();
 
-  const handleOpacityValue = (value) => {
-    setOpacityValue(1 - value / 100);
+  const handleSetOpacityValue = (value) => {
+    const newData = {
+      ...gardenData,
+      garden: { ...gardenData.garden, picture_opacity: value },
+    };
+    setGardenData(newData);
   };
 
   const handleClickEventHistory = () => {
@@ -92,10 +91,6 @@ const Garden = () => {
     }
   };
 
-  const handleChangeGardenLocation = (value) => {
-    //console.log(value);
-  };
-
   useEffect(() => {
     const fetchGardenData = async () => {
       const garden = await getGarden(garden_id);
@@ -131,23 +126,14 @@ const Garden = () => {
           backgroundPosition: "center",
         }}
       >
-        {isAmmendable ? (
-          <img
-            src={MaskImage}
-            alt=""
-            className="h-full w-full"
-            style={{ backgroundColor: `rgba(255,255,255,${opacityValue})` }}
-          />
-        ) : (
-          <img
-            src={MaskImage}
-            alt=""
-            className="h-full w-full"
-            style={{
-              backgroundColor: `rgba(255,255,255,${gardenData?.garden?.picture_opacity})`,
-            }}
-          />
-        )}
+        <img
+          src={MaskImage}
+          alt=""
+          className="h-full w-full"
+          style={{
+            backgroundColor: `rgba(255,255,255,${gardenData?.garden?.picture_opacity})`,
+          }}
+        />
       </div>
 
       <div className="grid grid-cols-12 relative z-20">
@@ -202,58 +188,27 @@ const Garden = () => {
             </div>
           )}
 
-          {isAmmendable ? (
-            <input
-              type="text"
-              className="col-span-4"
-              value={gardenData?.garden?.name}
-              style={{
-                fontSize: "3rem",
-                fontWeight: "700",
-                paddingTop: "2rem",
-                paddingBottom: "2rem",
-              }}
-            />
-          ) : (
-            <h1 className="col-span-4 text-center my-8">
-              {gardenData?.garden?.name.toUpperCase()}
-            </h1>
+          {!isAmmendable && (
+            <>
+              <h1 className="col-span-4 text-center my-8">
+                {gardenData?.garden?.name.toUpperCase()}
+              </h1>
+
+              <h4 className="col-span-4 text-center my-8">
+                {gardenData?.garden?.description}
+              </h4>
+            </>
           )}
           <div className="col-span-4 main-data-container flex flex-wrap justify-between mt-8">
             {isAmmendable ? (
-              <>
-                <Select
-                  icon={IconLabel}
-                  prompter="Quel est le type de votre jardin ?"
-                  options={[
-                    { value: 1, text: "urbain" },
-                    { value: 2, text: "rural" },
-                  ]}
-                  selectedOption={(value) => console.log(value)}
-                />
-                <Select
-                  icon={IconClimate}
-                  prompter=" Quel est votre climat ?"
-                  options={[]}
-                  selectedOption={(value) => console.log(value)}
-                />
-
-                <Input
-                  id={"garden-location"}
-                  type={"text"}
-                  name={"garden-location"}
-                  value={gardenData?.location?.name}
-                  onInput={(value) => handleChangeGardenLocation(value)}
-                  placeHolder={"Où se trouve votre jardin ?"}
-                  classNames={["w-full"]}
-                />
-
-                <SliderInput
-                  classNames={["my-4"]}
-                  label="Modifier l'opacité de la photo d'arrière plan :"
-                  opacityValue={(value) => handleOpacityValue(value)}
-                />
-              </>
+              <GardenEditionForm
+                gardenData={gardenData}
+                updateGardenData={(value) =>
+                  setGardenData({ ...gardenData, garden: value })
+                }
+                setOpacityValue={(value) => handleSetOpacityValue(value)}
+                setIsAmmendable={(value)=>setIsAmmendable(value)}
+              />
             ) : (
               <>
                 <CardIndicator
@@ -284,11 +239,17 @@ const Garden = () => {
             )}
           </div>
 
-          {isNewPostZoneDisplayed && <PostCreation setGardenData={setGardenData} gardenData={gardenData} setNewPostZoneDisplayed={setNewPostZoneDisplayed} />}
+          {isNewPostZoneDisplayed && (
+            <PostCreation
+              setGardenData={setGardenData}
+              gardenData={gardenData}
+              setNewPostZoneDisplayed={setNewPostZoneDisplayed}
+            />
+          )}
 
-          {(current_user &&
+          {current_user &&
             current_user.id !== gardenData?.user?.id &&
-            gardenFollow) && (
+            gardenFollow && (
               <Button
                 text="Ne plus suivre"
                 classNames={[
@@ -305,9 +266,9 @@ const Garden = () => {
               />
             )}
 
-          {(current_user &&
+          {current_user &&
             current_user.id !== gardenData?.user?.id &&
-            gardenFollow === null) && (
+            gardenFollow === null && (
               <Button
                 text="Suivre"
                 classNames={[
@@ -324,9 +285,9 @@ const Garden = () => {
               />
             )}
 
-          {(current_user &&
+          {current_user &&
             current_user?.id !== gardenData?.user?.id &&
-            myLike !== null )&& (
+            myLike !== null && (
               <Button
                 text="Je n'aime plus"
                 classNames={[
@@ -343,23 +304,24 @@ const Garden = () => {
               />
             )}
 
-          {(current_user && current_user.id !== gardenData?.user?.id &&
-            myLike == null) && (
-            <Button
-              text="J'aime ce jardin"
-              classNames={[
-                "btn",
-                "btn-lg",
-                "border-red",
-                "text-dark",
-                "p-4",
-                "w-full",
-                "col-span-4",
-                "lg:col-span-2",
-              ]}
-              onclick={() => handleLike(garden_id)}
-            />
-          )}
+          {current_user &&
+            current_user.id !== gardenData?.user?.id &&
+            myLike == null && (
+              <Button
+                text="J'aime ce jardin"
+                classNames={[
+                  "btn",
+                  "btn-lg",
+                  "border-red",
+                  "text-dark",
+                  "p-4",
+                  "w-full",
+                  "col-span-4",
+                  "lg:col-span-2",
+                ]}
+                onclick={() => handleLike(garden_id)}
+              />
+            )}
 
           <div className="my-8 col-span-4">
             {gardenData?.posts?.length > 0 ? (
