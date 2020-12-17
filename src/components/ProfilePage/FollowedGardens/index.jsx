@@ -2,9 +2,11 @@ import React, {useEffect, useState} from "react";
 import {findUserDatas} from "../../../requests/user";
 import {getFollowedGardenAndRelatedData} from "../../../requests/gardens";
 import GardenCard from '../../../components/GardenCard';
+import { useSelector } from "react-redux";
 
 const FollowedGardens = ({user}) => {
     const [followedGardens, setFollowedGardens] = useState([]);
+    const [current_user, setCurrentUser] = useState(useSelector(state=>state.current_user));
     
     useEffect(() => {
 
@@ -24,7 +26,12 @@ const FollowedGardens = ({user}) => {
     return (
         <section id="followed-gardens" className="flex flex-col">
             <div className="radius bg-light-brown shadow-neomorph p-4 my-5">
-                <h1>Mes jardins favoris</h1>
+                {   current_user && current_user.id == user.id?
+                        <h1>Mes jardins favoris</h1>
+                    :
+                        <h1>Jardins suivis</h1>
+                }
+                
             </div>
 
             <div className={followedGardens?.length > 1? "gardens overflow-y-scroll" : "gardens"}>

@@ -14,6 +14,7 @@ import useJwtToken from "./hooks/useJwtToken";
 import GardenHistory from "./pages/GardenHistory";
 import UnAuthRoute from "./components/routes/UnAuthRoute/index";
 import AuthRoute from "./components/routes/AuthRoute";
+import PublicProfile from "./pages/PublicProfile";
 
 const App = () => {
   const { pathname } = useLocation();
@@ -78,6 +79,11 @@ const App = () => {
           exact
           path="/garden/:garden_id"
           component={Garden}
+        />
+        <Route
+          exact
+          path="/user/:user_id"
+          component={PublicProfile}
         />
         <AuthRoute
           current_user={current_user}
