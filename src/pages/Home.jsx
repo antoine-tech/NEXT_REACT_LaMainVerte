@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserDatas, getUsers } from "../requests/user";
 import { getGardens } from "../requests/gardens";
@@ -170,7 +169,6 @@ const Home = () => {
               <GardenCard
                 key={`garden-${displayedGarden.id}`}
                 id={displayedGarden.id}
-                ref={ref}
               />
             );
           })}
