@@ -11,12 +11,14 @@ import useCurrentUser from "../../hooks/useCurrentUser";
 import useJwtToken from "../../hooks/useJwtToken";
 import useIsLoading from "../../hooks/useIsLoading";
 import Comment from "../Comment";
-import LoadingSpinner from '../loaders/LoadingSpinner/index';
-import IconHeart from '../base_components/icons/IconHeart/index';
-import IconComment from '../base_components/icons/IconComment/index';
-import TextArea from '../base_components/TextArea/index';
-import Button from '../base_components/Button/index';
-;
+import LoadingSpinner from "../loaders/LoadingSpinner/index";
+import IconHeart from "../base_components/icons/IconHeart/index";
+import IconComment from "../base_components/icons/IconComment/index";
+import TextArea from "../base_components/TextArea/index";
+import Button from "../base_components/Button/index";
+import "./index.scss";
+import Avatar from "../Avatar/index";
+
 const PostCard = ({ id }) => {
   const [postData, setPostData] = useState([]);
   const [myLike, setMyLike] = useState(null);
@@ -78,22 +80,11 @@ const PostCard = ({ id }) => {
     <>
       <div className="post-card grid grid-cols-12 p-4 my-4" id={`post-${id}`}>
         <div className="flex col-span-2 items-center">
-          <div
-            className="suggestion-avatar-half"
-            onClick={() => handleClick(postData?.garden?.id)}
-          >
-            <div className="avatar-img">
-              <img
-                src={postData?.user?.avatar_url}
-                className="h-full w-full rounded-full"
-                alt="avatar"
-              />
-            </div>
-          </div>
-
-          <p className="my-4 font-blue-dark-light font-sm ml-2">
-            {postData?.user?.username}
-          </p>
+          <Avatar
+            type="half"
+            imageSrc={postData?.user?.avatar_url}
+            userName={postData?.user?.username}
+          />
         </div>
 
         <h5 className="flex col-start-10 col-span-3 items-center">

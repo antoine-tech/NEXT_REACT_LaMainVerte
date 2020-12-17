@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { search } from "../../requests/gardens";
 import { parseQueryParams } from "../../helpers/parseQueryParams";
 import useGardenRelatedAttributes from "../../hooks/useGardenRelatedAttributes";
-import Button from '../base_components/Button/index';
-import Select from '../base_components/Select/index';
-import IconLabel from '../base_components/icons/IconLabel/index';
-import IconClimate from '../base_components/icons/IconClimate/index';
-import IconLocation from '../base_components/icons/IconLocation/index';
+import Button from "../base_components/Button/index";
+import Select from "../base_components/Select/index";
+import IconLabel from "../base_components/icons/IconLabel/index";
+import IconClimate from "../base_components/icons/IconClimate/index";
+import IconLocation from "../base_components/icons/IconLocation/index";
+import "./index.scss";
 
 const SearchEngine = ({
   getSearchResult,

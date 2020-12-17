@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import Moment from "react-moment";
 import useIsLoading from "../../hooks/useIsLoading";
-import LoadingSpinner from '../loaders/LoadingSpinner/index';
-
+import LoadingSpinner from "../loaders/LoadingSpinner/index";
+import "./index.scss";
+import Avatar from '../Avatar/index';
 
 const TestimonyCard = ({ id, content, user, created_at, updated_at }) => {
   const { isLoading, setIsLoading } = useIsLoading();
@@ -18,19 +19,7 @@ const TestimonyCard = ({ id, content, user, created_at, updated_at }) => {
       id={`testimony-${id}`}
     >
       <div className="flex col-span-2 items-center">
-        <div className="suggestion-avatar-half">
-          <div className="avatar-img">
-            <img
-              src={user?.avatar_url}
-              className="h-full w-full rounded-full"
-              alt="avatar"
-            />
-          </div>
-        </div>
-
-        <p className="my-4 font-blue-dark-light font-sm ml-2">
-          {user?.username}
-        </p>
+        <Avatar type={'half'} imageSrc={user?.avatar_url} userName={user?.username} />
       </div>
 
       <h5 className="flex col-start-10 col-span-3 items-center">

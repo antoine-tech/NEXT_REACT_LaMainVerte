@@ -1,8 +1,11 @@
 import React from "react";
+import "./index.scss";
 
 const Alert = ({ message, setIsAlertDisplayed, type }) => {
   return (
-    <div className={`alert ${type} absolute top-0 right-0 left-0 text-white p-2 flex justify-between`}>
+    <div
+      className={`alert ${type} absolute top-0 right-0 left-0 text-white p-2 flex justify-between`}
+    >
       <p className="text-center">{message}</p>
       <svg
         width="24"

@@ -1,7 +1,16 @@
 import React from "react";
+import "./index.scss";
 
-const TextArea = ({ id, name, cols, rows, classNames, value, onInput, onBlur }) => {
-
+const TextArea = ({
+  id,
+  name,
+  cols,
+  rows,
+  classNames,
+  value,
+  onInput,
+  onBlur,
+}) => {
   const handleInput = (value) => {
     return onInput(value);
   };
@@ -23,8 +32,7 @@ const TextArea = ({ id, name, cols, rows, classNames, value, onInput, onBlur }) 
         onBlur && handleBlur({ value: event.target.value, id: event.target.id })
       }
       value={value}
-    >
-    </textarea>
+    ></textarea>
   );
 };
 

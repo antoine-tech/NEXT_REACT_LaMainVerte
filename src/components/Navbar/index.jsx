@@ -7,6 +7,7 @@ import ToogleSwitch from "../ToogleSwitch/index";
 import MenuLeft from "../MenuLeft";
 import LaMainVerteBrandNav from '../base_components/icons/LaMainVerteBrandNav/index';
 import SettingIcon from '../base_components/icons/SettingIcon/index';
+import './index.scss'
 
 const Navbar = () => {
   const { getJwtToken, unSetJwtToken } = useJwtToken();

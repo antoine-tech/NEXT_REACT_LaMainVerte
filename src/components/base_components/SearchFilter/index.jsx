@@ -1,6 +1,7 @@
 import React from "react";
+import "./index.scss";
 
-const SearchFilter = ({type, label, id, name, onChange }) => {
+const SearchFilter = ({ type, label, id, name, onChange }) => {
   const handleChange = (type, id) => {
     return onChange({ id: id, type: type });
   };
@@ -10,7 +11,7 @@ const SearchFilter = ({type, label, id, name, onChange }) => {
         type="checkbox"
         id={id}
         name={name}
-        onChange={(type,id) => handleChange(type, id)}
+        onChange={(type, id) => handleChange(type, id)}
       />
       <label htmlFor="" className="ml-2">
         {label}
