@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserDatas, getUsers } from "../requests/user";
 import { getGardens } from "../requests/gardens";
@@ -21,6 +22,9 @@ const Home = () => {
   const [isSearchResultDisplayed, setSearchResultDisplayed] = useState(false);
   const { pageStatus, setPageStatus } = usePageStatus("loading");
   const { getJwtToken } = useJwtToken();
+  const [followedGardens, setFollowedGardens] = useState([]);
+  const [gardenSelection, setGardenSelection] = useState([]);
+  const [user, setUser] = useState(useSelector(state=>state.current_user));
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
@@ -75,20 +79,23 @@ const Home = () => {
     return (
       <section className="grid grid-cols-12 min-h-screen gap-4">
         <div className="hidden md:block md:col-span-1 lg:col-span-2 bg-man relative">
-          <div className="fixed h-1/6 flex flex-col justify-around mx-auto p-4">
+         { current_user &&
+         <div className="fixed h-1/6 flex flex-col justify-around mx-auto p-4">
             <Link
               to="/gardens/new"
               className="btn btn-md bg-blue-dark text-white text-center p-4 w-64 col-span-2 lg:col-span-1"
             >
               Créer un jardin
             </Link>
-            <Link
-              to="/profil"
-              className="btn btn-md bg-blue-dark text-white p-4 w-64 col-span-2 lg:col-span-1 text-center"
+
+            <Link 
+              to="/profile" 
+              className = "btn btn-md bg-blue-dark text-white text-center p-4 w-64 col-span-2 lg:col-span-1"
             >
               Mon profil
             </Link>
           </div>
+          }
         </div>
         <div className="col-span-12 lg:col-span-6 px-4" id="wall">
           <SearchEngine
