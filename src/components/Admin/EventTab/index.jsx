@@ -5,10 +5,18 @@ import TrashIcon from "../../../assets/icons/trash.svg";
 const EventTab = () => {
 	const [events, setEvents] = useState([]);
 
-	// const handleGardenComments = async () => {
-	// 	const response = await find("/gardens");
-	// 	setGardens(response);
-	// };
+	const handleEvents = async () => {
+		let response = await fetch(
+			"https://api-master-lamainverte.herokuapp.com/api/events",
+		);
+		let json = await response.json();
+
+		setEvents(json);
+	};
+
+	useEffect(() => {
+		handleEvents();
+	}, []);
 
 	return (
 		<div className="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">
