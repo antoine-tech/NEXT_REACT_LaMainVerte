@@ -828,7 +828,7 @@ div.concept-page #section2 img.card-img {
   width: auto;
 }
 div.concept-page #section2 {
-  animation: 900ms ease-in-out 0s 1 slideUp;
+  animation: 2s ease-in-out 0s 1 slideUp;
   padding: 4rem;
 }
 div.concept-page #section2 div.concept-card{
@@ -843,7 +843,6 @@ div.concept-page #section2 div.concept-card{
 div.concept-page #section3 {
   margin-top: 10%;
   padding: 6rem;
-  /*background-color: #f5d4d5;*/
   width: 100vw;
   margin: none;
   margin-left: -6%;
@@ -863,15 +862,15 @@ div.concept-page #section3 div.section-text button {
   padding: 0.7rem;
   max-width: 200px;
   margin-top: 50px;
-  border: 2px solid #72af77;
-  color: #72af77;
+  border: 2px solid #f88d52;
+  color: #f88d52;
   border-radius: 5px;
   transition: all 200ms 100ms ease;
 }
 div.concept-page #section3 div.section-text button:hover {
   transform: translateY(-5px);
   color: white;
-  background-color: #72af77;
+  background-color: #f88d52;
 }
 div.concept-page #section4 {
   margin-top: 10%;
@@ -906,6 +905,14 @@ div.concept-page #section4 div.section-text button:hover {
   transform: translateY(-5px);
   color: white;
   background-color: #72af77;
+}
+div.concept-page footer {
+  background-color: #1b2a4e;
+  padding: 5%;
+  padding-top: 8%;
+  min-height: 300px;
+  margin-left: -10%;
+  margin-right: -10%;
 }
 
 @keyframes slideInLeft {
