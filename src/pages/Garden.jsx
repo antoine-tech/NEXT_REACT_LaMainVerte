@@ -286,9 +286,9 @@ const Garden = () => {
 
           {isNewPostZoneDisplayed && <PostCreation />}
 
-          {current_user &&
+          {(current_user &&
             current_user.id !== gardenData?.user?.id &&
-            gardenFollow && (
+            gardenFollow) && (
               <Button
                 text="Ne plus suivre"
                 classNames={[
@@ -305,9 +305,9 @@ const Garden = () => {
               />
             )}
 
-          {current_user &&
+          {(current_user &&
             current_user.id !== gardenData?.user?.id &&
-            gardenFollow === null && (
+            gardenFollow === null) && (
               <Button
                 text="Suivre"
                 classNames={[
@@ -324,9 +324,9 @@ const Garden = () => {
               />
             )}
 
-          {current_user &&
+          {(current_user &&
             current_user?.id !== gardenData?.user?.id &&
-            myLike !== null && (
+            myLike !== null )&& (
               <Button
                 text="Je n'aime plus"
                 classNames={[
@@ -343,7 +343,8 @@ const Garden = () => {
               />
             )}
 
-          {current_user && current_user.id !== gardenData?.user?.id && (
+          {(current_user && current_user.id !== gardenData?.user?.id &&
+            myLike == null) && (
             <Button
               text="J'aime ce jardin"
               classNames={[
