@@ -14,6 +14,7 @@ import { getUserDatas } from "./requests/user";
 import useJwtToken from "./hooks/useJwtToken";
 import GardenHistory from "./pages/GardenHistory";
 import UnAuthRoute from "./components/routes/UnAuthRoute/index";
+import AdminRoute from "./components/routes/AdminRoute/index";
 import AuthRoute from "./components/routes/AuthRoute";
 import PublicProfile from "./pages/PublicProfile";
 
@@ -59,10 +60,12 @@ const App = () => {
 					<Home />
 				</Route>
 
-				<Route path="/admin">
-					<AdminDashboard />
-				</Route>
-
+				<AdminRoute
+					current_user={current_user}
+					exact
+					path="/admin"
+					component={AdminDashboard}
+				/>
 				<AuthRoute
 					current_user={current_user}
 					exact
