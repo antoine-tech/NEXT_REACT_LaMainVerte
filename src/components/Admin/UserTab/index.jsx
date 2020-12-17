@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode";
 import { usersDatas } from "../../../requests/user";
 import TrashIcon from "../../../assets/icons/trash.svg";
 
@@ -7,19 +8,32 @@ const UserTab = () => {
 	const [users, setUsers] = useState([]);
 	const [show, setShow] = useState(false);
 
+	const getToken = () => {
+		return Cookies.get("jwt_token");
+	};
+
 	const handleUsers = async () => {
-		const response = await fetch(
+		let response = await fetch(
 			"https://api-master-lamainverte.herokuapp.com/api/users",
 		);
-		const json = await response.json();
+		let json = await response.json();
 
 		setUsers(json);
 	};
 
-	// const deleteUser = async (user_id) => {
-	// 	await deletion(`/users/${user_id}`, true, Cookies.get("jwt_token"));
-	// 	handleUsers();
-	// };
+	const deleteUser = async (user_id) => {
+		let response = await fetch(
+			`https://api-master-lamainverte.herokuapp.com/api/users/${user_id}`,
+			{
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+					Authentication: getToken(),
+				},
+			},
+		);
+		handleUsers();
+	};
 
 	useEffect(() => {
 		handleUsers();
@@ -47,6 +61,9 @@ const UserTab = () => {
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
 							Email
 						</th>
+						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
+							Is_admin
+						</th>
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"></th>
 					</tr>
 				</thead>
@@ -57,6 +74,7 @@ const UserTab = () => {
 							<td>{user.first_name}</td>
 							<td>{user.last_name}</td>
 							<td>{user.email}</td>
+							<td>{user.is_admin ? "true" : "false"}</td>
 							<td>
 								<a href="#">
 									<img
@@ -64,7 +82,7 @@ const UserTab = () => {
 										alt="Delete a user"
 										width="25"
 										height="25"
-										// onClick={() => deleteUser(user.id)}
+										onClick={() => deleteUser(user.id)}
 									/>
 								</a>
 							</td>
