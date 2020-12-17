@@ -161,13 +161,14 @@ const PostCard = ({ id }) => {
         <>
           {postData?.comments?.length > 0 &&
             postData.comments.map((comment) => {
-              let { id, content, user_id } = comment;
+              let { id, content, user_id, warning } = comment;
               return (
                 <Comment
                   key={`comment-${id}`}
                   id={id}
                   user_id={user_id}
                   content={content}
+                  warning={warning}
                 />
               );
             })}
