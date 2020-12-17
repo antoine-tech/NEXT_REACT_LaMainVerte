@@ -6,7 +6,7 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 import { uploadToAWS } from "../../../sevices/Api";
 import { useDropzone } from "react-dropzone";
 import {editUserProfile, removeProfile} from "../../../requests/user";
-import Input from "../../Input";
+import Input from "../../base_components/Input";
 
 const EditProfileForm = ({current}) => {
     const [user, setUser] = useState(current);

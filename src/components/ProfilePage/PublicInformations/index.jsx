@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Input from "../../Input";
+import Input from "../../base_components/Input";
 
 const PublicInformations = ({other_user}) => {
     const [user, setUser] = useState(other_user);
