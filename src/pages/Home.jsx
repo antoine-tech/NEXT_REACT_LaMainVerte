@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { getUserDatas, getUsers } from "../requests/user";
 import { getGardens } from "../requests/gardens";
 import { getPosts } from "../requests/posts";
@@ -18,16 +18,17 @@ import Button from "../components/base_components/Button/index";
 
 
 const Home = () => {
+  const history = useHistory();
   const [currentPage, setCurrentPage] = useState(1);
   const [sliderData, setSLiderData] = useState(null);
   const [areFiltersDisplayed, setFiltersDisplayed] = useState(false);
   const [isSearchResultDisplayed, setSearchResultDisplayed] = useState(false);
-  const { pageStatus, setPageStatus } = usePageStatus("loading");
-  const { getJwtToken } = useJwtToken();
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
   const [displayedGardens, setDisplayedGardens] = useState([]);
+  const { pageStatus, setPageStatus } = usePageStatus("loading");
+  const { getJwtToken } = useJwtToken();
   const { current_user } = useCurrentUser();
 
   useEffect(() => {
@@ -62,10 +63,13 @@ const Home = () => {
     fetchPageDatas(current_user);
   }, [current_user]);
 
-  const handleNextPageData = async () => {
-    const userData = await getUserDatas(getJwtToken, currentPage + 1);
+  const handleClickLoadMoreButton = async () => {
+    if (current_user)
+    {const userData = await getUserDatas(getJwtToken, currentPage + 1);
     setDisplayedGardens([...displayedGardens, ...userData.follows]);
-    setCurrentPage(currentPage + 1);
+    setCurrentPage(currentPage + 1);}else{
+      history.push('/login')
+    }
   };
 
   if (pageStatus === "loading") {
@@ -173,15 +177,15 @@ const Home = () => {
             );
           })}
 
-          {current_user && (
+        
             <Button
               classNames={[
                 "btn btn-md bg-red mb-4 text-white text-center p-8 w-5/6 align-self-center justify-self-center mx-auto",
               ]}
-              text="VOIR PLUS DE JARDIN"
-              onclick={handleNextPageData}
+              text="VOIR PLUS DE JARDINS"
+              onclick={handleClickLoadMoreButton}
             />
-          )}
+      
         </div>
         <div className="hidden lg:block lg:col-span-4">
           <h4 className="mb-4 text-center">Les derniers posts</h4>
