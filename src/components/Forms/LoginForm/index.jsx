@@ -27,7 +27,7 @@ const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
 
       if (response) {
         setCurrentUser(response);
-        history.push("/");
+        history.push("/news_feed");
       } else {
         setAlertMessage("Les informations fournies ne sont pas correctes");
         setAlertType("danger");

@@ -55,7 +55,7 @@ const App = () => {
           path="/register"
           component={Register}
         />
-        <Route exact path="/">
+        <Route exact path="/news_feed">
           <Home />
         </Route>
 
@@ -72,7 +72,7 @@ const App = () => {
         />
         <Route
           exact
-          path="/concept"
+          path="/"
           component={Concept}
         />
         <Route

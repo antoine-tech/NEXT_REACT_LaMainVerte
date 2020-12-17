@@ -16,8 +16,8 @@ const Concept = () => {
                        Jardinier du dimanche ou permaculteur avéré, semez votre graine à l'édifice en partageant votre savoir faire avec d'autres passionnés du rateau.
                     </p>
 
-                    <div className="flex flex-wrap mt-5">
-                        <Link to="/" className="main-btn mx-5 mt-5">
+                    <div className="flex flex-wrap justify-evenly mt-5">
+                        <Link to="/news_feed" className="main-btn mx-5 mt-5">
                             Parcourir le site
                         </Link>
 
