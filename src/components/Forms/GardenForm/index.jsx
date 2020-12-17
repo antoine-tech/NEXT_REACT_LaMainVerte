@@ -15,6 +15,7 @@ import FormGroup from "../../FormGroup";
 import LetsGoButton from '../../base_components/buttons/LetsGoButton/index';
 import IconClimate from '../../base_components/icons/IconClimate/index';
 import IconLocation from '../../base_components/icons/IconLocation/index';
+import { set } from "js-cookie";
 
 const GardenForm = ({ droppedImage }) => {
 
@@ -23,6 +24,7 @@ const GardenForm = ({ droppedImage }) => {
   const [climates, setClimates] = useState([]);
   const [gardenTypes, setGardenTypes] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [isThereErros, setIsThereErrors] = useState(false);
   const { datas, alerts, setDatas, handleInput, handleBlur } = useFormAnalysis(
     { name: "", area: "", climate_id: "", location_id: "" },
     {}
@@ -73,7 +75,7 @@ const GardenForm = ({ droppedImage }) => {
         climate_id: climates[0].id,
       });
     }
-  }, [locations, climates]);
+  }, [locations, climates, isThereErros]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,8 +97,12 @@ const GardenForm = ({ droppedImage }) => {
     };
 
     const response = await createGarden(newGarden, getJwtToken);
-    const createdGardenId = response.id;
-    history.push(`/garden/${createdGardenId}`);
+    if(response.id){
+      const createdGardenId = response.id;
+      history.push(`/garden/${createdGardenId}`);
+    }else{
+      setIsThereErrors(true);
+    }
   };
 
   if (pageStatus === "loading") {
@@ -104,6 +110,9 @@ const GardenForm = ({ droppedImage }) => {
   } else if (pageStatus === "loaded") {
     return (
       <div>
+        { isThereErros &&
+          <p className="text-red-600" onClick={() => setIsThereErrors(false)}>- Erreur dans la saisie des informations</p>
+        }
         <h1 className="my-5">Partager mon jardin</h1>
 
         <form className="grid grid-cols-2 gap-4 my-2" onSubmit={handleSubmit}>
