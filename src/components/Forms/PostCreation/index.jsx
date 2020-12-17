@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
-import Button from "../../Button/index";
-import TextArea from "../../TextArea/index";
 import FormGroup from "../../FormGroup/index";
 import Dropzone from "../../PostDropZone/index";
-import IconAdd from "../../icons/IconAdd";
-import IconRemove from "../../icons/IconRemove";
+import Button from '../../base_components/Button/index';
+import TextArea from '../../base_components/TextArea/index';
+import IconAdd from '../../base_components/icons/IconAdd/index';
+import IconRemove from '../../base_components/icons/IconRemove/index';
 
 const PostCreation = () => {
   const [imageFields, setImageFields] = useState([

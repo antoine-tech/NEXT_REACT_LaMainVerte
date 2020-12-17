@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import LaMainVerteBrandNav from "../icons/LaMainVerteBrandNav/index";
-import SettingIcon from "../icons/SettingIcon";
 import ToogleSwitch from "../ToogleSwitch/index";
 import { logout } from "../../requests/user";
 import useJwtToken from "../../hooks/useJwtToken";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import MenuLeft from "../MenuLeft";
+import LaMainVerteBrandNav from '../base_components/icons/LaMainVerteBrandNav/index';
+import SettingIcon from '../base_components/icons/SettingIcon/index';
 
 const Navbar = () => {
   const { getJwtToken, unSetJwtToken } = useJwtToken();

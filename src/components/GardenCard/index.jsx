@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import DataContainer from "../DataContainer/index";
-import IconClimate from "../icons/IconClimate/index";
-import IconLabel from "../icons/IconLabel";
-import IconUpdate from "../icons/IconUpdate";
-import IconLocation from "../icons/IconLocation/index";
 import { useHistory } from "react-router-dom";
 import Moment from "react-moment";
 import { getGarden } from "../../requests/gardens";
 import useIsLoading from "../../hooks/useIsLoading";
-import LoadingSpinner from "../LoadingSpinner/index";
+import IconUpdate from '../base_components/icons/IconUpdate/index';
+import IconClimate from '../base_components/icons/IconClimate/index';
+import IconLabel from '../base_components/icons/IconLabel/index';
+import IconLocation from '../base_components/icons/IconLocation/index';
+import DataContainer from './DataContainer/index';
+import LoadingSpinner from '../loaders/LoadingSpinner/index';
 
 const GardenCard = ({ id }) => {
   const [garden, setGarden] = useState();

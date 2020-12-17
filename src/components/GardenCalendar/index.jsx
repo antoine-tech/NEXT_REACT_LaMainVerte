@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import Modal from "../Modal";
 import EventCreationForm from "../Forms/EventCreationForm/index";
 import useCurrentUser from "../../hooks/useCurrentUser";
-import { useHistory } from "react-router-dom";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const localizer = momentLocalizer(moment);
 
 const GardenCalendar = ({ events, setEvents, garden_owner }) => {
   const { current_user } = useCurrentUser();
-  const history = useHistory();
   const [isModalOpen, setModalOpen] = useState(false);
   const [newEvent, setNewEvent] = useState(null);
   const handleSelectEvent = (event) => {

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Moment from "react-moment";
-import IconHeart from "../icons/IconHeart/index";
 import {
   getPost,
   likePost,
@@ -11,12 +10,13 @@ import {
 import useCurrentUser from "../../hooks/useCurrentUser";
 import useJwtToken from "../../hooks/useJwtToken";
 import useIsLoading from "../../hooks/useIsLoading";
-import LoadingSpinner from "../LoadingSpinner/index";
 import Comment from "../Comment";
-import IconComment from "../icons/IconComment/index";
-import Button from "../Button/index";
-import TextArea from "../TextArea/index";
-
+import LoadingSpinner from '../loaders/LoadingSpinner/index';
+import IconHeart from '../base_components/icons/IconHeart/index';
+import IconComment from '../base_components/icons/IconComment/index';
+import TextArea from '../base_components/TextArea/index';
+import Button from '../base_components/Button/index';
+;
 const PostCard = ({ id }) => {
   const [postData, setPostData] = useState([]);
   const [myLike, setMyLike] = useState(null);

@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import MaskImage from "../assets/backgrounds/mask_image.png";
-import CardIndicator from "../components/CardIndicator/index";
-import IconClimate from "../components/icons/IconClimate/index";
-import IconLabel from "../components/icons/IconLabel/index";
-import IconLocation from "../components/icons/IconLocation/index";
-import IconUpdate from "../components/icons/IconUpdate/index";
 import PostCard from "../components/PostCard";
 import Moment from "react-moment";
-import Button from "../components/Button/index";
 import useJwtToken from "../hooks/useJwtToken";
 import useCurrentUser from "../hooks/useCurrentUser";
-import IconPen from "../components/icons/IconPen/index";
 import useIsAmmendable from "../hooks/useIsAmmendable";
-import TextArea from "../components/TextArea/index";
-import Select from "../components/Select/index";
 import SliderInput from "../components/SliderInput/index";
-import Input from "../components/Input/index";
-import FormGroup from "../components/FormGroup/index";
 import PostCreation from "../components/Forms/PostCreation/index";
+import Input from "../components/base_components/Input/index";
+import Select from "../components/base_components/Select/index";
+import Button from "../components/base_components/Button/index";
+import CardIndicator from "../components/CardIndicator/index";
+import IconPen from "../components/base_components/icons/IconPen/index";
+import IconLabel from "../components/base_components/icons/IconLabel/index";
+import IconClimate from "../components/base_components/icons/IconClimate/index";
+import IconUpdate from "../components/base_components/icons/IconUpdate/index";
+import IconLocation from '../components/base_components/icons/IconLocation/index';
 import {
   getGarden,
   follow,
@@ -28,7 +26,6 @@ import {
 } from "../requests/gardens";
 
 const Garden = () => {
-
   const [gardenData, setGardenData] = useState({});
   const [gardenFollow, setGardenFollow] = useState(null);
   const history = useHistory();

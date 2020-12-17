@@ -9,11 +9,11 @@ import PostCard from "../components/PostCard";
 import { getPosts } from "../requests/posts";
 import { getTestimonies } from "../requests/testimonies";
 import TestimonyCard from "../components/TestimonyCard/index";
-import LoadingAnimation from "../components/LoadingAnimation/index";
 import useCurrentUser from "../hooks/useCurrentUser";
 import { Link } from "react-router-dom";
 import usePageStatus from "../hooks/usePageStatus";
 import empty_result from "../assets/backgrounds/empty_result.svg";
+import LoadingAnimation from '../components/loaders/LoadingAnimation/index';
 
 const Home = () => {
   const [sliderData, setSLiderData] = useState(null);

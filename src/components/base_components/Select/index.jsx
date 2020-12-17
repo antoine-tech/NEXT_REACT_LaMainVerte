@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import IconArrowDown from "../icons/IconArrowDown/index";
+import IconArrowDown from '../icons/IconArrowDown/index';
+
 
 const Select = ({
   id,

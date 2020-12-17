@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import Moment from "react-moment";
 import useIsLoading from "../../hooks/useIsLoading";
-import LoadingSpinner from "../LoadingSpinner/index";
+import LoadingSpinner from '../loaders/LoadingSpinner/index';
+
 
 const TestimonyCard = ({ id, content, user, created_at, updated_at }) => {
   const { isLoading, setIsLoading } = useIsLoading();
