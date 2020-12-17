@@ -96,7 +96,9 @@ const PostCard = ({
             className="suggestion-avatar-half"
             onClick={() => handleClick(garden_id)}
           >
-            <div className="avatar-img"><img src={postData?.user?.avatar_url} className="h-full w-full rounded-full" alt="avatar"/></div>
+            <div className="avatar-img">
+              <img src={postData?.user?.avatar_url} className="h-full w-full rounded-full" alt="avatar"/>
+            </div>
           </div>
 
           <p className="my-4 font-blue-dark-light font-sm ml-2">
