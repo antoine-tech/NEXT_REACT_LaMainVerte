@@ -20,11 +20,11 @@ const UserPosts = ({user}) => {
     
     return (
         <section id="user-posts" className="flex flex-col">
-            <div className="radius bg-light-brown shadow-neomorph p-4 my-5">
+            <div className="radius bg-light-brown shadow-neomorph p-2 ">
             {   current_user && current_user.id == user.id?
-                    <h1>Mes derniers posts</h1>
+                    <h4>Mes derniers posts</h4>
                 :
-                    <h1>Derniers posts de {user.username}</h1>
+                    <h4>Derniers posts de {user.username}</h4>
             }
             </div>
 

@@ -26,16 +26,16 @@ const UserGardens = ({user}) => {
 
     return (
         <section id="user-gardens" className="flex flex-col">
-            <div className="radius bg-light-brown shadow-neomorph p-4 my-5 flex justify-between">
+            <div className="radius bg-light-brown shadow-neomorph p-2  flex items-center justify-between">
               { current_user && current_user.id == user.id?
                   <>
-                    <h1>Mes jardins</h1>
+                    <h4>Mes jardins</h4>
                     <Link to="/gardens/new" id = "create-garden">
                         Créer un nouveau jardin
                     </Link>
                   </>
                 :
-                  <h1>Jardins de {user.username}</h1>
+                  <h4>Jardins de {user.username}</h4>
               }
            
             </div>

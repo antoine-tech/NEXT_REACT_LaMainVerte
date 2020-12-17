@@ -189,7 +189,7 @@ const Home = () => {
         </div>
         <div className="hidden lg:block lg:col-span-4">
           <h4 className="mb-4 text-center">Les derniers posts</h4>
-          <div className="h-screen radius bg-light-brown shadow-neomorph p-4 overflow-auto">
+          <div className="h-screen radius bg-light-brown shadow-neomorph p-2  overflow-auto">
             {lastPosts?.map((lastPost) => {
               let { id } = lastPost;
               return <PostCard key={`post-${id}`} id={id} />;
@@ -197,7 +197,7 @@ const Home = () => {
           </div>
 
           <h4 className="my-4 text-center">Les derniers témoignages</h4>
-          <div className="h-screen radius bg-light-brown shadow-neomorph p-4">
+          <div className="h-screen radius bg-light-brown shadow-neomorph p-2 ">
             {testimonies?.map((testimony) => {
               let { id, content, user, created_at, updated_at } = testimony;
               return (

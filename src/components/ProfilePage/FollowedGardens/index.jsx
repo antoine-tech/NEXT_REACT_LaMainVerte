@@ -25,11 +25,11 @@ const FollowedGardens = ({user}) => {
 
     return (
         <section id="followed-gardens" className="flex flex-col">
-            <div className="radius bg-light-brown shadow-neomorph p-4 my-5">
+            <div className="radius bg-light-brown shadow-neomorph p-2 ">
                 {   current_user && current_user.id == user.id?
-                        <h1>Mes jardins favoris</h1>
+                        <h4>Mes jardins favoris</h4>
                     :
-                        <h1>Jardins suivis</h1>
+                        <h4>Jardins suivis</h4>
                 }
                 
             </div>
