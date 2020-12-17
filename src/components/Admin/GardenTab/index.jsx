@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { find, deletion } from "../../../sevices/Api";
 import TrashIcon from "../../../assets/icons/trash.svg";
 
 const GardenTab = () => {
 	const [gardens, setGardens] = useState([]);
 
 	const handleGardens = async () => {
-		const response = await find("/gardens");
-		setGardens(response);
+		let response = await fetch(
+			"https://api-master-lamainverte.herokuapp.com/api/gardens",
+		);
+		let json = await response.json();
+
+		setGardens(json);
 	};
+
+	useEffect(() => {
+		handleGardens();
+	}, []);
 
 	return (
 		<div className="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">
@@ -45,9 +52,9 @@ const GardenTab = () => {
 							<th scope="row">{garden.id}</th>
 							<td>{garden.name}</td>
 							<td>{garden.user_id}</td>
-							<td>{garden.likes.length}</td>
-							<td>{garden.location}</td>
-							<td>{garden.climate}</td>
+							<td>{garden.likes}</td>
+							<td>{garden.location_id}</td>
+							<td>{garden.climate_id}</td>
 							<td>{garden.area}</td>
 							<td>
 								<a href="#">

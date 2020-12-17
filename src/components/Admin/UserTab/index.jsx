@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import jwt_decode from "jwt-decode";
-import { usersDatas } from "../../../requests/user";
 import TrashIcon from "../../../assets/icons/trash.svg";
 
 const UserTab = () => {
 	const [users, setUsers] = useState([]);
-	const [show, setShow] = useState(false);
 
 	const getToken = () => {
 		return Cookies.get("jwt_token");
@@ -22,7 +19,7 @@ const UserTab = () => {
 	};
 
 	const deleteUser = async (user_id) => {
-		let response = await fetch(
+		await fetch(
 			`https://api-master-lamainverte.herokuapp.com/api/users/${user_id}`,
 			{
 				method: "DELETE",
@@ -37,12 +34,7 @@ const UserTab = () => {
 
 	useEffect(() => {
 		handleUsers();
-	}, [show]);
-
-	useEffect(() => {
-		console.log("coucou");
-		console.log(users);
-	}, [users]);
+	}, []);
 
 	return (
 		<div className="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">
