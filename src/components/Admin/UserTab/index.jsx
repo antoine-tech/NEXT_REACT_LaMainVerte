@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 import TrashIcon from "../../../assets/icons/trash.svg";
+import useJwtToken from "../../../hooks/useJwtToken";
 
 const UserTab = () => {
 	const [users, setUsers] = useState([]);
-
-	const getToken = () => {
-		return Cookies.get("jwt_token");
-	};
+	const [user, setUser] = useState(useSelector((state) => state.current_user));
+	const { getJwtToken } = useJwtToken();
 
 	const handleUsers = async () => {
 		let response = await fetch(
@@ -25,7 +24,7 @@ const UserTab = () => {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
-					Authentication: getToken(),
+					Authentication: getJwtToken,
 				},
 			},
 		);
@@ -56,7 +55,6 @@ const UserTab = () => {
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
 							Is_admin
 						</th>
-						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -67,17 +65,6 @@ const UserTab = () => {
 							<td>{user.last_name}</td>
 							<td>{user.email}</td>
 							<td>{user.is_admin ? "true" : "false"}</td>
-							<td>
-								<a href="#">
-									<img
-										src={TrashIcon}
-										alt="Delete a user"
-										width="25"
-										height="25"
-										onClick={() => deleteUser(user.id)}
-									/>
-								</a>
-							</td>
 						</tr>
 					))}
 				</tbody>

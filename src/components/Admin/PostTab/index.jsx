@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { getAdminData, deleteContent } from "../../../requests/admin";
 import TrashIcon from "../../../assets/icons/trash.svg";
+import useJwtToken from "../../../hooks/useJwtToken";
 
 const PostTab = () => {
 	const [posts, setPosts] = useState([]);
+	const { getJwtToken } = useJwtToken();
 
 	const handlePosts = async () => {
-		let response = await fetch(
-			"https://api-master-lamainverte.herokuapp.com/api/posts",
-		);
-		let json = await response.json();
-
-		setPosts(json);
+		const data = await getAdminData(getJwtToken);
+		setPosts(data.posts);
 	};
 
 	useEffect(() => {
@@ -44,12 +43,14 @@ const PostTab = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{posts.map((post) => (
+					{posts?.map((post) => (
 						<tr>
 							<th scope="row">{post.id}</th>
 							<td>{post.garden_id}</td>
 							<td>{post.title}</td>
 							<td>{post.content}</td>
+							<td>{post.updated_at}</td>
+							<td>{post.likes}</td>
 							<td>
 								<a href="#">
 									<img
@@ -57,7 +58,10 @@ const PostTab = () => {
 										alt="Delete a post"
 										width="25"
 										height="25"
-										// onClick={() => deleteUser(user)}
+										onClick={async () => {
+											await deleteContent("posts", post.id, getJwtToken);
+											handlePosts();
+										}}
 									/>
 								</a>
 							</td>

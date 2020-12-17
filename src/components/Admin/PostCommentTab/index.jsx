@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { getAdminData, deleteContent } from "../../../requests/admin";
 import TrashIcon from "../../../assets/icons/trash.svg";
+import useJwtToken from "../../../hooks/useJwtToken";
 
 const PostCommentTab = () => {
 	const [postComments, setPostComments] = useState([]);
+	const { getJwtToken } = useJwtToken();
 
-	// const handlePostComments = async () => {
-	// 	let response = await fetch(
-	// 		`https://api-master-lamainverte.herokuapp.com/api/posts/${post_id}/post_comments`, // must add a simpler URL to the API
-	// 	);
-	// 	let json = await response.json();
-
-	// 	setPostComments(json);
-	// };
+	const handlePostComments = async () => {
+		const data = await getAdminData(getJwtToken);
+		setPostComments(data.post_comments);
+	};
 
 	useEffect(() => {
-		// handlePostComments();
+		handlePostComments();
 	}, []);
 
 	return (
@@ -38,7 +37,7 @@ const PostCommentTab = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{postComments.map((postComment) => (
+					{postComments?.map((postComment) => (
 						<tr>
 							<th scope="row">{postComment.id}</th>
 							<td>{postComment.post_id}</td>
@@ -51,7 +50,14 @@ const PostCommentTab = () => {
 										alt="Delete a post comment"
 										width="25"
 										height="25"
-										// onClick={() => deleteUser(user)}
+										onClick={async () => {
+											await deleteContent(
+												"post_comments",
+												postComment.id,
+												getJwtToken,
+											);
+											handlePostComments();
+										}}
 									/>
 								</a>
 							</td>

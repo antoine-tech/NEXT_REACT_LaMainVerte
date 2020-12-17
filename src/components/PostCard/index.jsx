@@ -16,8 +16,9 @@ import IconHeart from "../base_components/icons/IconHeart/index";
 import IconComment from "../base_components/icons/IconComment/index";
 import TextArea from "../base_components/TextArea/index";
 import Button from "../base_components/Button/index";
-import "./index.scss";
 import Avatar from "../Avatar/index";
+import "./index.scss";
+import PostSlider from "../PostSlider";
 
 const PostCard = ({ id }) => {
   const [postData, setPostData] = useState([]);
@@ -79,6 +80,10 @@ const PostCard = ({ id }) => {
   ) : (
     <>
       <div className="post-card grid grid-cols-12 p-4 my-4" id={`post-${id}`}>
+        {postData?.post?.pictures_url.length > 0 && (
+            <PostSlider classNames={['col-span-12', 'p-0']} sliderData={postData.post.pictures_url} />
+        )}
+
         <div className="flex col-span-2 items-center">
           <Avatar
             type="half"
@@ -107,6 +112,7 @@ const PostCard = ({ id }) => {
               <IconComment
                 onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
               />
+              <span className="mx-2"> {postData?.comments?.length}</span>
             </div>
             <div className="col-span-1 flex items-center justify-end">
               <IconHeart
@@ -123,6 +129,7 @@ const PostCard = ({ id }) => {
               <IconComment
                 onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
               />
+              <span className="mx-2"> {postData?.comments?.length}</span>
             </div>
           </>
         )}

@@ -37,25 +37,25 @@ const AdminDashboard = () => {
 			<div className="flex justify-center items-baseline flex-wrap mt-8">
 				<button
 					onClick={() => switchDashboard("users")}
-					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 rounded-l h-12"
+					className="opacity-50 bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 rounded-l h-12"
 				>
 					Users
 				</button>
 				<button
 					onClick={() => switchDashboard("gardens")}
-					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
+					className="opacity-50 bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
 				>
 					Gardens
 				</button>
 				<button
 					onClick={() => switchDashboard("gardensComments")}
-					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
+					className="opacity-50 bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
 				>
 					Garden comments
 				</button>
 				<button
 					onClick={() => switchDashboard("events")}
-					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
+					className="opacity-50 bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12"
 				>
 					Events
 				</button>
@@ -73,7 +73,7 @@ const AdminDashboard = () => {
 				</button>
 				<button
 					onClick={() => switchDashboard("testimonies")}
-					className="bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12 rounded-r"
+					className="opacity-50 bg-blue-300 hover:bg-blue-400 border-b-4 border-blue-400 text-gray-800 font-bold py-2 px-4 h-12 rounded-r"
 				>
 					Testimonies
 				</button>

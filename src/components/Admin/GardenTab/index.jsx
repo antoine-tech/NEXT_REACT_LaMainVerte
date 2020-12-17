@@ -43,7 +43,6 @@ const GardenTab = () => {
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
 							Area (m²)
 						</th>
-						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -56,17 +55,6 @@ const GardenTab = () => {
 							<td>{garden.location_id}</td>
 							<td>{garden.climate_id}</td>
 							<td>{garden.area}</td>
-							<td>
-								<a href="#">
-									<img
-										src={TrashIcon}
-										alt="Delete a garden"
-										width="25"
-										height="25"
-										// onClick={() => deleteUser(user)}
-									/>
-								</a>
-							</td>
 						</tr>
 					))}
 				</tbody>

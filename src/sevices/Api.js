@@ -20,7 +20,7 @@ const request = async (
   };
 
   options = body ? { ...options, ...{ body: JSON.stringify(body) } } : options;
-
+  
   return await fetch(API_BASE_URL + endpoint, options)
     .then((response) => response)
     .then((error) => error);

@@ -1,4 +1,47 @@
-import { find, create, deletion } from "../sevices/Api";
+import { find, create, deletion, update } from "../sevices/Api";
+
+const getFollowedGardenAndRelatedData = async (gardens) => {
+
+  // fetching each of the gardens available data to gather all related data to a garden at once
+  let gardensDataPromises = await gardens.map((garden) => getGarden(garden.id));
+
+  // solving Pomises and getting out the data as object
+  let gardensDatas = await Promise.all(gardensDataPromises).then(
+    (gardenData) => gardenData
+  );
+
+  // reformating object
+  const followedGardens = gardensDatas.map((gardenData) => {
+    let {
+      garden: {
+        id,
+        name,
+        picture_url,
+        picture_opacity,
+        updated_at,
+        created_at,
+      },
+      climate,
+      location,
+      type,
+      user,
+    } = gardenData;
+    return {
+      id,
+      name,
+      picture_url,
+      picture_opacity,
+      updated_at,
+      created_at,
+      climate,
+      location,
+      garden_type: type,
+      user,
+    };
+  });
+
+  return followedGardens;
+};
 
 const getClimate = async (garden_climate_id) =>
   find("/climates/" + garden_climate_id)
@@ -27,6 +70,18 @@ const createGarden = async (gardenData, userToken) => {
   return response;
 };
 
+const updateGarden = async (garden_id, gardenData, userToken) => {
+  const response = await update(
+    gardenData,
+    `/gardens/${garden_id}`,
+    true,
+    userToken
+  )
+    .then((res) => res.json())
+    .catch((error) => error);
+  return response;
+};
+
 const getGarden = async (garden_id) =>
   find("/gardens/" + garden_id)
     .then((res) => res.json())
@@ -36,7 +91,6 @@ const getGardens = async () =>
   find("/gardens")
     .then((res) => res.json())
     .catch((error) => error);
-
 
 const follow = async (garden_id, jwt_token) => {
   const data = {
@@ -133,4 +187,6 @@ export {
   unlikeGarden,
   createGarden,
   search,
+  updateGarden,
+  getFollowedGardenAndRelatedData
 };

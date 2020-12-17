@@ -31,7 +31,6 @@ const TestimonyTab = () => {
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
 							Content
 						</th>
-						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -40,17 +39,6 @@ const TestimonyTab = () => {
 							<th scope="row">{testimony.id}</th>
 							<td>{testimony.user_id}</td>
 							<td>{testimony.content}</td>
-							<td>
-								<a href="#">
-									<img
-										src={TrashIcon}
-										alt="Delete a post comment"
-										width="25"
-										height="25"
-										// onClick={() => deleteUser(user)}
-									/>
-								</a>
-							</td>
 						</tr>
 					))}
 				</tbody>

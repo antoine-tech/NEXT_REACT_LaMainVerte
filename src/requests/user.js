@@ -1,4 +1,4 @@
-import { find, create, deletion } from "../sevices/Api";
+import { find, create, deletion, update } from "../sevices/Api";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 
@@ -49,15 +49,53 @@ const signUserUp = async (
     false
   );
 
+const editUserProfile = async (
+  first_name,
+  last_name,
+  username,
+  email,
+  avatar_url,
+  password,
+  password_confirmation,
+  user_id,
+  jwtToken
+) => 
+  await update(
+    {
+      user: {
+        first_name,
+        last_name,
+        username,
+        email,
+        avatar_url,
+        password,
+        password_confirmation,
+      },
+    },
+    `/users/${user_id}`,
+    true,
+    jwtToken
+  );
+
+const removeProfile = async (
+  user_id,
+  jwtToken
+) =>
+  await deletion(
+    `/users/${user_id}`,
+    true,
+    jwtToken
+  );
+
 const logout = async (jwtToken) =>
   await deletion("/logout", true, jwtToken)
     .then((res) => res.text())
     .catch((error) => error);
 
-const getUserDatas = async (jwt_token) => {
+const getUserDatas = async (jwt_token, page) => {
   const userId = jwtDecode(jwt_token);
   const userData = await find(
-    `/users/${userId.sub}`,
+    `/users/${userId.sub}?follows_page=${page}`,
     true,
     jwt_token
   ).then((res) => res.json());
@@ -75,4 +113,4 @@ const findUserDatas = async (userId) =>
     .then((res) => res.json())
     .catch((error) => error);
 
-export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout, getUsers };
+export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout, editUserProfile, removeProfile, getUsers  };

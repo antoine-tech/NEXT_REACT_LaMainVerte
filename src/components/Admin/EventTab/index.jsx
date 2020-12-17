@@ -37,7 +37,6 @@ const EventTab = () => {
 						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
 							Date
 						</th>
-						<th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -48,17 +47,6 @@ const EventTab = () => {
 							<td>{event.name}</td>
 							<td>{event.description}</td>
 							<td>{event.date}</td>
-							<td>
-								<a href="#">
-									<img
-										src={TrashIcon}
-										alt="Delete an event"
-										width="25"
-										height="25"
-										// onClick={() => deleteUser(user)}
-									/>
-								</a>
-							</td>
 						</tr>
 					))}
 				</tbody>
