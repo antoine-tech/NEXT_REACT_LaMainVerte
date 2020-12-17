@@ -51,4 +51,9 @@ const findUserDatas = async (userId) =>
     .then((res) => res.json())
     .catch((error) => error);
 
-export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout };
+const usersDatas = async () => {
+  await find(`/users`)
+  .then((res) => res.json())
+  .catch((error) => error);
+}
+export { signUserIn, signUserUp, getUserDatas, findUserDatas, usersDatas, logout };
