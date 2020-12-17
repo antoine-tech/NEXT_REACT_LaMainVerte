@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import AvatarSlider from "../components/AvatarSlider/index";
 import GardenCard from "../components/GardenCard/index";
 import SearchEngine from "../components/SearchEngine/index";
-import { getUserDatas } from "../requests/user";
+import { getUserDatas, getUsers } from "../requests/user";
 import useJwtToken from "../hooks/useJwtToken";
 import {
   getFollowedGardenAndRelatedData,
@@ -21,6 +21,7 @@ import usePageStatus from "../hooks/usePageStatus";
 import empty_result from "../assets/backgrounds/empty_result.svg";
 
 const Home = () => {
+  const [sliderData, setSLiderData] = useState(null);
   const [areFiltersDisplayed, setFiltersDisplayed] = useState(false);
   const [isSearchResultDisplayed, setSearchResultDisplayed] = useState(false);
   const { pageStatus, setPageStatus } = usePageStatus("loading");
@@ -65,11 +66,14 @@ const Home = () => {
 
       if (current_user) {
         const userProfile = await fetchUserProfile();
+        setSLiderData(userProfile.selected_users);
         const followedGarden = await fetchFollowedGarden(userProfile);
         setDisplayedGardens(followedGarden);
       } else {
         const gardenSelection = await fetchGardenSelection();
         setDisplayedGardens(gardenSelection);
+        const users = await getUsers();
+        setSLiderData(users);
       }
       setPageStatus("loaded");
     };
@@ -122,7 +126,7 @@ const Home = () => {
           />
           <h4 className="my-4">Sélectionné pour vous ...</h4>
 
-          <AvatarSlider />
+          <AvatarSlider sliderData={sliderData} />
 
           {isSearchResultDisplayed ? (
             <>
@@ -151,33 +155,10 @@ const Home = () => {
 
               <div className="h-66vh w-full bg-start-to-grow relative">
                 <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4 bg-light-white">
-                  <Button
-                    text="Créer un jardin"
-                    classNames={[
-                      "btn",
-                      "btn-lg",
-                      "bg-blue-dark",
-                      "text-white",
-                      "p-4",
-                      "w-full",
-                      "col-span-2",
-                      "lg:col-span-1",
-                    ]}
-                  />
+                 
+                 <Link to='/gardens/new' className='btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1'>Créer un jardin</Link>
+                 <Link to='/' className='btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1'>Rechercher un jardin</Link>
 
-                  <Button
-                    text="Rechecher un jardin"
-                    classNames={[
-                      "btn",
-                      "btn-lg",
-                      "bg-blue-dark",
-                      "text-white",
-                      "p-4",
-                      "w-full",
-                      "col-span-2",
-                      "lg:col-span-1",
-                    ]}
-                  />
                 </div>
               </div>
 

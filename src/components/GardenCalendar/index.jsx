@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 
 const localizer = momentLocalizer(moment);
 
-const GardenCalendar = ({ events, setEvents }) => {
+const GardenCalendar = ({ events, setEvents, garden_owner }) => {
   const { current_user } = useCurrentUser();
   const history = useHistory();
   const [isModalOpen, setModalOpen] = useState(false);
@@ -19,11 +19,9 @@ const GardenCalendar = ({ events, setEvents }) => {
   };
 
   const handleSelectDates = (event) => {
-    if (current_user) {
+    if (current_user?.id === garden_owner.id) {
       setNewEvent({ start: event.start.toString(), end: event.end.toString() });
       setModalOpen(true);
-    } else {
-      history.push("/login");
     }
   };
 
@@ -33,27 +31,29 @@ const GardenCalendar = ({ events, setEvents }) => {
       style={{ backgroundColor: "#f8f8f8" }}
       id="calendar-container"
     >
-      <Calendar
-        localizer={localizer}
-        events={events.map((event) => {
-          return {
-            title: event.name,
-            start: event.start_date,
-            end: event.end_date,
-            allDay: true,
-            ressource: event.description,
-          };
-        })}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: "85vh" }}
-        onSelectEvent={(event) => {
-          handleSelectEvent(event);
-        }}
-        onSelectSlot={(event) => handleSelectDates(event, current_user)}
-        selectable
-        className="col-span-8 col-start-3 bg-white m-8"
-      />
+      {events && (
+        <Calendar
+          localizer={localizer}
+          events={events?.map((event) => {
+            return {
+              title: event.name,
+              start: event.start_date,
+              end: event.end_date,
+              allDay: true,
+              ressource: event.description,
+            };
+          })}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: "85vh" }}
+          onSelectEvent={(event) => {
+            handleSelectEvent(event);
+          }}
+          onSelectSlot={(event) => handleSelectDates(event, current_user)}
+          selectable
+          className="col-span-8 col-start-3 bg-white m-8"
+        />
+      )}
 
       {isModalOpen && (
         <Modal

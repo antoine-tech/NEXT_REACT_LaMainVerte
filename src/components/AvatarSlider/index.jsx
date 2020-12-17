@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "infinite-react-carousel";
 
-const AvatarSlider = () => {
+const AvatarSlider = ({ sliderData }) => {
   const settings = {
     autoplay: true,
     autoplaySpeed: 5000,
@@ -15,41 +15,20 @@ const AvatarSlider = () => {
   return (
     <div>
       <Slider {...settings}>
-        <div>
-          <div className="suggestion-avatar">
-            <div className="avatar-img"></div>
+        {sliderData?.map((user) => (
+          <div>
+            <div className="suggestion-avatar">
+              <div className="avatar-img" >
+                <img
+                  title={user?.username}
+                  src={user?.avatar_url}
+                  className="h-full w-full rounded-full"
+                  alt="avatar"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
-          <div className="suggestion-avatar">
-            <div className="avatar-img"></div>
-          </div>
-        </div>
-        <div>
-          <div className="suggestion-avatar">
-            <div className="avatar-img"></div>
-          </div>
-        </div>
-        <div>
-          <div className="suggestion-avatar">
-            <div className="avatar-img"></div>
-          </div>
-        </div>
-        <div>
-          <div className="suggestion-avatar">
-            <div className="avatar-img"></div>
-          </div>
-        </div>
-        <div>
-          <div className="suggestion-avatar">
-            <div className="avatar-img"></div>
-          </div>
-        </div>
-        <div>
-          <div className="suggestion-avatar">
-            <div className="avatar-img"></div>
-          </div>
-        </div>
+        ))}
       </Slider>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 
-const SettingIcon = () => {
+const SettingIcon = ({classNames, onClick}) => {
   return (
     <svg
       width="56"
@@ -8,7 +8,8 @@ const SettingIcon = () => {
       viewBox="0 0 56 56"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="nav-link"
+      className={classNames? classNames.join(' ') : ''}
+      onClick={()=>onClick()}
     >
       <circle cx="28" cy="28" r="28" fill="#F5F5F5" />
       <path
