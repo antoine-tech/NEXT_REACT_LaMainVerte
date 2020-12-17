@@ -1,32 +1,36 @@
-import React from "react";
-import DataContainer from "../DataContainer/index";
-import IconClimate from "../icons/IconClimate/index";
-import IconLabel from "../icons/IconLabel";
-import IconUpdate from "../icons/IconUpdate";
-import IconLocation from "../icons/IconLocation/index";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Moment from "react-moment";
+import { getGarden } from "../../requests/gardens";
+import useIsLoading from "../../hooks/useIsLoading";
+import IconUpdate from '../base_components/icons/IconUpdate/index';
+import IconClimate from '../base_components/icons/IconClimate/index';
+import IconLabel from '../base_components/icons/IconLabel/index';
+import IconLocation from '../base_components/icons/IconLocation/index';
+import DataContainer from './DataContainer/index';
+import LoadingSpinner from '../loaders/LoadingSpinner/index';
 
-const GardenCard = ({
-  id,
-  name,
-  picture_url,
-  picture_opacity,
-  user,
-  image_url,
-  climate,
-  location,
-  garden_type,
-  created_at,
-  updated_at,
-}) => {
+const GardenCard = ({ id }) => {
+  const [garden, setGarden] = useState();
   const history = useHistory();
+  const { isLoading, setIsLoading } = useIsLoading();
 
   const handleRedirect = (id) => {
     history.push("/garden/" + id);
   };
 
-  return (
+  useEffect(() => {
+    const fetchAndSetGarden = async (id) => {
+      const garden = await getGarden(id);
+      setGarden(garden);
+      setIsLoading(false);
+    };
+    id && fetchAndSetGarden(id);
+  }, [id]);
+
+  return isLoading ? (
+    <LoadingSpinner />
+  ) : (
     <div
       className="card card-garden p-4"
       id={`garden-${id}`}
@@ -35,24 +39,26 @@ const GardenCard = ({
       <div
         className="card-image"
         style={{
-          backgroundImage: `url(${picture_url})`,
+          backgroundImage: `url(${garden.garden.picture_url})`,
         }}
       >
         <div className="garden-datas">
           <DataContainer
             icon={IconUpdate}
             dataText={
-              <Moment format="DD/MM:YYYY à hh:mm:ss">{updated_at}</Moment>
+              <Moment format="DD/MM:YYYY à hh:mm:ss">
+                {garden.garden.updated_at}
+              </Moment>
             }
           />
-          <DataContainer icon={IconClimate} dataText={climate?.name} />
-          <DataContainer icon={IconLabel} dataText={garden_type?.name} />
-          <DataContainer icon={IconLocation} dataText={location?.name} />
+          <DataContainer icon={IconClimate} dataText={garden.climate?.name} />
+          <DataContainer icon={IconLabel} dataText={garden.garden_type?.name} />
+          <DataContainer icon={IconLocation} dataText={garden.location?.name} />
         </div>
       </div>
       <div className="card-footer p-4 flex items-center justify-between">
-        <h4>{name?.toUpperCase()}</h4>{" "}
-        <h4 className="italic">Par {user?.username}</h4>
+        <h4>{garden.garden.name?.toUpperCase()}</h4>{" "}
+        <h4 className="italic">Par {garden.user?.username}</h4>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { useDropzone } from "react-dropzone";
 
 const MyDropzone = ({ droppedImage, setDroppedImage }) => {

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import FormGroup from "../../FormGroup";
-import useFormAnalysis from "../../../hooks/useFormAnalysis";
-import LetsGoButton from "../../buttons/LetsGoButton/index";
-import { createGarden } from "../../../requests/gardens";
-import useIsToogled from "../../../hooks/useIsToogled";
-import useJwtToken from "../../../hooks/useJwtToken";
+import { useHistory } from "react-router-dom";
 import { uploadToAWS } from "../../../sevices/Api";
-import Select from "../../Select/index";
-import IconClimate from "../../icons/IconClimate/index";
 import { getClimates } from "../../../requests/climates";
 import { getGardenTypes } from "../../../requests/gardens";
 import { getLocations } from "../../../requests/locations";
-import IconLocation from "../../icons/IconLocation/index";
-import LoadingAnimation from "../../LoadingAnimation/index";
+import { createGarden } from "../../../requests/gardens";
+import useFormAnalysis from "../../../hooks/useFormAnalysis";
+import useIsToogled from "../../../hooks/useIsToogled";
+import useJwtToken from "../../../hooks/useJwtToken";
 import usePageStatus from "../../../hooks/usePageStatus";
-import { useHistory } from "react-router-dom";
+import LoadingAnimation from '../../loaders/LoadingAnimation/index';
+import Select from '../../base_components/Select/index';
+import FormGroup from "../../FormGroup";
+import LetsGoButton from '../../base_components/buttons/LetsGoButton/index';
+import IconClimate from '../../base_components/icons/IconClimate/index';
+import IconLocation from '../../base_components/icons/IconLocation/index';
 
 const GardenForm = ({ droppedImage }) => {
 
@@ -82,6 +82,7 @@ const GardenForm = ({ droppedImage }) => {
       ? await uploadToAWS(getJwtToken, droppedImage[0], "la-main-verte")
       : "";
 
+
     const newGarden = {
       garden: {
         garden_type_id: isToogled ? 1 : 2,
@@ -89,7 +90,7 @@ const GardenForm = ({ droppedImage }) => {
         area: datas.area,
         climate_id: datas.climate_id,
         location_id: datas.location_id,
-        image_url,
+        picture_url:image_url,
       },
     };
 

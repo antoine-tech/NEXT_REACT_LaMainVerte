@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import GardenCalendar from "../components/GardenCalendar";
 import { getEvents, getGarden } from "../requests/gardens";
+import GardenCalendar from "../components/GardenCalendar";
 
 const GardenHistory = () => {
   const [gardenData, setGardenData] = useState(null);

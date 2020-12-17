@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { findUserDatas } from "../../requests/user";
 import useIsLoading from "../../hooks/useIsLoading";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from '../loaders/LoadingSpinner/index';
 
 const Comment = ({ id, content, user_id }) => {
   const { isLoading, setIsLoading } = useIsLoading();
