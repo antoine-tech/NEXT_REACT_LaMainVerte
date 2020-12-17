@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { find, deletion } from "../../../sevices/Api";
 import TrashIcon from "../../../assets/icons/trash.svg";
 
 const GardenCommentTab = () => {
 	const [gardensComments, setGardenComments] = useState([]);
 
-	// const handleGardenComments = async () => {
-	// 	const response = await find("/gardens");
-	// 	setGardens(response);
-	// };
+	const handleGardenComments = async () => {
+		let response = await fetch(
+			"https://api-master-lamainverte.herokuapp.com/api/garden_comments",
+		);
+		let json = await response.json();
+
+		setGardenComments(json);
+	};
+
+	useEffect(() => {
+		handleGardenComments();
+	}, []);
 
 	return (
 		<div className="align-middle inline-block min-w-full overflow-hidden bg-white px-8 pt-3 rounded-bl-lg rounded-br-lg">
