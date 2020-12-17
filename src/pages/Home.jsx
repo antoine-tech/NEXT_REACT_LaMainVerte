@@ -148,7 +148,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <h4 className="my-4"> De merveilleux jardin à découvir...</h4>
+              <h4 className="my-4"> De merveilleux jardins à découvir...</h4>
             </>
           )}
 
