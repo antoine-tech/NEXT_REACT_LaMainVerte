@@ -284,7 +284,7 @@ const Garden = () => {
             )}
           </div>
 
-          {isNewPostZoneDisplayed && <PostCreation />}
+          {isNewPostZoneDisplayed && <PostCreation setGardenData={setGardenData} gardenData={gardenData} setNewPostZoneDisplayed={setNewPostZoneDisplayed} />}
 
           {(current_user &&
             current_user.id !== gardenData?.user?.id &&

@@ -14,10 +14,9 @@ const Dropzone = ({ id, droppedImage, setDroppedImage }) => {
   });
 
   return (
-    <div className="gardenDropzone">
-      {droppedImage && console.log(droppedImage[0])}
+    <div className="gardenDropzone h-full">
       <div
-        className="realDropzone"
+        className="realDropzone h-full flex items-center justify-center"
         style={{
           backgroundImage: `url(${droppedImage ? droppedImage.preview : ""})`,
         }}
@@ -25,9 +24,9 @@ const Dropzone = ({ id, droppedImage, setDroppedImage }) => {
       >
         <input id={id} type="file" {...getInputProps()} />
         {isDragActive ? (
-          <p className="text-center">Glissez ici l'image de votre jardin ...</p>
+          <p className="text-center text-white">Glissez ici l'image de votre jardin ...</p>
         ) : (
-          <p className="text-center">
+          <p className="text-center text-white">
             Glissez ici l'image de votre jardin <br />
             ou bien cliquez afin de sélectionner un fichier
           </p>
