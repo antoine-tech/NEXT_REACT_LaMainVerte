@@ -24,10 +24,14 @@ import IconClimate from "../components/base_components/icons/IconClimate/index";
 import IconUpdate from "../components/base_components/icons/IconUpdate/index";
 import IconLocation from "../components/base_components/icons/IconLocation/index";
 import MaskImage from "../assets/backgrounds/mask_image.png";
+import IconCreate from "../components/base_components/icons/IconCreate";
+
+
 
 const Garden = () => {
   const [gardenData, setGardenData] = useState({});
   const [gardenFollow, setGardenFollow] = useState(null);
+  const [isNewPostZoneDisplayed, setNewPostZoneDisplayed] = useState(false);
   const history = useHistory();
   const [myLike, setMyLike] = useState(null);
   const [opacityValue, setOpacityValue] = useState(1);
@@ -153,30 +157,51 @@ const Garden = () => {
           className="grid grid-cols-4 gap-4 col-span-12 lg:col-span-6 bg-white min-h-screen p-12"
           style={{ marginTop: "20%" }}
         >
-          <h2 className="italic col-span-3">
+          <h2 className="italic col-span-2">
             Par {gardenData?.user?.fist_name} {gardenData?.user?.last_name}
           </h2>
           {current_user && current_user.id === gardenData?.user?.id && (
-            <Button
-              content={IconPen}
-              classNames={[
-                "h-20",
-                "w-20",
-                "flex",
-                "items-center",
-                "justify-center",
-                "justify-self-end",
-                "p-2",
-                "col-span-1",
-                "bg-blue-dark",
-                "text-white",
-                "text-center",
-                "rounded-full",
-                "hover-animate-bounce",
-              ]}
-              onclick={() => setIsAmmendable()}
-            />
+            <div className="col-span-2 flex justify-self-end">
+              <Button
+                content={IconCreate}
+                classNames={[
+                  "h-20",
+                  "w-20",
+                  "mx-2",
+                  "flex",
+                  "items-center",
+                  "justify-center",
+                  "p-2",
+                  "bg-blue-dark",
+                  "text-white",
+                  "text-center",
+                  "rounded-full",
+                  "hover-animate-bounce",
+                ]}
+                onclick={() => setNewPostZoneDisplayed(!isNewPostZoneDisplayed)}
+              />
+
+              <Button
+                content={IconPen}
+                classNames={[
+                  "h-20",
+                  "w-20",
+                  "mx-2",
+                  "flex",
+                  "items-center",
+                  "justify-center",
+                  "p-2",
+                  "bg-blue-dark",
+                  "text-white",
+                  "text-center",
+                  "rounded-full",
+                  "hover-animate-bounce",
+                ]}
+                onclick={() => setIsAmmendable()}
+              />
+            </div>
           )}
+
           {isAmmendable ? (
             <input
               type="text"
@@ -259,13 +284,11 @@ const Garden = () => {
             )}
           </div>
 
-          {current_user && current_user?.id === gardenData?.user?.id && (
-            <PostCreation />
-          )}
+          {isNewPostZoneDisplayed && <PostCreation />}
 
-          {current_user &&
+          {(current_user &&
             current_user.id !== gardenData?.user?.id &&
-            gardenFollow && (
+            gardenFollow) && (
               <Button
                 text="Ne plus suivre"
                 classNames={[
@@ -282,9 +305,9 @@ const Garden = () => {
               />
             )}
 
-          {current_user &&
+          {(current_user &&
             current_user.id !== gardenData?.user?.id &&
-            gardenFollow === null && (
+            gardenFollow === null) && (
               <Button
                 text="Suivre"
                 classNames={[
@@ -301,9 +324,9 @@ const Garden = () => {
               />
             )}
 
-          {current_user &&
+          {(current_user &&
             current_user?.id !== gardenData?.user?.id &&
-            myLike !== null && (
+            myLike !== null )&& (
               <Button
                 text="Je n'aime plus"
                 classNames={[
@@ -320,7 +343,8 @@ const Garden = () => {
               />
             )}
 
-          {current_user && current_user.id !== gardenData?.user?.id && (
+          {(current_user && current_user.id !== gardenData?.user?.id &&
+            myLike == null) && (
             <Button
               text="J'aime ce jardin"
               classNames={[
