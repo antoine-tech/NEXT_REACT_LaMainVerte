@@ -35,8 +35,8 @@ const PostCard = ({ id }) => {
     history.push("/garden/" + garden_id);
   };
 
-  const handleCommentInput = (event) => {
-    setNewCommentValue(event.target.value);
+  const handleCommentInput = (value) => {
+    setNewCommentValue(value);
   };
 
   const handleCommentCreation = async (postId) => {
@@ -153,7 +153,7 @@ const PostCard = ({ id }) => {
                 cols="30"
                 rows="10"
                 classNames={["col-span-12"]}
-                oninput={(event) => handleCommentInput(event)}
+                onInput={(obj) => handleCommentInput(obj.value)}
                 value={newCommentValue}
               />
 
