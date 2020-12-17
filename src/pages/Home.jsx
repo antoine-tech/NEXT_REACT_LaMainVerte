@@ -22,12 +22,12 @@ const Home = () => {
   const [sliderData, setSLiderData] = useState(null);
   const [areFiltersDisplayed, setFiltersDisplayed] = useState(false);
   const [isSearchResultDisplayed, setSearchResultDisplayed] = useState(false);
+  const { pageStatus, setPageStatus } = usePageStatus("loading");
+  const { getJwtToken } = useJwtToken();
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
   const [displayedGardens, setDisplayedGardens] = useState([]);
-  const { pageStatus, setPageStatus } = usePageStatus("loading");
-  const { getJwtToken } = useJwtToken();
   const { current_user } = useCurrentUser();
 
   useEffect(() => {
@@ -160,7 +160,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <h4 className="my-4"> De merveilleux jardin à découvir...</h4>
+              <h4 className="my-4"> De merveilleux jardins à découvir...</h4>
             </>
           )}
 
