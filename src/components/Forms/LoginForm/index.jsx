@@ -1,11 +1,11 @@
 import React from "react";
-import FormGroup from "../../FormGroup/index";
-import useFormAnalysis from "../../../hooks/useFormAnalysis";
-import RegistrationLinks from "../../RegistrationLinks";
+import { useHistory } from "react-router-dom";
 import { signUserIn } from "../../../requests/user";
 import useCurrentUser from "../../../hooks/useCurrentUser";
-import { useHistory } from "react-router-dom";
+import useFormAnalysis from "../../../hooks/useFormAnalysis";
+import RegistrationLinks from "../../RegistrationLinks";
 import LetsGoButton from '../../base_components/buttons/LetsGoButton/index';
+import FormGroup from "../../FormGroup/index";
 
 const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
   const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import useGardenRelatedAttributes from "../../hooks/useGardenRelatedAttributes";
 import { search } from "../../requests/gardens";
 import { parseQueryParams } from "../../helpers/parseQueryParams";
+import useGardenRelatedAttributes from "../../hooks/useGardenRelatedAttributes";
 import Button from '../base_components/Button/index';
 import Select from '../base_components/Select/index';
 import IconLabel from '../base_components/icons/IconLabel/index';

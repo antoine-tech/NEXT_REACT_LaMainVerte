@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import ToogleSwitch from "../ToogleSwitch/index";
 import { logout } from "../../requests/user";
 import useJwtToken from "../../hooks/useJwtToken";
 import useCurrentUser from "../../hooks/useCurrentUser";
+import ToogleSwitch from "../ToogleSwitch/index";
 import MenuLeft from "../MenuLeft";
 import LaMainVerteBrandNav from '../base_components/icons/LaMainVerteBrandNav/index';
 import SettingIcon from '../base_components/icons/SettingIcon/index';

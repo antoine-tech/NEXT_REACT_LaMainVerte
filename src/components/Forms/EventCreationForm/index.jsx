@@ -1,10 +1,10 @@
 import React from "react";
-import useFormAnalysis from "../../../hooks/useFormAnalysis";
-import FormGroup from "../../FormGroup/index";
-import Moment from "react-moment";
 import { useParams } from "react-router-dom";
 import { createEvent } from "../../../requests/events";
+import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import useJwtToken from "../../../hooks/useJwtToken";
+import FormGroup from "../../FormGroup/index";
+import Moment from "react-moment";
 import LetsGoButton from '../../base_components/buttons/LetsGoButton/index';
 
 const EventCreationForm = ({

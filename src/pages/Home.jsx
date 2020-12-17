@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { getUserDatas, getUsers } from "../requests/user";
+import { getGardens } from "../requests/gardens";
+import { getPosts } from "../requests/posts";
+import { getTestimonies } from "../requests/testimonies";
+import useCurrentUser from "../hooks/useCurrentUser";
+import usePageStatus from "../hooks/usePageStatus";
 import AvatarSlider from "../components/AvatarSlider/index";
 import GardenCard from "../components/GardenCard/index";
 import SearchEngine from "../components/SearchEngine/index";
-import { getUserDatas, getUsers } from "../requests/user";
 import useJwtToken from "../hooks/useJwtToken";
-import { getGardens } from "../requests/gardens";
 import PostCard from "../components/PostCard";
-import { getPosts } from "../requests/posts";
-import { getTestimonies } from "../requests/testimonies";
 import TestimonyCard from "../components/TestimonyCard/index";
-import useCurrentUser from "../hooks/useCurrentUser";
-import { Link } from "react-router-dom";
-import usePageStatus from "../hooks/usePageStatus";
 import empty_result from "../assets/backgrounds/empty_result.svg";
 import LoadingAnimation from '../components/loaders/LoadingAnimation/index';
 

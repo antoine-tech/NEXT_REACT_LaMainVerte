@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import useCurrentUser from "../../hooks/useCurrentUser";
 import Modal from "../Modal";
 import EventCreationForm from "../Forms/EventCreationForm/index";
-import useCurrentUser from "../../hooks/useCurrentUser";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const localizer = momentLocalizer(moment);

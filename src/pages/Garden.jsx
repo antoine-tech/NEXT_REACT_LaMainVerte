@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import MaskImage from "../assets/backgrounds/mask_image.png";
-import PostCard from "../components/PostCard";
 import Moment from "react-moment";
+import {
+  getGarden,
+  follow,
+  unfollow,
+  unlikeGarden,
+  likeGarden,
+} from "../requests/gardens";
 import useJwtToken from "../hooks/useJwtToken";
 import useCurrentUser from "../hooks/useCurrentUser";
 import useIsAmmendable from "../hooks/useIsAmmendable";
 import SliderInput from "../components/SliderInput/index";
+import PostCard from "../components/PostCard";
 import PostCreation from "../components/Forms/PostCreation/index";
 import Input from "../components/base_components/Input/index";
 import Select from "../components/base_components/Select/index";
@@ -16,14 +22,8 @@ import IconPen from "../components/base_components/icons/IconPen/index";
 import IconLabel from "../components/base_components/icons/IconLabel/index";
 import IconClimate from "../components/base_components/icons/IconClimate/index";
 import IconUpdate from "../components/base_components/icons/IconUpdate/index";
-import IconLocation from '../components/base_components/icons/IconLocation/index';
-import {
-  getGarden,
-  follow,
-  unfollow,
-  unlikeGarden,
-  likeGarden,
-} from "../requests/gardens";
+import IconLocation from "../components/base_components/icons/IconLocation/index";
+import MaskImage from "../assets/backgrounds/mask_image.png";
 
 const Garden = () => {
   const [gardenData, setGardenData] = useState({});
