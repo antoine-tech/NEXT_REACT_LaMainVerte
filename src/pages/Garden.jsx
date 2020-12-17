@@ -35,6 +35,14 @@ const Garden = () => {
   const { isAmmendable, setIsAmmendable } = useIsAmmendable();
   const { garden_id } = useParams();
 
+  const handleRemovePost = (postId) => {
+    const newGardenData = {
+      ...gardenData,
+      posts: gardenData.posts.filter((post) => post.id !== postId),
+    };
+    setGardenData(newGardenData);
+  };
+
   const handleSetOpacityValue = (value) => {
     const newData = {
       ...gardenData,
@@ -207,7 +215,7 @@ const Garden = () => {
                   setGardenData({ ...gardenData, garden: value })
                 }
                 setOpacityValue={(value) => handleSetOpacityValue(value)}
-                setIsAmmendable={(value)=>setIsAmmendable(value)}
+                setIsAmmendable={(value) => setIsAmmendable(value)}
               />
             ) : (
               <>
@@ -350,6 +358,7 @@ const Garden = () => {
                   created_at={created_at}
                   updated_at={updated_at}
                   likes={likes}
+                  removePost={(postId) => handleRemovePost(postId)}
                 />
               );
             })}
