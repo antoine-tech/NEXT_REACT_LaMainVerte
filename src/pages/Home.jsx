@@ -22,9 +22,6 @@ const Home = () => {
   const [isSearchResultDisplayed, setSearchResultDisplayed] = useState(false);
   const { pageStatus, setPageStatus } = usePageStatus("loading");
   const { getJwtToken } = useJwtToken();
-  const [followedGardens, setFollowedGardens] = useState([]);
-  const [gardenSelection, setGardenSelection] = useState([]);
-  const [user, setUser] = useState(useSelector(state=>state.current_user));
   const [lastPosts, setLastPosts] = useState([]);
   const [testimonies, setTestimonies] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
