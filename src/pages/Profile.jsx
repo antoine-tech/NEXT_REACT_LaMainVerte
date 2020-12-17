@@ -17,7 +17,7 @@ const Profile = () => {;
       </div>
 
       <div className="flex flex-wrap justify-around">
-        <UserGardens user={user} />
+        <UserGardens user={user && user} />
 
         <UserPosts user={user && user} />
       </div>

@@ -159,7 +159,7 @@ const Home = () => {
                     to="/"
                     className="btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1 text-center"
                   >
-                    Rechercher un jardin
+                    En savoir plus
                   </Link>
                 </div>
               </div>
