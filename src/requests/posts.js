@@ -33,20 +33,20 @@ const commentPost = async (postId, content, jwtToken) => {
 };
 
 
-const createPost = async (garden_id, title, content, pictures_url, jwtToken, ) =>
+const createPost = async (jwtToken, garden_id, title, content, pictures_url ) =>
 {
   const data ={
     'post':{
-      garden_id,
       title,
       content,
-      pictures_url,
+      pictures_url: pictures_url,
     }
   }
 
+
   return await create(
     data,
-    `/posts/`,
+    `/gardens/${garden_id}/posts`,
     true,
     jwtToken
   ).then((res) => res.json());
