@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
 const Concept = () => {
     
     return (
@@ -10,7 +11,8 @@ const Concept = () => {
                 <div id="main-text" className="text-xl my-auto">
                     <h1 className="text-gray-900">Cultiver la connaissance,<br/>Partager.</h1>
                     <p className="text-gray-400">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas, numquam et eligendi ab maxime excepturi ut ex perferendis, quasi exercitationem, aliquam reiciendis explicabo! Sunt at perferendis aperiam, a laboriosam corporis?
+                       Jardinier du dimanche ou permaculteur avéré, semez votre graine à l'édifice en partageant votre savoir faire avec d'autres passionnés du rateau.
+                       Appuyez-vous sur notre communauté soudée pour monter en compétences et faire fleurir votre jardins.
                     </p>
                     <button className="main-btn">
                         Parcourir le site
