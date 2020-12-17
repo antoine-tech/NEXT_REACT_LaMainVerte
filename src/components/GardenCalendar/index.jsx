@@ -5,6 +5,7 @@ import useCurrentUser from "../../hooks/useCurrentUser";
 import Modal from "../Modal";
 import EventCreationForm from "../Forms/EventCreationForm/index";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./index.scss";
 
 const localizer = momentLocalizer(moment);
 
