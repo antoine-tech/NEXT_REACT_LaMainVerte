@@ -48,7 +48,7 @@ const Navbar = () => {
         <ul className="hidden lg:flex items-center">
           {current_user ? (
             <>
-              <Link to="/profil" className="mx-4" title="Mon profil">
+              <Link to="/profile" className="mx-4" title="Mon profil">
                 Mon profil
               </Link>
 
