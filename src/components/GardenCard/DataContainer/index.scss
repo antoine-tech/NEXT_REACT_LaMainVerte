@@ -1,0 +1,26 @@
+.icon-data {
+    height: 55px;
+    width: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+}
+
+.data-container {
+    display: flex;
+    align-items: center;
+}
+
+.data-container .data {
+    display: none;
+}
+
+.data-container:hover .data {
+    background-color: #f5f5f5;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin-left: 1rem;
+    display: flex;
+}

@@ -32,4 +32,25 @@ const commentPost = async (postId, content, jwtToken) => {
   ).then((res) => res.json());
 };
 
-export { getPosts, getPost, likePost, unlikePost, commentPost };
+
+const createPost = async (garden_id, title, content, pictures_url, jwtToken, ) =>
+{
+  const data ={
+    'post':{
+      garden_id,
+      title,
+      content,
+      pictures_url,
+    }
+  }
+
+  return await create(
+    data,
+    `/posts/`,
+    true,
+    jwtToken
+  ).then((res) => res.json());
+
+
+}
+export { getPosts, getPost, likePost, unlikePost, commentPost, createPost };

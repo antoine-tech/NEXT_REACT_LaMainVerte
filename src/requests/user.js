@@ -1,8 +1,9 @@
 import { find, create, deletion } from "../sevices/Api";
 import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
 
-const signUserIn = async (email, password, jwt_token) =>
-  await create(
+const signUserIn = async (email, password) => {
+  const response = await create(
     {
       user: {
         email,
@@ -11,7 +12,19 @@ const signUserIn = async (email, password, jwt_token) =>
     },
     "/login",
     false
-  );
+  )
+    .then(async (res) => {
+      if (res.headers.get("Authorization")) {
+        Cookies.set('jwt_token', res.headers.get("Authorization"));
+       
+        const user_data = await getUserDatas(res.headers.get("Authorization"));
+        return user_data.user;
+      }
+    })
+    .catch((error) => error);
+
+  return response;
+};
 
 const signUserUp = async (
   first_name,
@@ -43,17 +56,23 @@ const logout = async (jwtToken) =>
 
 const getUserDatas = async (jwt_token) => {
   const userId = jwtDecode(jwt_token);
-  return await find(`/users/${userId.sub}`, true, jwt_token);
+  const userData = await find(
+    `/users/${userId.sub}`,
+    true,
+    jwt_token
+  ).then((res) => res.json());
+  return userData;
 };
+
+
+const getUsers  = async () =>
+await find(`/users`, false)
+  .then((res) => res.json())
+  .catch((error) => error);
 
 const findUserDatas = async (userId) =>
   await find(`/users/${userId}`, false)
     .then((res) => res.json())
     .catch((error) => error);
 
-const usersDatas = async () => {
-  await find(`/users`)
-  .then((res) => res.json())
-  .catch((error) => error);
-}
-export { signUserIn, signUserUp, getUserDatas, findUserDatas, usersDatas, logout };
+export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout, getUsers };

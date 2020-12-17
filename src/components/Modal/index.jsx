@@ -1,11 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./index.scss";
 
-const Modal = ({ id, data, setModalOpen, parentNodeId, component: Component }) => {
+const Modal = ({
+  id,
+  data,
+  events,
+  setEvents,
+  setModalOpen,
+  parentNodeId,
+  component: Component,
+}) => {
   return ReactDOM.createPortal(
     <Component
       id={id}
       data={data}
+      event={events}
+      setEvents={(value) => setEvents(value)}
+      setModalOpen={setModalOpen}
       onClick={(event) => {
         event.target.id === id && setModalOpen(false);
       }}

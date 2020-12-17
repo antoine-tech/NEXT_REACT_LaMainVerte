@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AbstractShape from "../AbstractShape/index";
-import Alert from "../Alert";
+import Alert from '../base_components/Alert/index';
 
 
 const SignContainer = ({

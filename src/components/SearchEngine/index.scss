@@ -1,0 +1,11 @@
+#search {
+    background-image: url(../../assets/icons/search.svg);
+    background-size: contain;
+    background-position: top left;
+    background-repeat: no-repeat;
+    padding-left: 2.5rem;
+}
+
+#search:focus {
+    padding-left: 3rem;
+}
