@@ -64,9 +64,15 @@ const getUserDatas = async (jwt_token) => {
   return userData;
 };
 
+
+const getUsers  = async () =>
+await find(`/users`, false)
+  .then((res) => res.json())
+  .catch((error) => error);
+
 const findUserDatas = async (userId) =>
   await find(`/users/${userId}`, false)
     .then((res) => res.json())
     .catch((error) => error);
 
-export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout };
+export { signUserIn, signUserUp, getUserDatas, findUserDatas, logout, getUsers };

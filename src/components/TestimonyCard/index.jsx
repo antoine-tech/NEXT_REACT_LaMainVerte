@@ -9,7 +9,7 @@ const TestimonyCard = ({ id, content, user, created_at, updated_at }) => {
     >
       <div className="flex col-span-2 items-center">
         <div className="suggestion-avatar-half">
-          <div className="avatar-img"></div>
+          <div className="avatar-img"><img src={user?.avatar_url} className="h-full w-full rounded-full" alt="avatar"/></div>
         </div>
 
         <p className="my-4 font-blue-dark-light font-sm ml-2">
