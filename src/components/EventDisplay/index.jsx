@@ -1,5 +1,3 @@
-import { Moment } from "react-moment";
-
 const EventDisplay = ({ id, data, onClick, setModalOpen, setEventDisplayed }) => {
 
   const handleClose = () =>
@@ -14,6 +12,8 @@ const EventDisplay = ({ id, data, onClick, setModalOpen, setEventDisplayed }) =>
       onClick={(event) => onClick(event)}
     >
       <div className="col-span-7 lg:col-span-3 lg:col-start-3 flex flex-col justify-around p-4 bg-white border-blue-dark radius" >
+        
+
         <h2 className="my-2">Titre de l'évènement :</h2>
         <h3>{data.title}</h3>
 
