@@ -115,7 +115,6 @@ const GardenEditionForm = ({
 
     setIsLoading(true);
     const data = {
-<<<<<<< HEAD
         garden: {
           garden_type_id: garden_type_id,
           name: name,
@@ -126,19 +125,6 @@ const GardenEditionForm = ({
           picture_opacity: picture_opacity
         },
       };
-=======
-      garden: {
-        garden_type_id: datas.garden_type_id,
-        name: datas.name,
-        area: parseInt(datas.area),
-        description: datas.description,
-        climate_id: datas.climate_id,
-        location_id: datas.location_id,
-        picture_opacity: datas.picture_opacity,
-        picture_url: datas.picture_url
-      },
-    };
->>>>>>> cd5937c07bf3984e8156d000100014061d543650
 
     console.log(data)
 
@@ -150,11 +136,7 @@ const GardenEditionForm = ({
 
   const handleOpacityValue = (value) => {
     setOpacityValue(1 - value / 100);
-<<<<<<< HEAD
     setUpdatedDatas({ ...datas, picture_opacity: 1 - value / 100 })
-=======
-    setDatas({ ...datas, picture_opacity: 1 - value / 100 });
->>>>>>> cd5937c07bf3984e8156d000100014061d543650
   };
 
   useEffect(() => {
@@ -200,15 +182,10 @@ const GardenEditionForm = ({
         id={"name"}
         name={"name"}
         type={"text"}
-<<<<<<< HEAD
         placeHolder={"Un ptit nom sympa pour votre jardin ?"}
         classNames={["w-full my-2"]}
         value={datas?.garden?.name}
         onInput={(obj) => setUpdatedDatas({ ...datas, name: obj.value })}
-=======
-        value={datas.name}
-        onInput={(obj) => setDatas({ ...datas, name: obj.value })}
->>>>>>> cd5937c07bf3984e8156d000100014061d543650
       />
 
       <FormGroup
@@ -217,15 +194,10 @@ const GardenEditionForm = ({
         id={"area"}
         name={"area"}
         type={"number"}
-<<<<<<< HEAD
         placeHolder={"Quelle est la surface de votre jardin ?"}
         classNames={["w-full my-2"]}
         value={datas?.garden?.area}
         onInput={(obj) => setUpdatedDatas({ ...datas, area: obj.value })}
-=======
-        value={datas.area}
-        onInput={(obj) => setDatas({ ...datas, area: obj.value })}
->>>>>>> cd5937c07bf3984e8156d000100014061d543650
       />
 
       <TextArea
