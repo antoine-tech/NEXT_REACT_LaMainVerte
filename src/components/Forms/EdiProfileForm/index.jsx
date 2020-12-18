@@ -204,7 +204,7 @@ const EditProfileForm = ({ current }) => {
         <Button
           type="submit"
           text="Modifier mes informations"
-          onclick={deleteProfile}
+          onclick={editUserInformations}
           id="edit-profile"
           classNames={[
             "btn btn-lg bg-blue-dark text-white p-2 my-2 w-full col-span-2 lg:col-span-1 text-center",
