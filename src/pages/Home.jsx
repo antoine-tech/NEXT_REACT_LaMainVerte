@@ -148,7 +148,7 @@ const Home = () => {
               <h4 className="my-4">Votre aventure commence ici !</h4>
 
               <div className="h-66vh w-full bg-start-to-grow relative">
-                <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4 bg-light-white">
+                <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4">
                   <Link
                     to="/gardens/new"
                     className="btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1 text-center"

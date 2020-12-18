@@ -51,8 +51,9 @@ const GardenCard = ({ id }) => {
               </Moment>
             }
           />
+
           <DataContainer icon={IconClimate} dataText={garden.climate?.name} />
-          <DataContainer icon={IconLabel} dataText={garden.garden_type?.name} />
+          <DataContainer icon={IconLabel} dataText={garden.type?.name} />
           <DataContainer icon={IconLocation} dataText={garden.location?.name} />
         </div>
       </div>
