@@ -22,7 +22,10 @@ import IconClimate from "../components/base_components/icons/IconClimate/index";
 import IconUpdate from "../components/base_components/icons/IconUpdate/index";
 import IconLocation from "../components/base_components/icons/IconLocation/index";
 import IconAdd from "../components/base_components/icons/IconAdd/index";
-import MaskImage from "../assets/backgrounds/mask_image.png";
+import GardenCoverImage from "../components/GardenCoverImage";
+import usePageStatus from "../hooks/usePageStatus";
+import LoadingAnimation from "../components/loaders/LoadingAnimation/index";
+import Error404 from "../components/Error404";
 
 const Garden = () => {
   const history = useHistory();
@@ -34,6 +37,38 @@ const Garden = () => {
   const { getJwtToken } = useJwtToken();
   const { isAmmendable, setIsAmmendable } = useIsAmmendable();
   const { garden_id } = useParams();
+  const { pageStatus, setPageStatus } = usePageStatus();
+
+  useEffect(() => {
+    const fetchGardenData = async () => {
+      const garden = await getGarden(garden_id);
+
+      if (garden.hasOwnProperty("status") && garden.status === 404) {
+        setPageStatus("404");
+      } else {
+        setGardenData(garden);
+      }
+    };
+
+    fetchGardenData();
+  }, [garden_id]);
+
+  useEffect(() => {
+    const userLike = gardenData?.likes?.find(
+      (el) =>
+        el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
+    );
+
+    const userFollow = gardenData?.follows?.find(
+      (el) =>
+        el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
+    );
+
+    userFollow && setGardenFollow(userFollow);
+    userLike && setMyLike(userLike);
+
+    setPageStatus("loaded");
+  }, [gardenData, current_user]);
 
   const handleRemovePost = (postId) => {
     const newGardenData = {
@@ -99,276 +134,244 @@ const Garden = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchGardenData = async () => {
-      const garden = await getGarden(garden_id);
-      setGardenData(garden);
-    };
+  if (pageStatus === "loading") {
+    return <LoadingAnimation />;
+  } else if (pageStatus === "loaded") {
+    return (
+      <section className="relative">
+        <GardenCoverImage gardenData={gardenData} />
+        <div className="grid grid-cols-12 relative z-20">
+          <div className="hidden lg:block col-span-3"></div>
 
-    fetchGardenData();
-  }, [garden_id]);
-
-  useEffect(() => {
-    const userLike = gardenData?.likes?.find(
-      (el) =>
-        el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
-    );
-
-    const userFollow = gardenData?.follows?.find(
-      (el) =>
-        el.garden_id === parseInt(garden_id) && el.user_id === current_user?.id
-    );
-
-    userFollow && setGardenFollow(userFollow);
-    userLike && setMyLike(userLike);
-  }, [gardenData, current_user]);
-
-  return (
-    <section className="relative">
-      <div
-        className="absolute z-10 w-full"
-        style={{
-          backgroundImage: `url(${gardenData?.garden?.picture_url})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-        }}
-      >
-        <img
-          src={MaskImage}
-          alt=""
-          className="h-full w-full"
-          style={{
-            backgroundColor: `rgba(255,255,255,${gardenData?.garden?.picture_opacity})`,
-          }}
-        />
-      </div>
-
-      <div className="grid grid-cols-12 relative z-20">
-        <div className="hidden lg:block col-span-3"></div>
-
-        <div
-          className="grid grid-cols-4 gap-4 col-span-12 lg:col-span-6 bg-white min-h-screen p-12"
-          style={{ marginTop: "20%" }}
-        >
-          <h2 className="italic col-span-2">
-            Par {gardenData?.user?.fist_name} {gardenData?.user?.last_name}
-          </h2>
-          {current_user && current_user.id === gardenData?.user?.id && (
-            <div className="col-span-2 flex justify-self-end">
-              <Button
-                content={IconAdd}
-                classNames={[
-                  "h-20",
-                  "w-20",
-                  "mx-2",
-                  "flex",
-                  "items-center",
-                  "justify-center",
-                  "p-2",
-                  "bg-blue-dark",
-                  "text-white",
-                  "text-center",
-                  "rounded-full",
-                  "hover-animate-bounce",
-                ]}
-                onclick={() => setNewPostZoneDisplayed(!isNewPostZoneDisplayed)}
-              />
-
-              <Button
-                content={IconPen}
-                classNames={[
-                  "h-20",
-                  "w-20",
-                  "mx-2",
-                  "flex",
-                  "items-center",
-                  "justify-center",
-                  "p-2",
-                  "bg-blue-dark",
-                  "text-white",
-                  "text-center",
-                  "rounded-full",
-                  "hover-animate-bounce",
-                ]}
-                onclick={() => setIsAmmendable()}
-              />
-            </div>
-          )}
-
-          {!isAmmendable && (
-            <>
-              <h1 className="col-span-4 text-center my-8">
-                {gardenData?.garden?.name.toUpperCase()}
-              </h1>
-
-              <h4 className="col-span-4 text-center my-8">
-                {gardenData?.garden?.description}
-              </h4>
-            </>
-          )}
-          <div className="col-span-4 main-data-container flex flex-wrap justify-between mt-8">
-            {isAmmendable ? (
-              <GardenEditionForm
-                gardenData={gardenData}
-                updateGardenData={(value) =>
-                  setGardenData({ ...gardenData, garden: value })
-                }
-                setOpacityValue={(value) => handleSetOpacityValue(value)}
-                setIsAmmendable={(value) => setIsAmmendable(value)}
-              />
-            ) : (
-              <>
-                <CardIndicator
-                  icon={IconUpdate}
-                  dataText={
-                    <Moment
-                      format={"DD/MM/YYY à hh:mm:ss"}
-                      className="text-center w-full block"
-                    >
-                      {gardenData?.garden?.updated_at}
-                    </Moment>
+          <div
+            className="grid grid-cols-4 gap-4 col-span-12 lg:col-span-6 bg-white min-h-screen p-12"
+            style={{ marginTop: "20%" }}
+          >
+            <h2 className="italic col-span-2">
+              Par {gardenData?.user?.fist_name} {gardenData?.user?.last_name}
+            </h2>
+            {current_user && current_user.id === gardenData?.user?.id && (
+              <div className="col-span-2 flex justify-self-end">
+                <Button
+                  content={IconAdd}
+                  classNames={[
+                    "h-20",
+                    "w-20",
+                    "mx-2",
+                    "flex",
+                    "items-center",
+                    "justify-center",
+                    "p-2",
+                    "bg-blue-dark",
+                    "text-white",
+                    "text-center",
+                    "rounded-full",
+                    "hover-animate-bounce",
+                  ]}
+                  onclick={() =>
+                    setNewPostZoneDisplayed(!isNewPostZoneDisplayed)
                   }
-                  onClick={handleClickEventHistory}
                 />
-                <CardIndicator
-                  icon={IconClimate}
-                  dataText={gardenData?.climate?.name}
+
+                <Button
+                  content={IconPen}
+                  classNames={[
+                    "h-20",
+                    "w-20",
+                    "mx-2",
+                    "flex",
+                    "items-center",
+                    "justify-center",
+                    "p-2",
+                    "bg-blue-dark",
+                    "text-white",
+                    "text-center",
+                    "rounded-full",
+                    "hover-animate-bounce",
+                  ]}
+                  onclick={() => setIsAmmendable()}
                 />
-                <CardIndicator
-                  icon={IconLabel}
-                  dataText={gardenData?.type?.name}
-                />
-                <CardIndicator
-                  icon={IconLocation}
-                  dataText={gardenData?.location?.name}
-                />
+              </div>
+            )}
+
+            {!isAmmendable && (
+              <>
+                <h1 className="col-span-4 text-center my-8">
+                  {gardenData?.garden?.name.toUpperCase()}
+                </h1>
+
+                <h4 className="col-span-4 text-center my-8">
+                  {gardenData?.garden?.description}
+                </h4>
               </>
             )}
-          </div>
-
-          {isNewPostZoneDisplayed && (
-            <PostCreation
-              setGardenData={setGardenData}
-              gardenData={gardenData}
-              setNewPostZoneDisplayed={setNewPostZoneDisplayed}
-            />
-          )}
-
-          {current_user &&
-            current_user.id !== gardenData?.user?.id &&
-            gardenFollow && (
-              <Button
-                text="Ne plus suivre"
-                classNames={[
-                  "btn",
-                  "btn-lg",
-                  "bg-blue-dark",
-                  "text-white",
-                  "p-4",
-                  "w-full",
-                  "col-span-4",
-                  "lg:col-span-2",
-                ]}
-                onclick={() => handleFollow(garden_id)}
-              />
-            )}
-
-          {current_user &&
-            current_user.id !== gardenData?.user?.id &&
-            gardenFollow === null && (
-              <Button
-                text="Suivre"
-                classNames={[
-                  "btn",
-                  "btn-lg",
-                  "bg-blue-dark",
-                  "text-white",
-                  "p-4",
-                  "w-full",
-                  "col-span-4",
-                  "lg:col-span-2",
-                ]}
-                onclick={() => handleFollow(garden_id)}
-              />
-            )}
-
-          {current_user &&
-            current_user?.id !== gardenData?.user?.id &&
-            myLike !== null && (
-              <Button
-                text="Je n'aime plus"
-                classNames={[
-                  "btn",
-                  "btn-lg",
-                  "border-blue-dark",
-                  "text-dark",
-                  "p-4",
-                  "w-full",
-                  "col-span-4",
-                  "lg:col-span-2",
-                ]}
-                onclick={() => handleLike(garden_id)}
-              />
-            )}
-
-          {current_user &&
-            current_user.id !== gardenData?.user?.id &&
-            myLike == null && (
-              <Button
-                text="J'aime ce jardin"
-                classNames={[
-                  "btn",
-                  "btn-lg",
-                  "border-red",
-                  "text-dark",
-                  "p-4",
-                  "w-full",
-                  "col-span-4",
-                  "lg:col-span-2",
-                ]}
-                onclick={() => handleLike(garden_id)}
-              />
-            )}
-
-          <div className="my-8 col-span-4">
-            {gardenData?.posts?.length > 0 ? (
-              <h3 className="my-4">Les posts</h3>
-            ) : (
-              <h3 className="my-4">Rien pour le moment ...</h3>
-            )}
-
-            {gardenData?.posts?.map((post) => {
-              let {
-                id,
-                garden_id,
-                title,
-                content,
-                created_at,
-                updated_at,
-                likes,
-              } = post;
-              return (
-                <PostCard
-                  key={`post-${id}`}
-                  id={id}
-                  title={title}
-                  content={content}
-                  garden_id={garden_id}
-                  created_at={created_at}
-                  updated_at={updated_at}
-                  likes={likes}
-                  removePost={(postId) => handleRemovePost(postId)}
+            <div className="col-span-4 main-data-container flex flex-wrap justify-between mt-8">
+              {isAmmendable ? (
+                <GardenEditionForm
+                  gardenData={gardenData}
+                  updateGardenData={(value) =>
+                    setGardenData({ ...gardenData, garden: value })
+                  }
+                  setOpacityValue={(value) => handleSetOpacityValue(value)}
+                  setIsAmmendable={(value) => setIsAmmendable(value)}
                 />
-              );
-            })}
-          </div>
-        </div>
+              ) : (
+                <>
+                  <CardIndicator
+                    icon={IconUpdate}
+                    dataText={
+                      <Moment
+                        format={"DD/MM/YYY à hh:mm:ss"}
+                        className="text-center w-full block"
+                      >
+                        {gardenData?.garden?.updated_at}
+                      </Moment>
+                    }
+                    onClick={handleClickEventHistory}
+                  />
+                  <CardIndicator
+                    icon={IconClimate}
+                    dataText={gardenData?.climate?.name}
+                  />
+                  <CardIndicator
+                    icon={IconLabel}
+                    dataText={gardenData?.type?.name}
+                  />
+                  <CardIndicator
+                    icon={IconLocation}
+                    dataText={gardenData?.location?.name}
+                  />
+                </>
+              )}
+            </div>
 
-        <div className="hidden lg:block col-span-3"></div>
-      </div>
-    </section>
-  );
+            {isNewPostZoneDisplayed && (
+              <PostCreation
+                setGardenData={setGardenData}
+                gardenData={gardenData}
+                setNewPostZoneDisplayed={setNewPostZoneDisplayed}
+              />
+            )}
+
+            {current_user &&
+              current_user.id !== gardenData?.user?.id &&
+              gardenFollow && (
+                <Button
+                  text="Ne plus suivre"
+                  classNames={[
+                    "btn",
+                    "btn-lg",
+                    "bg-blue-dark",
+                    "text-white",
+                    "p-4",
+                    "w-full",
+                    "col-span-4",
+                    "lg:col-span-2",
+                  ]}
+                  onclick={() => handleFollow(garden_id)}
+                />
+              )}
+
+            {current_user &&
+              current_user.id !== gardenData?.user?.id &&
+              gardenFollow === null && (
+                <Button
+                  text="Suivre"
+                  classNames={[
+                    "btn",
+                    "btn-lg",
+                    "bg-blue-dark",
+                    "text-white",
+                    "p-4",
+                    "w-full",
+                    "col-span-4",
+                    "lg:col-span-2",
+                  ]}
+                  onclick={() => handleFollow(garden_id)}
+                />
+              )}
+
+            {current_user &&
+              current_user?.id !== gardenData?.user?.id &&
+              myLike !== null && (
+                <Button
+                  text="Je n'aime plus"
+                  classNames={[
+                    "btn",
+                    "btn-lg",
+                    "border-blue-dark",
+                    "text-dark",
+                    "p-4",
+                    "w-full",
+                    "col-span-4",
+                    "lg:col-span-2",
+                  ]}
+                  onclick={() => handleLike(garden_id)}
+                />
+              )}
+
+            {current_user &&
+              current_user.id !== gardenData?.user?.id &&
+              myLike == null && (
+                <Button
+                  text="J'aime ce jardin"
+                  classNames={[
+                    "btn",
+                    "btn-lg",
+                    "border-red",
+                    "text-dark",
+                    "p-4",
+                    "w-full",
+                    "col-span-4",
+                    "lg:col-span-2",
+                  ]}
+                  onclick={() => handleLike(garden_id)}
+                />
+              )}
+
+            <div className="my-8 col-span-4">
+              {gardenData?.posts?.length > 0 ? (
+                <h3 className="my-4">Les posts</h3>
+              ) : (
+                <h3 className="my-4">Rien pour le moment ...</h3>
+              )}
+
+              {gardenData?.posts?.map((post) => {
+                let {
+                  id,
+                  garden_id,
+                  title,
+                  content,
+                  created_at,
+                  updated_at,
+                  likes,
+                } = post;
+                return (
+                  <PostCard
+                    key={`post-${id}`}
+                    id={id}
+                    title={title}
+                    content={content}
+                    garden_id={garden_id}
+                    created_at={created_at}
+                    updated_at={updated_at}
+                    likes={likes}
+                    removePost={(postId) => handleRemovePost(postId)}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="hidden lg:block col-span-3"></div>
+        </div>
+      </section>
+    );
+  } else {
+    return (
+      <Error404/>
+    );
+  }
 };
 
 export default Garden;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getGarden } from "../requests/gardens";
 import GardenCalendar from "../components/GardenCalendar";
+import Error404 from "../components/Error404";
 
 const GardenHistory = () => {
   const [gardenData, setGardenData] = useState(null);
@@ -21,13 +22,17 @@ const GardenHistory = () => {
     fecthAndSetGardenData();
   }, []);
 
-  return (
-    <GardenCalendar
-      garden_owner={gardenData?.user}
-      events={gardenData?.events}
-      setEvents={(value) => handleNewEvent(value)}
-    />
-  );
+  if (gardenData && !gardenData.hasOwnProperty('status')) {
+    return (
+      <GardenCalendar
+        garden_owner={gardenData?.user}
+        events={gardenData?.events}
+        setEvents={(value) => handleNewEvent(value)}
+      />
+    );
+  } else {
+    return <Error404 />;
+  }
 };
 
 export default GardenHistory;

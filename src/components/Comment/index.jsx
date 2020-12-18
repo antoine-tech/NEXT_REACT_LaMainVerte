@@ -43,7 +43,7 @@ const Comment = ({ id, content, user_id, removeComment }) => {
         {content}
       </p>
 
-      {author?.user?.id === current_user.id && (
+      {author?.user?.id === current_user?.id && (
         <div className="col-span-1 col-start-12 flex items-center justify-end">
           <IconDelete onClick={()=>handleDelete(id)} />
         </div>
