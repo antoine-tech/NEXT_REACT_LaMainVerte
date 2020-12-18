@@ -19,7 +19,6 @@ const EditProfileForm = ({ current }) => {
   const history = useHistory();
   const { setCurrentUser } = useCurrentUser();
 
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedImages) => {
@@ -33,13 +32,10 @@ const EditProfileForm = ({ current }) => {
     },
   });
 
-  const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
-    user,
-    {
-      isEmpty: "Ce champ est obligatoire",
-      passwordsAreDifferent: "Les mots de passes ne sont pas similaires",
-    }
-  );
+  const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(user, {
+    isEmpty: "Ce champ est obligatoire",
+    passwordsAreDifferent: "Les mots de passes ne sont pas similaires",
+  });
 
   const editUserInformations = async (event) => {
     event.preventDefault();
@@ -140,7 +136,7 @@ const EditProfileForm = ({ current }) => {
           placeHolder={datas.username}
           colSpan={2}
           value={datas.username}
-          onInput={(value)=>handleInput(value)}
+          onInput={(value) => handleInput(value)}
         />
 
         <FormGroup
@@ -151,7 +147,7 @@ const EditProfileForm = ({ current }) => {
           placeHolder={datas.first_name}
           colSpan={2}
           value={datas.first_name}
-          onInput={(value)=>handleInput(value)}
+          onInput={(value) => handleInput(value)}
         />
 
         <FormGroup
@@ -162,7 +158,7 @@ const EditProfileForm = ({ current }) => {
           placeHolder={datas.last_name}
           colSpan={2}
           value={datas.last_name}
-          onInput={(value)=>handleInput(value)}
+          onInput={(value) => handleInput(value)}
         />
 
         <FormGroup
@@ -173,7 +169,7 @@ const EditProfileForm = ({ current }) => {
           placeHolder={datas.email}
           colSpan={2}
           value={datas.email}
-          onInput={(value)=>handleInput(value)}
+          onInput={(value) => handleInput(value)}
         />
 
         <FormGroup
@@ -183,7 +179,7 @@ const EditProfileForm = ({ current }) => {
           name="password"
           placeHolder="Mot de passe"
           colSpan={2}
-          onInput={(value)=>handleInput(value)}
+          onInput={(value) => handleInput(value)}
         />
 
         <FormGroup
@@ -193,7 +189,7 @@ const EditProfileForm = ({ current }) => {
           name="password_confirmation"
           placeHolder="Confirmer le mot de passe"
           colSpan={2}
-          onInput={(value)=>handleInput(value)}
+          onInput={(value) => handleInput(value)}
         />
 
         <Button
@@ -203,7 +199,6 @@ const EditProfileForm = ({ current }) => {
           classNames={[
             "btn btn-lg bg-red text-white p-2 my-2 w-full col-span-2 lg:col-span-1 text-center",
           ]}
-          
         />
 
         <Button
