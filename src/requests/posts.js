@@ -32,17 +32,30 @@ const commentPost = async (postId, content, jwtToken) => {
   ).then((res) => res.json());
 };
 
+const deletePost = async (postId, jwt_token) =>
+  await deletion("/posts/" + postId, true, jwt_token)
+    .then((res) => res.text())
+    .catch((error) => error);
 
-const createPost = async (jwtToken, garden_id, title, content, pictures_url ) =>
-{
-  const data ={
-    'post':{
+const deleteComment = async (commentId, jwt_token) =>
+  await deletion("/post_comments/" + commentId, true, jwt_token)
+    .then((res) => res.text())
+    .catch((error) => error);
+
+const createPost = async (
+  jwtToken,
+  garden_id,
+  title,
+  content,
+  pictures_url
+) => {
+  const data = {
+    post: {
       title,
       content,
       pictures_url: pictures_url,
-    }
-  }
-
+    },
+  };
 
   return await create(
     data,
@@ -50,7 +63,14 @@ const createPost = async (jwtToken, garden_id, title, content, pictures_url ) =>
     true,
     jwtToken
   ).then((res) => res.json());
-
-
-}
-export { getPosts, getPost, likePost, unlikePost, commentPost, createPost };
+};
+export {
+  getPosts,
+  getPost,
+  likePost,
+  unlikePost,
+  commentPost,
+  createPost,
+  deletePost,
+  deleteComment,
+};
