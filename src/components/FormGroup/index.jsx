@@ -23,8 +23,8 @@ const FormGroup = ({
           type={type}
           name={name}
           value={value}
-          onInput={(value) => onInput(value)}
-          onBlur={(value) => onBlur(value)}
+          onInput={onInput ? (value) => onInput(value) : ''}
+          onBlur={onBlur ? (value) => onBlur(value) : ''}
           />
         {alertMessage && (
           <div className="alert danger my-2 flex w-full justify-between">
