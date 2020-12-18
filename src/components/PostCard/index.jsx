@@ -70,7 +70,7 @@ const PostCard = ({ id, removePost }) => {
   };
 
   const updateCommentWarning = () => {
-    setCommentPostWarning(true);
+    setCommentPostWarning(!commentPostWarning);
   };
 
   const handleCommentCreation = async (postId) => {
