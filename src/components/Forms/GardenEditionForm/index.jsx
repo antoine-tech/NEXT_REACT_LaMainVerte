@@ -33,7 +33,7 @@ const GardenEditionForm = ({
   const [locations, setLocations] = useState([]);
   const { getJwtToken } = useJwtToken();
   const { isLoading, setIsLoading } = useIsLoading();
-  const { datas, setDatas } = useFormAnalysis(
+  const { datas, setDatas} = useFormAnalysis(
     {
       name: gardenData.garden.name,
       description: gardenData.garden.description,
@@ -49,6 +49,8 @@ const GardenEditionForm = ({
     }
   );
 
+  const [updatedDatas, setUpdatedDatas] = useState(datas);
+
   const handleDelete = async (gardenId) => {
     const confirm = window.confirm(
       "Voulez vous vraiment supprimer ce jardin ?"
@@ -61,20 +63,70 @@ const GardenEditionForm = ({
   };
 
   const handleUpdate = async () => {
+    let garden_type_id;
+    let name;
+    let area;
+    let description;
+    let climate_id;
+    let location_id;
+    let picture_opacity;
+
+    if(updatedDatas.garden_type_id){
+      garden_type_id = updatedDatas.garden_type_id;
+    }else{
+      garden_type_id = datas.garden_type_id;
+    }
+
+    if(updatedDatas.name){
+      name = updatedDatas.name;
+    }else{
+      name = datas.name
+    }
+
+    if(updatedDatas.area){
+      area = updatedDatas.area;
+    }else{
+      area = datas.area;
+    }
+
+    if(updatedDatas.description){
+      description = updatedDatas.description;
+    }else{
+      description = datas.description;
+    }
+
+    if(updatedDatas.climate_id){
+      climate_id = updatedDatas.climate_id;
+    }else{
+      climate_id = datas.climate_id;
+    }
+
+    if(updatedDatas.location_id){
+      location_id = updatedDatas.location_id;
+    }else{
+      location_id = datas.location_id;
+    }
+
+    if(updatedDatas.picture_opacity){
+      picture_opacity = updatedDatas.picture_opacity;
+    }else{
+      picture_opacity = datas.picture_opacity;
+    }
 
     setIsLoading(true);
     const data = {
-      garden: {
-        garden_type_id: datas.garden_type_id,
-        name: datas.name,
-        area: parseInt(datas.area),
-        description: datas.description,
-        climate_id: datas.climate_id,
-        location_id: datas.location_id,
-        picture_opacity: datas.picture_opacity,
-        picture_url: datas.picture_url
-      },
-    };
+        garden: {
+          garden_type_id: garden_type_id,
+          name: name,
+          area: parseInt(area),
+          description : description,
+          climate_id: climate_id,
+          location_id: location_id,
+          picture_opacity: picture_opacity
+        },
+      };
+
+    console.log(data)
 
     const updatedGarden = await updateGarden(garden_id, data, getJwtToken);
     updateGardenData(updatedGarden);
@@ -84,7 +136,7 @@ const GardenEditionForm = ({
 
   const handleOpacityValue = (value) => {
     setOpacityValue(1 - value / 100);
-    setDatas({ ...datas, picture_opacity: 1 - value / 100 });
+    setUpdatedDatas({ ...datas, picture_opacity: 1 - value / 100 })
   };
 
   useEffect(() => {
@@ -130,8 +182,10 @@ const GardenEditionForm = ({
         id={"name"}
         name={"name"}
         type={"text"}
-        value={datas.name}
-        onInput={(obj) => setDatas({ ...datas, name: obj.value })}
+        placeHolder={"Un ptit nom sympa pour votre jardin ?"}
+        classNames={["w-full my-2"]}
+        value={datas?.garden?.name}
+        onInput={(obj) => setUpdatedDatas({ ...datas, name: obj.value })}
       />
 
       <FormGroup
@@ -140,8 +194,10 @@ const GardenEditionForm = ({
         id={"area"}
         name={"area"}
         type={"number"}
-        value={datas.area}
-        onInput={(obj) => setDatas({ ...datas, area: obj.value })}
+        placeHolder={"Quelle est la surface de votre jardin ?"}
+        classNames={["w-full my-2"]}
+        value={datas?.garden?.area}
+        onInput={(obj) => setUpdatedDatas({ ...datas, area: obj.value })}
       />
 
       <TextArea
@@ -149,7 +205,7 @@ const GardenEditionForm = ({
         name="description"
         classNames={["col-span-2 my-4"]}
         value={datas.description}
-        onInput={(obj) => setDatas({ ...datas, description: obj.value })}
+        onInput={(obj) => setUpdatedDatas({ ...datas, description: obj.value })}
       />
 
       <Select
@@ -162,7 +218,7 @@ const GardenEditionForm = ({
           return { id: gardenType.id, text: gardenType.name };
         })}
         selectedOption={(garden_type_id) =>
-          setDatas({ ...datas, garden_type_id: garden_type_id })
+          setUpdatedDatas({ ...datas, garden_type_id: garden_type_id })
         }
       />
 
@@ -176,7 +232,7 @@ const GardenEditionForm = ({
           return { id: climate.id, text: climate.name };
         })}
         selectedOption={(climate_id) =>
-          setDatas({ ...datas, climate_id: climate_id })
+          setUpdatedDatas({ ...datas, climate_id: climate_id })
         }
       />
 
@@ -190,7 +246,7 @@ const GardenEditionForm = ({
           return { id: location.id, text: location.name };
         })}
         selectedOption={(location_id) =>
-          setDatas({ ...datas, location_id: location_id })
+          setUpdatedDatas({ ...datas, location_id: location_id })
         }
       />
 
