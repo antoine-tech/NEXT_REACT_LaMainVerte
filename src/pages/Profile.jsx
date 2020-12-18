@@ -6,7 +6,7 @@ import UserGardens from "../components/ProfilePage/UserGardens";
 import UserPosts from "../components/ProfilePage/UserPosts";
 
 const Profile = () => {
-  const [user, setUser] = useState(useSelector((state) => state.current_user));
+  const [user] = useState(useSelector((state) => state.current_user));
 
 
   return (

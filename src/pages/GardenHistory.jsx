@@ -20,7 +20,7 @@ const GardenHistory = () => {
     };
 
     fecthAndSetGardenData();
-  }, []);
+  }, [garden_id]);
 
   if (gardenData && !gardenData.hasOwnProperty('status')) {
     return (

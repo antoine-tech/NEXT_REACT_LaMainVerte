@@ -18,7 +18,7 @@ const PublicProfile = () => {
     };
     
     fetchUserData();
-  }, []);
+  }, [user_id]);
 
   if (user) {
     return (
