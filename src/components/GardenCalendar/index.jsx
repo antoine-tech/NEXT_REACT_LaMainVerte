@@ -9,14 +9,13 @@ import "./index.scss";
 import EventDisplay from "../EventDisplay";
 const localizer = momentLocalizer(moment);
 
-const GardenCalendar = ({ events, setEvents, garden_owner }) => {
+const GardenCalendar = ({ events, setEvents, removeEvent, garden_owner }) => {
   const { current_user } = useCurrentUser();
   const [isModalOpen, setModalOpen] = useState(false);
   const [newEvent, setNewEvent] = useState(null);
   const [isEventDisplayed, setEventDisplayed] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(null);
 
-  
   const handleSelectEvent = (obj, event) => {
     setCurrentEvent(obj);
     setEventDisplayed(true);
@@ -28,6 +27,10 @@ const GardenCalendar = ({ events, setEvents, garden_owner }) => {
       setNewEvent({ start: event.start.toString(), end: event.end.toString() });
       setModalOpen(true);
     }
+  };
+
+  const handleRemoveEvent = (eventId) => {
+    removeEvent(eventId);
   };
 
   return (
@@ -45,7 +48,7 @@ const GardenCalendar = ({ events, setEvents, garden_owner }) => {
               start: event.start_date,
               end: event.end_date,
               allDay: true,
-              ressource: event.description,
+              ressource: { event },
             };
           })}
           startAccessor="start"
@@ -79,6 +82,7 @@ const GardenCalendar = ({ events, setEvents, garden_owner }) => {
             setModalOpen={setModalOpen}
             data={currentEvent}
             setEventDisplayed={setEventDisplayed}
+            removeEvent={(value) => handleRemoveEvent(value)}
           />
         ))}
     </div>
