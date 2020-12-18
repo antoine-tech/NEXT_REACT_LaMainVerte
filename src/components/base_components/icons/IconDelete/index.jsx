@@ -3,12 +3,13 @@ import React from "react";
 const IconDelete = ({ onClick }) => {
   return (
     <svg
- width="25"
+      width="25"
       height="25"
       viewBox="0 0 25 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       onClick={onClick}
+      style={{ cursor: "pointer" }}
     >
       <g id="delete_outline_24px">
         <path

@@ -22,6 +22,7 @@ import Avatar from "../Avatar/index";
 import "./index.scss";
 import PostSlider from "../PostSlider";
 import IconDelete from "../base_components/icons/IconDelete";
+import IconWarning from "../base_components/icons/IconWarning";
 
 const PostCard = ({ id, removePost }) => {
 	const [postData, setPostData] = useState([]);
@@ -69,7 +70,7 @@ const PostCard = ({ id, removePost }) => {
 	};
 
 	const updateCommentWarning = () => {
-		setCommentPostWarning(true);
+		setCommentPostWarning(!commentPostWarning);
 	};
 
 	const handleCommentCreation = async (postId) => {
@@ -146,8 +147,8 @@ const PostCard = ({ id, removePost }) => {
 
 				{current_user ? (
 					current_user.id === postData?.user?.id ? (
-						<div className="flex flex-row space-x-4 space-x ml-auto">
-							<div className="col-start-10 col-span-1 flex items-center justify-end">
+						<>
+							<div className="col-start-9 col-span-1 flex items-center justify-end">
 								<IconComment
 									onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
 								/>
@@ -165,35 +166,22 @@ const PostCard = ({ id, removePost }) => {
 							<div className="col-span-1 flex items-center justify-end">
 								<IconDelete onClick={() => handleDelete(postData.post.id)} />
 							</div>
-							<div
-								className="col-span-1 flex items-center justify-end"
-								title={
-									postData?.post?.warning
-										? "ce post a été signalé comme contenu indésirable, il va être passé en revue par un administrateur"
-										: "signaler"
-								}
-								onClick={warningPost}
-								id="warning-icon"
-							>
-								<svg
-									width="18"
-									height="18"
-									viewBox="0 0 18 18"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										fillRule="evenodd"
-										clipRule="evenodd"
-										d="M0.5 16H17.5L9 1L0.5 16ZM10 14H8V12H10V14ZM10 11H8V7H10V11Z"
-										fill={postData?.post?.warning ? "#ff6b6b" : "#c9cbd2"}
-									/>
-								</svg>
+							<div className="col-span-1 flex items-center justify-end">
+								<IconWarning
+									fill={postData?.post?.warning ? "#ff6b6b" : "#c9cbd2"}
+									title={
+										postData?.post?.warning
+											? "ce post a été signalé comme contenu indésirable, il va être passé en revue par un administrateur"
+											: "signaler"
+									}
+									onClick={warningPost}
+									id="warning-icon"
+								/>
 							</div>
-						</div>
+						</>
 					) : (
-						<div className="flex flex-row space-x-4 space-x ml-auto">
-							<div className="col-start-1 col-span-1 flex items-center justify-end">
+						<>
+							<div className="col-start-10 col-span-1 flex items-center justify-end">
 								<IconComment
 									onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
 								/>
@@ -208,47 +196,34 @@ const PostCard = ({ id, removePost }) => {
 								<span className="ml-2"> {postData?.likes?.length}</span>
 							</div>
 							{current_user && (
-								<div
-									className="col-span-1 flex items-center justify-end"
-									title={
-										postData?.post?.warning
-											? "ce post a été signalé comme contenu indésirable, il va être passé en revue par un administrateur"
-											: "signaler"
-									}
-									onClick={warningPost}
-									id="warning-icon"
-								>
-									<svg
-										width="18"
-										height="18"
-										viewBox="0 0 18 18"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											fillRule="evenodd"
-											clipRule="evenodd"
-											d="M0.5 16H17.5L9 1L0.5 16ZM10 14H8V12H10V14ZM10 11H8V7H10V11Z"
-											fill={postData?.post?.warning ? "#ff6b6b" : "#c9cbd2"}
-										/>
-									</svg>
+								<div className="col-span-1 flex items-center justify-end">
+									<IconWarning
+										fill={postData?.post?.warning ? "#ff6b6b" : "#c9cbd2"}
+										title={
+											postData?.post?.warning
+												? "ce post a été signalé comme contenu indésirable, il va être passé en revue par un administrateur"
+												: "signaler"
+										}
+										onClick={warningPost}
+										id="warning-icon"
+									/>
 								</div>
 							)}
-						</div>
+						</>
 					)
 				) : (
-					<div>
+					<>
 						<div className="col-start-12 col-span-1 flex items-center justify-end">
 							<IconComment
 								onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
 							/>
 							<span className="mx-2"> {postData?.comments?.length}</span>
 						</div>
-					</div>
+					</>
 				)}
 			</div>
 			{areCommentDisplayed && (
-				<div>
+				<>
 					{postData?.comments?.length > 0 &&
 						postData.comments.map((comment) => {
 							let { id, content, user_id, warning, post_id } = comment;
@@ -294,7 +269,7 @@ const PostCard = ({ id, removePost }) => {
 							/>
 						</div>
 					)}
-				</div>
+				</>
 			)}
 		</div>
 	);

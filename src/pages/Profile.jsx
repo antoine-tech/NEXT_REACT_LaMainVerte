@@ -8,6 +8,7 @@ import UserPosts from "../components/ProfilePage/UserPosts";
 const Profile = () => {
   const [user, setUser] = useState(useSelector((state) => state.current_user));
 
+
   return (
     <section className="grid grid-cols-12 min-h-80vh gap-4 bg-light-brown">
       <div className="hidden md:block md:col-span-1 lg:col-span-2 bg-man relative"></div>
