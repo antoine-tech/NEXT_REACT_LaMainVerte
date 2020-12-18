@@ -41,17 +41,30 @@ const signalCommentPost = async (postId, content, jwtToken, id) => {
     jwtToken
   ).then((res) => res.json());
 }
+const deletePost = async (postId, jwt_token) =>
+  await deletion("/posts/" + postId, true, jwt_token)
+    .then((res) => res.text())
+    .catch((error) => error);
 
-const createPost = async (jwtToken, garden_id, title, content, pictures_url ) =>
-{
-  const data ={
-    'post':{
+const deleteComment = async (commentId, jwt_token) =>
+  await deletion("/post_comments/" + commentId, true, jwt_token)
+    .then((res) => res.text())
+    .catch((error) => error);
+
+const createPost = async (
+  jwtToken,
+  garden_id,
+  title,
+  content,
+  pictures_url
+) => {
+  const data = {
+    post: {
       title,
       content,
       pictures_url: pictures_url,
-    }
-  }
-
+    },
+  };
 
   return await create(
     data,
@@ -84,4 +97,4 @@ const signalPost = async (garden_id, title, content, pictures_url, jwtToken, pos
 
 
 }
-export { getPosts, getPost, likePost, unlikePost, commentPost, createPost, signalPost, signalCommentPost };
+export { getPosts, getPost, likePost, unlikePost, commentPost, createPost, signalPost, signalCommentPost, deletePost, deleteComment, };

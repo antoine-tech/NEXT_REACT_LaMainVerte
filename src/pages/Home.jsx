@@ -107,7 +107,7 @@ const Home = () => {
           )}
         </div>
         <div
-          className="flex flex-col justify-center col-span-12 lg:col-span-6 px-4"
+          className="flex flex-col col-span-12 lg:col-span-6 px-4"
           id="wall"
         >
           <SearchEngine
@@ -148,7 +148,7 @@ const Home = () => {
               <h4 className="my-4">Votre aventure commence ici !</h4>
 
               <div className="h-66vh w-full bg-start-to-grow relative">
-                <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4 bg-light-white">
+                <div className="grid grid-cols-2 gap-4 flex items-center h-full w-full p-4">
                   <Link
                     to="/gardens/new"
                     className="btn btn-lg bg-blue-dark text-white p-4 w-full col-span-2 lg:col-span-1 text-center"
@@ -189,7 +189,7 @@ const Home = () => {
         </div>
         <div className="hidden lg:block lg:col-span-4">
           <h4 className="mb-4 text-center">Les derniers posts</h4>
-          <div className="h-screen radius bg-light-brown shadow-neomorph p-4 overflow-auto">
+          <div className="h-screen radius bg-light-brown shadow-neomorph p-2  overflow-auto">
             {lastPosts?.map((lastPost) => {
               let { id } = lastPost;
               return <PostCard key={`post-${id}`} id={id} />;
@@ -197,7 +197,7 @@ const Home = () => {
           </div>
 
           <h4 className="my-4 text-center">Les derniers témoignages</h4>
-          <div className="h-screen radius bg-light-brown shadow-neomorph p-4">
+          <div className="h-screen radius bg-light-brown shadow-neomorph p-2 ">
             {testimonies?.map((testimony) => {
               let { id, content, user, created_at, updated_at } = testimony;
               return (

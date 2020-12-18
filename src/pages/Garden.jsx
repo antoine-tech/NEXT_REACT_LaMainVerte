@@ -15,14 +15,14 @@ import PostCard from "../components/PostCard";
 import PostCreation from "../components/Forms/PostCreation/index";
 import Button from "../components/base_components/Button/index";
 import CardIndicator from "../components/CardIndicator/index";
+import GardenEditionForm from "../components/Forms/GardenEditionForm";
 import IconPen from "../components/base_components/icons/IconPen/index";
 import IconLabel from "../components/base_components/icons/IconLabel/index";
 import IconClimate from "../components/base_components/icons/IconClimate/index";
 import IconUpdate from "../components/base_components/icons/IconUpdate/index";
 import IconLocation from "../components/base_components/icons/IconLocation/index";
+import IconAdd from "../components/base_components/icons/IconAdd/index";
 import MaskImage from "../assets/backgrounds/mask_image.png";
-import IconCreate from "../components/base_components/icons/IconCreate";
-import GardenEditionForm from "../components/Forms/GardenEditionForm";
 
 const Garden = () => {
   const history = useHistory();
@@ -34,6 +34,14 @@ const Garden = () => {
   const { getJwtToken } = useJwtToken();
   const { isAmmendable, setIsAmmendable } = useIsAmmendable();
   const { garden_id } = useParams();
+
+  const handleRemovePost = (postId) => {
+    const newGardenData = {
+      ...gardenData,
+      posts: gardenData.posts.filter((post) => post.id !== postId),
+    };
+    setGardenData(newGardenData);
+  };
 
   const handleSetOpacityValue = (value) => {
     const newData = {
@@ -149,7 +157,7 @@ const Garden = () => {
           {current_user && current_user.id === gardenData?.user?.id && (
             <div className="col-span-2 flex justify-self-end">
               <Button
-                content={IconCreate}
+                content={IconAdd}
                 classNames={[
                   "h-20",
                   "w-20",
@@ -207,7 +215,7 @@ const Garden = () => {
                   setGardenData({ ...gardenData, garden: value })
                 }
                 setOpacityValue={(value) => handleSetOpacityValue(value)}
-                setIsAmmendable={(value)=>setIsAmmendable(value)}
+                setIsAmmendable={(value) => setIsAmmendable(value)}
               />
             ) : (
               <>
@@ -350,6 +358,7 @@ const Garden = () => {
                   created_at={created_at}
                   updated_at={updated_at}
                   likes={likes}
+                  removePost={(postId) => handleRemovePost(postId)}
                 />
               );
             })}

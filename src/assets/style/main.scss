@@ -65,6 +65,11 @@
   }
 }
 
+/* REMOVE OUTLINE ON FOCUS */
+button:focus, input:focus{
+  outline: none;
+}
+
 
 // GENERAL UTILITIES
 
@@ -79,6 +84,21 @@
 .shadow-neomorph-1 {
   box-shadow: var(--shadow-neomorph-1);
 }
+
+.shadow-neomorph-1:hover{
+  box-shadow: var(--shadow-neomorph-2);
+}
+
+.h-80vh {
+  height: 80vh;
+}
+
+@media (min-width: 1024px) {.lg-h-80vh{
+  height: 80vh;
+}}
+
+
+
 
 
 /* GENERAL TYPOS */
@@ -442,28 +462,17 @@ SLIDER */
 
 /*
 PROFILE */
-#user-informations {
-  width: 600px;
-  min-width: 300px;
-  margin-top: 12vh;
-  padding-bottom: 4vh;
-  overflow: visible;
-}
+
 #user-informations div.img {
   display: grid;
   cursor: pointer;
 }
 #user-informations .avatar-img {
-  grid-column: 1;
-  grid-row: 1;
   border-radius: 50%;
-  padding: 2px;
-  height: 200px;
-  width: 200px;
-  transform: translateY(-70px);
+  height: 20rem;
+  width: 20rem;
   background: var(--red-gradient);
-  padding: 10px;
-  transition: all 200ms 100ms ease;
+  padding:.5rem;
 }
 #user-informations #picture-img {
   display: grid;
@@ -476,18 +485,18 @@ PROFILE */
   width: 70px;
   transition: all 200ms 100ms ease;
 }
-#user-informations #picture-img img {
-  cursor: pointer;
-  grid-column: 1;
-  grid-row: 1;
-}
-#user-informations #picture-img input {
-  padding-top: 15px;
-  cursor: pointer;
-  opacity: 0%;
-  grid-column: 1;
-  grid-row: 1;
-}
+// #user-informations #picture-img img {
+//   cursor: pointer;
+//   grid-column: 1;
+//   grid-row: 1;
+// }
+// #user-informations #picture-img input {
+//   padding-top: 15px;
+//   cursor: pointer;
+//   opacity: 0%;
+//   grid-column: 1;
+//   grid-row: 1;
+// }
 #user-informations div.img:hover .avatar-img{
   transform: translateY(-80px);
   filter: brightness(70%);
@@ -496,89 +505,75 @@ PROFILE */
   transform: translateY(-80px);
   opacity: 100%;
 }
-#user-informations  h1 {
-  font-size: 30px;
-  transform: translateY(-40px );
-}
-#user-informations form input {
-  margin-top: 15px;
-  margin-bottom: 20px;
-  padding: 15px;
-  border-top: 3px solid #F6DCA2;
-  border-left: 3px solid #F6DCA2;
-  border-bottom: none;
-  border-radius: 2px;
-  background-color: #f7e9c9;
-  color: #3A405A;
-}
-#user-informations form button {
-  margin-top: 30px;
-  padding: 10px;
-}
-#user-informations form button#delete-profile {
-  border: 1px solid #FF6B6B;
-  border-radius: 4px;
-  color:  #FF6B6B;
-  transition: all 100ms 200ms ease;
-}
-#user-informations form button#delete-profile:hover {
-  color: white;
-  background-color: #FF6B6B;
-}
-#user-informations form button#edit-profile {
-  border-radius: 4px;
-  background-color:  #3A405A;
-  color: white;
-  transition: all 200ms 100ms ease-in-out;
-}
-#user-informations form button#edit-profile:hover {
-  transform: scale(1.05);
-}
-#followed-gardens {
-  margin-top: 4vh;
-  width: 600px;
-  min-width: 300px;
-}
-#followed-gardens div.gardens{
-  max-height: 700px;
-}
-#followed-gardens h1 {
-  font-size: 20px;
-  margin-left: 15px;
-}
-#user-gardens {
-  margin-top: 4vh;
-  width: 600px;
-  min-width: 300px;
-}
-#user-gardens div.gardens{
-  max-height: 700px;
-}
-#user-gardens h1 {
-  font-size: 20px;
-}
-#user-gardens a#create-garden {
-  padding: 10px;
-  border: 1px solid #615C5F;
-  border-radius: 4px;
-  color:  #615C5F;
-  transition: all 100ms 200ms ease;
-}
-#user-gardens a#create-garden:hover {
-  color: white;
-  background-color: #615C5F;
-}
-#user-posts {
-  margin-top: 4vh;
-  width: 600px;
-  min-width: 300px;
-}
-#user-posts div.posts{
-  max-height: 700px;
-}
-#user-posts h1 {
-  font-size: 20px;
-}
+// #user-informations  h1 {
+//   font-size: 30px;
+//   transform: translateY(-40px );
+// }
+// #user-informations form input {
+//   margin-top: 15px;
+//   margin-bottom: 20px;
+//   padding: 15px;
+//   border-top: 3px solid #F6DCA2;
+//   border-left: 3px solid #F6DCA2;
+//   border-bottom: none;
+//   border-radius: 2px;
+//   background-color: #f7e9c9;
+//   color: #3A405A;
+// }
+// #user-informations form button {
+//   margin-top: 30px;
+//   padding: 10px;
+// }
+// #user-informations form button#delete-profile {
+//   border: 1px solid #FF6B6B;
+//   border-radius: 4px;
+//   color:  #FF6B6B;
+//   transition: all 100ms 200ms ease;
+// }
+// #user-informations form button#delete-profile:hover {
+//   color: white;
+//   background-color: #FF6B6B;
+// }
+// #user-informations form button#edit-profile {
+//   border-radius: 4px;
+//   background-color:  #3A405A;
+//   color: white;
+//   transition: all 200ms 100ms ease-in-out;
+// }
+// #user-informations form button#edit-profile:hover {
+//   transform: scale(1.05);
+// }
+// #followed-gardens div.gardens{
+//   max-height: 700px;
+// }
+// #followed-gardens h1 {
+//   font-size: 20px;
+//   margin-left: 15px;
+// }
+
+// #user-gardens div.gardens{
+//   max-height: 700px;
+// }
+// #user-gardens h1 {
+//   font-size: 20px;
+// }
+// #user-gardens a#create-garden {
+//   padding: 10px;
+//   border: 1px solid #615C5F;
+//   border-radius: 4px;
+//   color:  #615C5F;
+//   transition: all 100ms 200ms ease;
+// }
+// #user-gardens a#create-garden:hover {
+//   color: white;
+//   background-color: #615C5F;
+// }
+// #user-posts div.posts{
+//   max-height: 700px;
+// }
+// #user-posts h1 {
+//   font-size: 20px;
+// }
 
 /* MODAL */
 

@@ -4,11 +4,15 @@ import { signalCommentPost } from "../../requests/posts";
 import useIsLoading from "../../hooks/useIsLoading";
 import LoadingSpinner from '../loaders/LoadingSpinner/index';
 import useJwtToken from "../../hooks/useJwtToken";
+import { deleteComment } from "../../requests/posts";
+import useCurrentUser from "../../hooks/useCurrentUser";
+import IconDelete from "../base_components/icons/IconDelete";
 
-const Comment = ({ id, content, user_id, warning, post_Id, updateWarning }) => {
+const Comment = ({ id, content, user_id, warning, post_Id, updateWarning, removeComment }) => {
+  const { current_user } = useCurrentUser();
+  const { getJwtToken } = useJwtToken();
   const { isLoading, setIsLoading } = useIsLoading();
   const [author, setAuthor] = useState(null);
-  const { getJwtToken } = useJwtToken();
 
   const warningPostComment = async () => {
     const comment = await signalCommentPost(
@@ -19,6 +23,11 @@ const Comment = ({ id, content, user_id, warning, post_Id, updateWarning }) => {
     )
     updateWarning();
   }
+
+  const handleDelete = async (commentId) => {
+    const response = await deleteComment(commentId, getJwtToken);
+    removeComment(commentId)
+  };
 
   useEffect(() => {
     const fetchAuthorData = async () => {
@@ -46,6 +55,7 @@ const Comment = ({ id, content, user_id, warning, post_Id, updateWarning }) => {
         {content}
       </p>
 
+      { current_user &&
       <div
         id="warning-icon"
         onClick={warningPostComment}
@@ -56,6 +66,12 @@ const Comment = ({ id, content, user_id, warning, post_Id, updateWarning }) => {
           <path fillRule="evenodd" clipRule="evenodd" d="M0.5 16H17.5L9 1L0.5 16ZM10 14H8V12H10V14ZM10 11H8V7H10V11Z" fill={warning? "#ff6b6b" : "#c9cbd2"}/>
         </svg>
       </div> 
+      }
+      {author?.user?.id === current_user.id && (
+        <div className="col-span-1 col-start-12 flex items-center justify-end">
+          <IconDelete onClick={()=>handleDelete(id)} />
+        </div>
+      )}
     </div>
   );
 };
