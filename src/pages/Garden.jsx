@@ -71,11 +71,15 @@ const Garden = () => {
   }, [gardenData, current_user]);
 
   const handleRemovePost = (postId) => {
+
+    const confirm = window.confirm('Voulez vous vraiment supprimer ce post ?')
+
+    if (confirm) {
     const newGardenData = {
       ...gardenData,
       posts: gardenData.posts.filter((post) => post.id !== postId),
     };
-    setGardenData(newGardenData);
+    setGardenData(newGardenData);}
   };
 
   const handleSetOpacityValue = (value) => {

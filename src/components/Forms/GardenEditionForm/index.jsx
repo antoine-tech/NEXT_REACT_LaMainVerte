@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { getClimates } from "../../../requests/climates";
 import { getLocations } from "../../../requests/locations";
-import { deleteGarden, getGardenTypes, updateGarden } from "../../../requests/gardens";
-import { update } from "../../../sevices/Api";
-import useJwtToken from '../../../hooks/useJwtToken';
+import {
+  deleteGarden,
+  getGardenTypes,
+  updateGarden,
+} from "../../../requests/gardens";
+import useJwtToken from "../../../hooks/useJwtToken";
 import useIsLoading from "../../../hooks/useIsLoading";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import TextArea from "../../base_components/TextArea/index";
@@ -14,18 +17,20 @@ import Button from "../../base_components/Button/index";
 import Select from "../../base_components/Select/index";
 import IconLabel from "../../base_components/icons/IconLabel/index";
 import IconClimate from "../../base_components/icons/IconClimate/index";
-import IconUpdate from "../../base_components/icons/IconUpdate/index";
 import IconLocation from "../../base_components/icons/IconLocation/index";
 
-
-const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIsAmmendable }) => {
-
+const GardenEditionForm = ({
+  gardenData,
+  updateGardenData,
+  setOpacityValue,
+  setIsAmmendable,
+}) => {
   const history = useHistory();
   const { garden_id } = useParams();
   const [climates, setClimates] = useState([]);
   const [gardenTypes, setGardenTypes] = useState([]);
   const [locations, setLocations] = useState([]);
-  const {getJwtToken} = useJwtToken();
+  const { getJwtToken } = useJwtToken();
   const { isLoading, setIsLoading } = useIsLoading();
   const { datas, setDatas } = useFormAnalysis(
     {
@@ -42,36 +47,38 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
     }
   );
 
+  const handleDelete = async (gardenId) => {
+    const confirm = window.confirm(
+      "Voulez vous vraiment supprimer ce jardin ?"
+    );
 
-  const handleDelete = async(gardenId) =>
-  {
+    if (confirm) {
       const response = await deleteGarden(gardenId, getJwtToken);
-      history.push('/news_feed');
-  }
+      history.push("/news_feed");
+    }
+  };
 
   const handleUpdate = async () => {
-
     const data = {
-        garden: {
-          garden_type_id: datas.garden_type_id,
-          name: datas.name,
-          area: parseInt(datas.area),
-          description : datas.description,
-          climate_id: datas.climate_id,
-          location_id: datas.location_id,
-          picture_opacity: datas.picture_opacity
-        },
-      };
+      garden: {
+        garden_type_id: datas.garden_type_id,
+        name: datas.name,
+        area: parseInt(datas.area),
+        description: datas.description,
+        climate_id: datas.climate_id,
+        location_id: datas.location_id,
+        picture_opacity: datas.picture_opacity,
+      },
+    };
 
     const updatedGarden = await updateGarden(garden_id, data, getJwtToken);
-    updateGardenData(updatedGarden)
+    updateGardenData(updatedGarden);
     setIsAmmendable(false);
-    
   };
 
   const handleOpacityValue = (value) => {
     setOpacityValue(1 - value / 100);
-    setDatas({ ...datas, picture_opacity: 1 - value / 100 })
+    setDatas({ ...datas, picture_opacity: 1 - value / 100 });
   };
 
   useEffect(() => {
@@ -202,7 +209,6 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
         ]}
         onclick={() => handleUpdate(garden_id)}
       />
-
 
       <Button
         text="SUPPRIMER"
