@@ -32,12 +32,12 @@ const Navbar = () => {
 		setIsMenuLeftDisplayed(!isMenuLeftDisplayed);
 	};
 
-	return (
-		<>
-			<nav className="flex w-full justify-between items-center p-4 relative">
-				<Link to="/" title="home">
-					<LaMainVerteBrandNav />
-				</Link>
+  return (
+    <>
+      <nav className="flex w-full justify-between items-center p-4 relative">
+        <Link to="/news_feed" title="fil d'actualité">
+          <LaMainVerteBrandNav />
+        </Link>
 
 				<ul className="flex lg:hidden items-center">
 					<li>

@@ -6,6 +6,7 @@ import {
   likePost,
   unlikePost,
   commentPost,
+  signalPost,
   deletePost,
 } from "../../requests/posts";
 import useCurrentUser from "../../hooks/useCurrentUser";
@@ -25,6 +26,8 @@ import IconDelete from "../base_components/icons/IconDelete";
 const PostCard = ({ id, removePost }) => {
   const [postData, setPostData] = useState([]);
   const [myLike, setMyLike] = useState(null);
+  const [postWarning, setPostWarning] = useState(false);
+  const [commentPostWarning, setCommentPostWarning] = useState(false);
   const [newCommentValue, setNewCommentValue] = useState(
     "Votre avis compte, laissez un commentaire !"
   );
@@ -38,6 +41,17 @@ const PostCard = ({ id, removePost }) => {
     history.push("/garden/" + garden_id);
   };
 
+  const warningPost = async () => {
+    const post = await signalPost(
+      postData.post.garden_id, 
+      postData.post.title, 
+      postData.post.content,
+      postData.post.pictures_url,
+      getJwtToken,
+      postData.post.id
+    )
+    setPostWarning(true);
+  }
   const handleRemoveComment = (id) => {
     const newComments = postData.comments.filter(
       (comment) => comment.id !== id
@@ -53,6 +67,10 @@ const PostCard = ({ id, removePost }) => {
   const handleCommentInput = (value) => {
     setNewCommentValue(value);
   };
+
+  const updateCommentWarning = () => {
+    setCommentPostWarning(true);
+  }
 
   const handleCommentCreation = async (postId) => {
     const comment = await commentPost(postId, newCommentValue, getJwtToken);
@@ -87,7 +105,7 @@ const PostCard = ({ id, removePost }) => {
     userLike && setMyLike(userLike);
 
     setIsLoading(false);
-  }, [id]);
+  }, [id, postWarning, commentPostWarning]);
 
   return isLoading ? (
     <LoadingSpinner />
@@ -144,10 +162,24 @@ const PostCard = ({ id, removePost }) => {
               <div className="col-span-1 flex items-center justify-end">
                 <IconDelete onClick={() => handleDelete(postData.post.id)} />
               </div>
+              <div className="col-span-1 flex items-center justify-end" 
+                title={
+                  postData?.post?.warning?
+                    "ce post a été signalé comme contenu indésirable, il va être passé en revue par un administrateur"
+                  :
+                    "signaler"
+                  } 
+                  onClick={warningPost}
+                  id="warning-icon"
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M0.5 16H17.5L9 1L0.5 16ZM10 14H8V12H10V14ZM10 11H8V7H10V11Z" fill={postData?.post?.warning? "#ff6b6b" : "#c9cbd2"}/>
+                </svg>
+              </div>
             </>
           ) : (
             <>
-              <div className="col-start-11 col-span-1 flex items-center justify-end">
+              <div className="col-start-1 col-span-1 flex items-center justify-end">
                 <IconComment
                   onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
                 />
@@ -161,6 +193,22 @@ const PostCard = ({ id, removePost }) => {
                 />
                 <span className="ml-2"> {postData?.likes?.length}</span>
               </div>
+              { current_user &&
+              <div className="col-span-1 flex items-center justify-end" 
+                title={
+                  postData?.post?.warning?
+                    "ce post a été signalé comme contenu indésirable, il va être passé en revue par un administrateur"
+                  :
+                    "signaler"
+                  } 
+                  onClick={warningPost}
+                  id="warning-icon"
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M0.5 16H17.5L9 1L0.5 16ZM10 14H8V12H10V14ZM10 11H8V7H10V11Z" fill={postData?.post?.warning? "#ff6b6b" : "#c9cbd2"}/>
+                </svg>
+              </div>
+              }
             </>
           )
         ) : (
@@ -178,13 +226,16 @@ const PostCard = ({ id, removePost }) => {
         <>
           {postData?.comments?.length > 0 &&
             postData.comments.map((comment) => {
-              let { id, content, user_id } = comment;
+              let { id, content, user_id, warning, post_id } = comment;
               return (
                 <Comment
                   key={`comment-${id}`}
                   id={id}
                   user_id={user_id}
                   content={content}
+                  warning={warning}
+                  post_id={post_id}
+                  updateWarning={updateCommentWarning}
                   removeComment={(value) => handleRemoveComment(value)}
                 />
               );

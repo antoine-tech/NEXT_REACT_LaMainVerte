@@ -1,4 +1,4 @@
-import { find, create, deletion } from "../sevices/Api";
+import { find, create, deletion, update } from "../sevices/Api";
 
 const getPosts = async () =>
   await find("/posts", false).then((res) => res.json());
@@ -32,6 +32,15 @@ const commentPost = async (postId, content, jwtToken) => {
   ).then((res) => res.json());
 };
 
+const signalCommentPost = async (postId, content, jwtToken, id) => {
+  const data = { post_comment: { content: content, warning: true } };
+  return await update(
+    data,
+    `/post_comments/${id}`,
+    true,
+    jwtToken
+  ).then((res) => res.json());
+}
 const deletePost = async (postId, jwt_token) =>
   await deletion("/posts/" + postId, true, jwt_token)
     .then((res) => res.text())
@@ -63,14 +72,29 @@ const createPost = async (
     true,
     jwtToken
   ).then((res) => res.json());
-};
-export {
-  getPosts,
-  getPost,
-  likePost,
-  unlikePost,
-  commentPost,
-  createPost,
-  deletePost,
-  deleteComment,
-};
+
+
+}
+
+const signalPost = async (garden_id, title, content, pictures_url, jwtToken, post_id) =>
+{
+  const data ={
+    'post':{
+      garden_id,
+      title,
+      content,
+      pictures_url,
+      warning: true,
+    }
+  }
+
+  return await update(
+    data,
+    `/posts/${post_id}`,
+    true,
+    jwtToken
+  ).then((res) => res.json());
+
+
+}
+export { getPosts, getPost, likePost, unlikePost, commentPost, createPost, signalPost, signalCommentPost, deletePost, deleteComment, };
