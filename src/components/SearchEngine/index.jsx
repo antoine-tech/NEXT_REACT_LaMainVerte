@@ -85,7 +85,7 @@ const SearchEngine = ({
       />
 
       <Button
-        text={filterDisplay ? "Cacher les filtres" : "Voir les filtres :"}
+        text={filterDisplay ? "Cacher les filtres" : "Voir les filtres"}
         classNames={[
           "h-50",
           "w-100",
