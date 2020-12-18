@@ -18,6 +18,7 @@ import Select from "../../base_components/Select/index";
 import IconLabel from "../../base_components/icons/IconLabel/index";
 import IconClimate from "../../base_components/icons/IconClimate/index";
 import IconLocation from "../../base_components/icons/IconLocation/index";
+import FormGroup from '../../FormGroup/index';
 
 const GardenEditionForm = ({
   gardenData,
@@ -41,13 +42,12 @@ const GardenEditionForm = ({
       climate_id: gardenData.garden.climate_id,
       location_id: gardenData.garden.location_id,
       picture_opacity: gardenData.garden.picture_opacity,
+      picture_url:gardenData.garden.picture_url
     },
     {
       isEmpty: "Ce champ est obligatoire",
     }
   );
-
-  console.log(gardenData);
 
   const handleDelete = async (gardenId) => {
     const confirm = window.confirm(
@@ -61,6 +61,8 @@ const GardenEditionForm = ({
   };
 
   const handleUpdate = async () => {
+
+    setIsLoading(true);
     const data = {
       garden: {
         garden_type_id: datas.garden_type_id,
@@ -70,12 +72,14 @@ const GardenEditionForm = ({
         climate_id: datas.climate_id,
         location_id: datas.location_id,
         picture_opacity: datas.picture_opacity,
+        picture_url: datas.picture_url
       },
     };
 
     const updatedGarden = await updateGarden(garden_id, data, getJwtToken);
     updateGardenData(updatedGarden);
     setIsAmmendable(false);
+    setIsLoading(false);
   };
 
   const handleOpacityValue = (value) => {
@@ -119,21 +123,23 @@ const GardenEditionForm = ({
   }, []);
 
   return (
-    <>
-      <Input
+    <div className='w-full grid grid-cols-2'>
+      <FormGroup
+        labelText="Nom du jardin"
+        colSpan='2'
         id={"name"}
         name={"name"}
         type={"text"}
-        classNames={["w-full my-2"]}
         value={datas.name}
         onInput={(obj) => setDatas({ ...datas, name: obj.value })}
       />
 
-      <Input
+      <FormGroup
+        labelText="Surface du jardin"
+        colSpan='2'
         id={"area"}
         name={"area"}
         type={"number"}
-        classNames={["w-full my-2"]}
         value={datas.area}
         onInput={(obj) => setDatas({ ...datas, area: obj.value })}
       />
@@ -141,7 +147,7 @@ const GardenEditionForm = ({
       <TextArea
         id="description"
         name="description"
-        classNames={["w-full my-2"]}
+        classNames={["col-span-2 my-4"]}
         value={datas.description}
         onInput={(obj) => setDatas({ ...datas, description: obj.value })}
       />
@@ -202,7 +208,7 @@ const GardenEditionForm = ({
           "bg-blue-dark",
           "text-white",
           "p-4",
-          "w-full",
+          "col-span-2",
           "col-span-4",
           "lg:col-span-2",
           "my-4",
@@ -218,14 +224,14 @@ const GardenEditionForm = ({
           "bg-red",
           "text-white",
           "p-4",
-          "w-full",
+          "col-span-2",
           "col-span-4",
           "lg:col-span-2",
           "my-4",
         ]}
         onclick={() => handleDelete(garden_id)}
       />
-    </>
+    </div>
   );
 };
 

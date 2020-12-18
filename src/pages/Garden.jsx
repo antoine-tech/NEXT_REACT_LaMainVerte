@@ -201,7 +201,7 @@ const Garden = () => {
             {!isAmmendable && (
               <>
                 <h1 className="col-span-4 text-center my-8">
-                  {gardenData?.garden?.name.toUpperCase()}
+                  {gardenData?.garden?.name?.toUpperCase()}
                 </h1>
 
                 <h4 className="col-span-4 text-center my-8">
