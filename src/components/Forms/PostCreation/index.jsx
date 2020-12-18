@@ -40,14 +40,14 @@ const PostCreation = ({ setGardenData, gardenData, setNewPostZoneDisplayed }) =>
   };
 
   const handleSubmit = async () => {
-    const imagesUrls = []
+    let imagesUrls = []
 
     if(imageFields[0].file){
       const imagesUrlsPromises = await imageFields.map((field) =>
         uploadToAWS(getJwtToken, field.file, "la-main-verte")
       );
 
-      const imagesUrls = await Promise.all(imagesUrlsPromises).then(
+      imagesUrls = await Promise.all(imagesUrlsPromises).then(
         (result) => result
       );
     }
