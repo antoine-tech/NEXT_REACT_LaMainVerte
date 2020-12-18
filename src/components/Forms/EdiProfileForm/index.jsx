@@ -6,9 +6,9 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 import { uploadToAWS } from "../../../sevices/Api";
 import { useDropzone } from "react-dropzone";
 import { editUserProfile, removeProfile } from "../../../requests/user";
-import Input from "../../base_components/Input";
 import Button from "../../base_components/Button/index";
-import FormGroup from '../../FormGroup/index';
+import FormGroup from "../../FormGroup/index";
+import useFormAnalysis from "../../../hooks/useFormAnalysis";
 
 const EditProfileForm = ({ current }) => {
   const [user, setUser] = useState(current);
@@ -18,6 +18,8 @@ const EditProfileForm = ({ current }) => {
   const { getJwtToken } = useJwtToken();
   const history = useHistory();
   const { setCurrentUser } = useCurrentUser();
+
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedImages) => {
@@ -31,29 +33,21 @@ const EditProfileForm = ({ current }) => {
     },
   });
 
+  const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
+    user,
+    {
+      isEmpty: "Ce champ est obligatoire",
+      passwordsAreDifferent: "Les mots de passes ne sont pas similaires",
+    }
+  );
+
   const editUserInformations = async (event) => {
     event.preventDefault();
 
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-
-    let email = !formData.get("email") ? user.email : formData.get("email");
-    let first_name = !formData.get("first_name")
-      ? user.first_name
-      : formData.get("first_name");
-    let username = !formData.get("username")
-      ? user.username
-      : formData.get("username");
-    let last_name = !formData.get("last_name")
-      ? user.last_name
-      : formData.get("last_name");
-    let password = formData.get("password");
-    let password_confirmation = formData.get("password_confirmation");
-
     if (
-      !password ||
-      !password_confirmation ||
-      password != password_confirmation
+      !datas.password ||
+      !datas.password_confirmation ||
+      datas.password !== datas.password_confirmation
     ) {
       setDisplayErrors(true);
       return;
@@ -66,15 +60,15 @@ const EditProfileForm = ({ current }) => {
     if (!avatar_url) avatar_url = user.avatar_url;
 
     const response = await editUserProfile(
-      first_name,
-      last_name,
-      username,
-      email,
+      datas.first_name,
+      datas.last_name,
+      datas.username,
+      datas.email,
       avatar_url,
-      password,
-      password_confirmation,
+      datas.password,
+      datas.password_confirmation,
       user.id,
-      Cookies.get("jwt_token")
+      getJwtToken
     ).then((res) => {
       return res.json();
     });
@@ -93,10 +87,7 @@ const EditProfileForm = ({ current }) => {
     );
 
     if (answer) {
-      const response = await removeProfile(
-        user.id,
-        Cookies.get("jwt_token")
-      ).then((res) => {
+      const response = await removeProfile(user.id, getJwtToken).then((res) => {
         setCurrentUser(null);
         Cookies.remove("jwt_token");
         history.push("/");
@@ -129,44 +120,49 @@ const EditProfileForm = ({ current }) => {
       </div>
 
       <div className="grid grid-cols-2 gap-4 w-full">
-
-      <h4 className="text-center col-span-2">Mes informations</h4>
-      {displayErrors && (
-        <p
-          className="text-red-400 text-center"
-          onClick={() => setDisplayErrors(false)}
-        >
-          - Erreur lors de la saisie des mots de passe
-        </p>
-      )}
-      {droppedImage && (
-        <p className="text-center">{`avatar uploadé: ${droppedImage[0].name}`}</p>
-      )}
+        <h4 className="text-center col-span-2">Mes informations</h4>
+        {displayErrors && (
+          <p
+            className="text-red-400 text-center"
+            onClick={() => setDisplayErrors(false)}
+          >
+            - Erreur lors de la saisie des mots de passe
+          </p>
+        )}
+        {droppedImage && (
+          <p className="text-center">{`avatar uploadé: ${droppedImage[0].name}`}</p>
+        )}
         <FormGroup
           labelText="Identifiant"
           id="username"
           type="text"
           name="username"
-          placeHolder={user.username}
+          placeHolder={datas.username}
           colSpan={2}
+          value={datas.username}
+          onInput={(value)=>handleInput(value)}
         />
 
         <FormGroup
           labelText="Prénom"
-          id="first-name"
+          id="first_name"
           type="text"
-          name="first-name"
-          placeHolder={user.first_name}
+          name="first_name"
+          placeHolder={datas.first_name}
           colSpan={2}
+          value={datas.first_name}
+          onInput={(value)=>handleInput(value)}
         />
 
         <FormGroup
           labelText="Nom"
-          id="last-name"
+          id="last_name"
           type="text"
-          name="last-name"
-          placeHolder={user.last_name}
+          name="last_name"
+          placeHolder={datas.last_name}
           colSpan={2}
+          value={datas.last_name}
+          onInput={(value)=>handleInput(value)}
         />
 
         <FormGroup
@@ -174,8 +170,10 @@ const EditProfileForm = ({ current }) => {
           id="email"
           type="email"
           name="email"
-          placeHolder={user.email}
+          placeHolder={datas.email}
           colSpan={2}
+          value={datas.email}
+          onInput={(value)=>handleInput(value)}
         />
 
         <FormGroup
@@ -185,6 +183,7 @@ const EditProfileForm = ({ current }) => {
           name="password"
           placeHolder="Mot de passe"
           colSpan={2}
+          onInput={(value)=>handleInput(value)}
         />
 
         <FormGroup
@@ -194,6 +193,7 @@ const EditProfileForm = ({ current }) => {
           name="password_confirmation"
           placeHolder="Confirmer le mot de passe"
           colSpan={2}
+          onInput={(value)=>handleInput(value)}
         />
 
         <Button
@@ -201,8 +201,9 @@ const EditProfileForm = ({ current }) => {
           onclick={deleteProfile}
           id="delete-profile"
           classNames={[
-            "btn btn-lg bg-blue-dark text-white p-2 my-2 w-full col-span-2 lg:col-span-1 text-center",
+            "btn btn-lg bg-red text-white p-2 my-2 w-full col-span-2 lg:col-span-1 text-center",
           ]}
+          
         />
 
         <Button

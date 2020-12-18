@@ -80,6 +80,21 @@
   box-shadow: var(--shadow-neomorph-1);
 }
 
+.shadow-neomorph-1:hover{
+  box-shadow: var(--shadow-neomorph-2);
+}
+
+.h-80vh {
+  height: 80vh;
+}
+
+@media (min-width: 1024px) {.lg-h-80vh{
+  height: 80vh;
+}}
+
+
+
+
 
 /* GENERAL TYPOS */
 
@@ -448,8 +463,8 @@ PROFILE */
 }
 #user-informations .avatar-img {
   border-radius: 50%;
-  height: 10rem;
-  width: 10rem;
+  height: 20rem;
+  width: 20rem;
   background: var(--red-gradient);
   padding:.5rem;
 }
