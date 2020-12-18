@@ -20,7 +20,10 @@ const Modal = ({
       setEvents={(value) => setEvents(value)}
       setModalOpen={setModalOpen}
       onClick={(event) => {
-        event.target.id === id && setModalOpen(false);
+        if (event.target.id === id) {
+          setModalOpen(false);
+          rest.setEventDisplayed && rest.setEventDisplayed(false);
+        }
       }}
       {...rest}
     />,

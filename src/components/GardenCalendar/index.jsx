@@ -15,6 +15,8 @@ const GardenCalendar = ({ events, setEvents, garden_owner }) => {
   const [newEvent, setNewEvent] = useState(null);
   const [isEventDisplayed, setEventDisplayed] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(null);
+
+  
   const handleSelectEvent = (obj, event) => {
     setCurrentEvent(obj);
     setEventDisplayed(true);
