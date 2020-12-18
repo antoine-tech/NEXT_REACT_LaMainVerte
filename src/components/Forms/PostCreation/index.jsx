@@ -40,13 +40,17 @@ const PostCreation = ({ setGardenData, gardenData, setNewPostZoneDisplayed }) =>
   };
 
   const handleSubmit = async () => {
-    const imagesUrlsPromises = await imageFields.map((field) =>
-      uploadToAWS(getJwtToken, field.file, "la-main-verte")
-    );
+    let imagesUrls = []
 
-    const imagesUrls = await Promise.all(imagesUrlsPromises).then(
-      (result) => result
-    );
+    if(imageFields[0].file){
+      const imagesUrlsPromises = await imageFields.map((field) =>
+        uploadToAWS(getJwtToken, field.file, "la-main-verte")
+      );
+
+      imagesUrls = await Promise.all(imagesUrlsPromises).then(
+        (result) => result
+      );
+    }
 
     const newPost = await createPost(
       getJwtToken,

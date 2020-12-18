@@ -436,7 +436,8 @@ input:checked + .switch {
 /*  ICONS  */
 
 .iconHeart,
-.iconComment {
+.iconComment,
+#warning-icon {
   cursor: pointer;
 }
 
@@ -605,7 +606,7 @@ div.concept-page {
 }
 div.concept-page img.background1 {
   max-width: 550px;
-  opacity: 70%;
+  opacity: .7;
   margin-left: auto;
   margin-right: auto;
 }
@@ -644,14 +645,10 @@ div.concept-page .secondary-btn:hover {
   background-color: #a5da9e;
 }
 div.concept-page #section1 img {
-  animation: 900ms ease-in-out 0s 1 slideInLeft;
   cursor: pointer;
   max-width: 800px;
   min-width: 400px;
   transition: all 200ms 100ms ease;
-}
-div.concept-page #section1 div#main-text {
-  animation: 900ms ease-in-out 0s 1 slideInRigth;
 }
 div.concept-page #section1 div#main-text h1 {
   letter-spacing: -.02em;
@@ -671,7 +668,6 @@ div.concept-page #section2 div.concept-card:hover {
   transform: translateY(-10px);
 }
 div.concept-page #section2 {
-  animation: 2s ease-in-out 0s 1 slideUp;
   padding: 4rem;
 }
 div.concept-page #section2 div.concept-card{
@@ -684,7 +680,6 @@ div.concept-page #section2 div.concept-card{
   border-top: 5px solid #b7ebbb;
 }
 div.concept-page #section3 {
-  animation: 3s ease-in 0s 1 slideInLeft;
   padding: 6rem;
   width: 100vw;
   margin: none;
@@ -716,7 +711,6 @@ div.concept-page #section3 div.section-text a:hover {
   background-color: #f88d52;
 }
 div.concept-page #section4 {
-  animation: 4s ease-in 0s 1 slideInRigth;
   padding: 6rem;
   width: 100vw;
   margin: none;
@@ -749,45 +743,4 @@ div.concept-page #section4 div.section-text a:hover {
   background-color: #72af77;
 }
 
-@keyframes slideInLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-40%);
-  }
-  50% {
-    opacity: 10%;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 100%;
-  }
-}
-
-@keyframes slideInRigth {
-  0% {
-    opacity: 0;
-    transform: translateX(40%);
-  }
-  50% {
-    opacity: 10%;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 100%;
-  }
-}
-
-@keyframes slideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(60%);
-  }
-  50% {
-    opacity: 30%;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 100%;
-  }
-}
 
