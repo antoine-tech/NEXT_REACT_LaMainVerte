@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { getClimates } from "../../../requests/climates";
 import { getLocations } from "../../../requests/locations";
-import { deleteGarden, getGardenTypes, updateGarden } from "../../../requests/gardens";
-import { update } from "../../../sevices/Api";
-import useJwtToken from '../../../hooks/useJwtToken';
+import {
+  deleteGarden,
+  getGardenTypes,
+  updateGarden,
+} from "../../../requests/gardens";
+import useJwtToken from "../../../hooks/useJwtToken";
 import useIsLoading from "../../../hooks/useIsLoading";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import TextArea from "../../base_components/TextArea/index";
@@ -14,18 +17,21 @@ import Button from "../../base_components/Button/index";
 import Select from "../../base_components/Select/index";
 import IconLabel from "../../base_components/icons/IconLabel/index";
 import IconClimate from "../../base_components/icons/IconClimate/index";
-import IconUpdate from "../../base_components/icons/IconUpdate/index";
 import IconLocation from "../../base_components/icons/IconLocation/index";
+import FormGroup from '../../FormGroup/index';
 
-
-const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIsAmmendable }) => {
-
+const GardenEditionForm = ({
+  gardenData,
+  updateGardenData,
+  setOpacityValue,
+  setIsAmmendable,
+}) => {
   const history = useHistory();
   const { garden_id } = useParams();
   const [climates, setClimates] = useState([]);
   const [gardenTypes, setGardenTypes] = useState([]);
   const [locations, setLocations] = useState([]);
-  const {getJwtToken} = useJwtToken();
+  const { getJwtToken } = useJwtToken();
   const { isLoading, setIsLoading } = useIsLoading();
   const { datas, setDatas} = useFormAnalysis(
     {
@@ -36,6 +42,7 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
       climate_id: gardenData.garden.climate_id,
       location_id: gardenData.garden.location_id,
       picture_opacity: gardenData.garden.picture_opacity,
+      picture_url:gardenData.garden.picture_url
     },
     {
       isEmpty: "Ce champ est obligatoire",
@@ -44,12 +51,16 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
 
   const [updatedDatas, setUpdatedDatas] = useState(datas);
 
+  const handleDelete = async (gardenId) => {
+    const confirm = window.confirm(
+      "Voulez vous vraiment supprimer ce jardin ?"
+    );
 
-  const handleDelete = async(gardenId) =>
-  {
+    if (confirm) {
       const response = await deleteGarden(gardenId, getJwtToken);
-      history.push('/news_feed');
-  }
+      history.push("/news_feed");
+    }
+  };
 
   const handleUpdate = async () => {
     let garden_type_id;
@@ -102,7 +113,9 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
       picture_opacity = datas.picture_opacity;
     }
 
+    setIsLoading(true);
     const data = {
+<<<<<<< HEAD
         garden: {
           garden_type_id: garden_type_id,
           name: name,
@@ -113,18 +126,35 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
           picture_opacity: picture_opacity
         },
       };
+=======
+      garden: {
+        garden_type_id: datas.garden_type_id,
+        name: datas.name,
+        area: parseInt(datas.area),
+        description: datas.description,
+        climate_id: datas.climate_id,
+        location_id: datas.location_id,
+        picture_opacity: datas.picture_opacity,
+        picture_url: datas.picture_url
+      },
+    };
+>>>>>>> cd5937c07bf3984e8156d000100014061d543650
 
     console.log(data)
 
     const updatedGarden = await updateGarden(garden_id, data, getJwtToken);
-    updateGardenData(updatedGarden)
+    updateGardenData(updatedGarden);
     setIsAmmendable(false);
-    
+    setIsLoading(false);
   };
 
   const handleOpacityValue = (value) => {
     setOpacityValue(1 - value / 100);
+<<<<<<< HEAD
     setUpdatedDatas({ ...datas, picture_opacity: 1 - value / 100 })
+=======
+    setDatas({ ...datas, picture_opacity: 1 - value / 100 });
+>>>>>>> cd5937c07bf3984e8156d000100014061d543650
   };
 
   useEffect(() => {
@@ -163,31 +193,45 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
   }, []);
 
   return (
-    <>
-      <Input
+    <div className='w-full grid grid-cols-2'>
+      <FormGroup
+        labelText="Nom du jardin"
+        colSpan='2'
         id={"name"}
         name={"name"}
         type={"text"}
+<<<<<<< HEAD
         placeHolder={"Un ptit nom sympa pour votre jardin ?"}
         classNames={["w-full my-2"]}
         value={datas?.garden?.name}
         onInput={(obj) => setUpdatedDatas({ ...datas, name: obj.value })}
+=======
+        value={datas.name}
+        onInput={(obj) => setDatas({ ...datas, name: obj.value })}
+>>>>>>> cd5937c07bf3984e8156d000100014061d543650
       />
 
-      <Input
+      <FormGroup
+        labelText="Surface du jardin"
+        colSpan='2'
         id={"area"}
         name={"area"}
         type={"number"}
+<<<<<<< HEAD
         placeHolder={"Quelle est la surface de votre jardin ?"}
         classNames={["w-full my-2"]}
         value={datas?.garden?.area}
         onInput={(obj) => setUpdatedDatas({ ...datas, area: obj.value })}
+=======
+        value={datas.area}
+        onInput={(obj) => setDatas({ ...datas, area: obj.value })}
+>>>>>>> cd5937c07bf3984e8156d000100014061d543650
       />
 
       <TextArea
         id="description"
         name="description"
-        classNames={["w-full my-2"]}
+        classNames={["col-span-2 my-4"]}
         value={datas.description}
         onInput={(obj) => setUpdatedDatas({ ...datas, description: obj.value })}
       />
@@ -248,14 +292,13 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
           "bg-blue-dark",
           "text-white",
           "p-4",
-          "w-full",
+          "col-span-2",
           "col-span-4",
           "lg:col-span-2",
           "my-4",
         ]}
         onclick={() => handleUpdate(garden_id)}
       />
-
 
       <Button
         text="SUPPRIMER"
@@ -265,14 +308,14 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
           "bg-red",
           "text-white",
           "p-4",
-          "w-full",
+          "col-span-2",
           "col-span-4",
           "lg:col-span-2",
           "my-4",
         ]}
         onclick={() => handleDelete(garden_id)}
       />
-    </>
+    </div>
   );
 };
 
