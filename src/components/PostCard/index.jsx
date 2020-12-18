@@ -42,7 +42,6 @@ const PostCard = ({ id, removePost }) => {
 		history.push("/garden/" + garden_id);
 	};
 
-<<<<<<< HEAD
 	const warningPost = async () => {
 		const post = await signalPost(
 			postData.post.garden_id,
@@ -55,36 +54,17 @@ const PostCard = ({ id, removePost }) => {
 		setPostWarning(true);
 	};
 	const handleRemoveComment = (id) => {
-		const newComments = postData.comments.filter(
-			(comment) => comment.id !== id,
+		const confirm = window.confirm(
+			"Souhaitez vous vraiment supprimer la ressource ?",
 		);
-		setPostData({ ...postData, comments: newComments });
-	};
-=======
-  const warningPost = async () => {
-    const post = await signalPost(
-      postData.post.garden_id,
-      postData.post.title,
-      postData.post.content,
-      postData.post.pictures_url,
-      getJwtToken,
-      postData.post.id
-    );
-    setPostWarning(true);
-  };
-  const handleRemoveComment = (id) => {
-    const confirm = window.confirm(
-      "Souhaitez vous vraiment supprimer la ressource ?"
-    );
 
-    if (confirm) {
-      const newComments = postData.comments.filter(
-        (comment) => comment.id !== id
-      );
-      setPostData({ ...postData, comments: newComments });
-    }
-  };
->>>>>>> 5cefde5aafc9d6801724b03e8c23415aace070cb
+		if (confirm) {
+			const newComments = postData.comments.filter(
+				(comment) => comment.id !== id,
+			);
+			setPostData({ ...postData, comments: newComments });
+		}
+	};
 
 	const handleDelete = async (postId) => {
 		const response = await deletePost(postId, getJwtToken);
