@@ -13,7 +13,7 @@
 ## __La Main Verte__ is a french social plateform dedicated to rural and urban farming
 
 Go check it: __[La Main Verte](https://la-main-verte.herokuapp.com/)__   
-The API behind is also on [github](https://github.com/AmauryDBZ/NEXT_API_LaMainVerte).
+The API behind this application is also on [github](https://github.com/AmauryDBZ/NEXT_API_LaMainVerte).
 <details>
 <summary>Example</summary>
 
