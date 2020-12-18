@@ -6,15 +6,19 @@ import Modal from "../Modal";
 import EventCreationForm from "../Forms/EventCreationForm/index";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./index.scss";
-
+import EventDisplay from "../EventDisplay";
 const localizer = momentLocalizer(moment);
 
 const GardenCalendar = ({ events, setEvents, garden_owner }) => {
   const { current_user } = useCurrentUser();
   const [isModalOpen, setModalOpen] = useState(false);
   const [newEvent, setNewEvent] = useState(null);
-  const handleSelectEvent = (event) => {
-    //console.log(event);
+  const [isEventDisplayed, setEventDisplayed] = useState(false);
+  const [currentEvent, setCurrentEvent] = useState(null);
+  const handleSelectEvent = (obj, event) => {
+    setCurrentEvent(obj);
+    setEventDisplayed(true);
+    setModalOpen(true);
   };
 
   const handleSelectDates = (event) => {
@@ -45,8 +49,8 @@ const GardenCalendar = ({ events, setEvents, garden_owner }) => {
           startAccessor="start"
           endAccessor="end"
           style={{ height: "85vh" }}
-          onSelectEvent={(event) => {
-            handleSelectEvent(event);
+          onSelectEvent={(obj, event) => {
+            handleSelectEvent(obj, event);
           }}
           onSelectSlot={(event) => handleSelectDates(event, current_user)}
           selectable
@@ -54,17 +58,26 @@ const GardenCalendar = ({ events, setEvents, garden_owner }) => {
         />
       )}
 
-      {isModalOpen && (
-        <Modal
-          id="modal"
-          parentNodeId="calendar-container"
-          component={EventCreationForm}
-          setModalOpen={setModalOpen}
-          data={newEvent}
-          events={events}
-          setEvents={(value) => setEvents(value)}
-        />
-      )}
+      {isModalOpen &&
+        (!isEventDisplayed ? (
+          <Modal
+            id="modal"
+            parentNodeId="calendar-container"
+            component={EventCreationForm}
+            setModalOpen={setModalOpen}
+            data={newEvent}
+            events={events}
+            setEvents={(value) => setEvents(value)}
+          />
+        ) : (
+          <Modal
+            id="modal"
+            parentNodeId="calendar-container"
+            component={EventDisplay}
+            setModalOpen={setModalOpen}
+            data={currentEvent}
+          />
+        ))}
     </div>
   );
 };
