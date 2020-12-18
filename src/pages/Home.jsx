@@ -16,7 +16,6 @@ import empty_result from "../assets/backgrounds/empty_result.svg";
 import LoadingAnimation from "../components/loaders/LoadingAnimation/index";
 import Button from "../components/base_components/Button/index";
 
-
 const Home = () => {
   const history = useHistory();
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,11 +63,12 @@ const Home = () => {
   }, [current_user]);
 
   const handleClickLoadMoreButton = async () => {
-    if (current_user)
-    {const userData = await getUserDatas(getJwtToken, currentPage + 1);
-    setDisplayedGardens([...displayedGardens, ...userData.follows]);
-    setCurrentPage(currentPage + 1);}else{
-      history.push('/login')
+    if (current_user) {
+      const userData = await getUserDatas(getJwtToken, currentPage + 1);
+      setDisplayedGardens([...displayedGardens, ...userData.follows]);
+      setCurrentPage(currentPage + 1);
+    } else {
+      history.push("/login");
     }
   };
 
@@ -106,10 +106,7 @@ const Home = () => {
             </div>
           )}
         </div>
-        <div
-          className="flex flex-col col-span-12 lg:col-span-6 px-4"
-          id="wall"
-        >
+        <div className="flex flex-col col-span-12 lg:col-span-6 px-4" id="wall">
           <SearchEngine
             getSearchResult={(gardens) => setDisplayedGardens(gardens)}
             filterDisplay={areFiltersDisplayed}
@@ -177,22 +174,28 @@ const Home = () => {
             );
           })}
 
-        
-            <Button
-              classNames={[
-                "btn btn-md bg-red mb-4 text-white text-center p-8 w-5/6 align-self-center justify-self-center mx-auto",
-              ]}
-              text="VOIR PLUS DE JARDINS"
-              onclick={handleClickLoadMoreButton}
-            />
-      
+          <Button
+            classNames={[
+              "btn btn-md bg-red mb-4 text-white text-center p-8 w-5/6 align-self-center justify-self-center mx-auto",
+            ]}
+            text="VOIR PLUS DE JARDINS"
+            onclick={handleClickLoadMoreButton}
+          />
         </div>
         <div className="hidden lg:block lg:col-span-4">
           <h4 className="mb-4 text-center">Les derniers posts</h4>
           <div className="h-screen radius bg-light-brown shadow-neomorph p-2  overflow-auto">
             {lastPosts?.map((lastPost) => {
               let { id } = lastPost;
-              return <PostCard key={`post-${id}`} id={id} />;
+              return (
+                <PostCard
+                  key={`post-${id}`}
+                  id={id}
+                  removePost={(postId) =>
+                    setLastPosts(lastPosts.filter((post) => post.id !== postId))
+                  }
+                />
+              );
             })}
           </div>
 
