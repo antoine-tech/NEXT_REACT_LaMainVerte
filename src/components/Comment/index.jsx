@@ -55,6 +55,19 @@ const Comment = ({ id, content, user_id, warning, post_Id, updateWarning, remove
         {content}
       </p>
 
+      { current_user &&
+      <div
+        id="warning-icon"
+        onClick={warningPostComment}
+        title={warning? "ce post a été signalé comme contenu indésirable, il va être passé en revue par un administrateur" : "signaler"}
+        className="col-start-12 col-span-1 flex items-center justify-end"
+      >
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fillRule="evenodd" clipRule="evenodd" d="M0.5 16H17.5L9 1L0.5 16ZM10 14H8V12H10V14ZM10 11H8V7H10V11Z" fill={warning? "#ff6b6b" : "#c9cbd2"}/>
+        </svg>
+      </div> 
+      }
+
       {author?.user?.id === current_user?.id && (
         <div className="col-span-1 col-start-12 flex items-center justify-end">
           <IconDelete onClick={()=>handleDelete(id)} />
