@@ -37,15 +37,17 @@ const GardenEditionForm = ({
       name: gardenData.garden.name,
       description: gardenData.garden.description,
       area: gardenData.garden.area,
-      garden_type_id: "",
-      climate_id: "",
-      location_id: "",
+      garden_type_id: gardenData.garden.garden_type_id,
+      climate_id: gardenData.garden.climate_id,
+      location_id: gardenData.garden.location_id,
       picture_opacity: gardenData.garden.picture_opacity,
     },
     {
       isEmpty: "Ce champ est obligatoire",
     }
   );
+
+  console.log(gardenData);
 
   const handleDelete = async (gardenId) => {
     const confirm = window.confirm(
@@ -122,9 +124,8 @@ const GardenEditionForm = ({
         id={"name"}
         name={"name"}
         type={"text"}
-        placeHolder={"Un ptit nom sympa pour votre jardin ?"}
         classNames={["w-full my-2"]}
-        value={datas?.garden?.name}
+        value={datas.name}
         onInput={(obj) => setDatas({ ...datas, name: obj.value })}
       />
 
@@ -132,9 +133,8 @@ const GardenEditionForm = ({
         id={"area"}
         name={"area"}
         type={"number"}
-        placeHolder={"Quelle est la surface de votre jardin ?"}
         classNames={["w-full my-2"]}
-        value={datas?.garden?.area}
+        value={datas.area}
         onInput={(obj) => setDatas({ ...datas, area: obj.value })}
       />
 
