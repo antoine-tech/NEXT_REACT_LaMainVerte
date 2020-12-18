@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getEvents, getGarden } from "../requests/gardens";
+import { getGarden } from "../requests/gardens";
 import GardenCalendar from "../components/GardenCalendar";
 
 const GardenHistory = () => {
@@ -20,10 +20,6 @@ const GardenHistory = () => {
 
     fecthAndSetGardenData();
   }, []);
-
-  useEffect(() => {
-    console.log(gardenData);
-  }, [gardenData]);
 
   return (
     <GardenCalendar
