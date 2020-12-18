@@ -54,10 +54,16 @@ const PostCard = ({ id, removePost }) => {
     setPostWarning(true);
   };
   const handleRemoveComment = (id) => {
-    const newComments = postData.comments.filter(
-      (comment) => comment.id !== id
+    const confirm = window.confirm(
+      "Souhaitez vous vraiment supprimer la ressource ?"
     );
-    setPostData({ ...postData, comments: newComments });
+
+    if (confirm) {
+      const newComments = postData.comments.filter(
+        (comment) => comment.id !== id
+      );
+      setPostData({ ...postData, comments: newComments });
+    }
   };
 
   const handleDelete = async (postId) => {

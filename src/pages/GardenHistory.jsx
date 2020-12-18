@@ -13,6 +13,11 @@ const GardenHistory = () => {
     setGardenData({ ...gardenData, events: newEvents });
   };
 
+  const handleDeletedEvent = (eventId) => {
+    const newEvents = gardenData.events.filter((event) => event.id !== eventId);
+    setGardenData({ ...gardenData, events: newEvents });
+  };
+
   useEffect(() => {
     const fecthAndSetGardenData = async () => {
       const fetchedGarden = await getGarden(garden_id);
@@ -20,14 +25,15 @@ const GardenHistory = () => {
     };
 
     fecthAndSetGardenData();
-  }, []);
+  }, [garden_id]);
 
-  if (gardenData && !gardenData.hasOwnProperty('status')) {
+  if (gardenData && !gardenData.hasOwnProperty("status")) {
     return (
       <GardenCalendar
         garden_owner={gardenData?.user}
         events={gardenData?.events}
         setEvents={(value) => handleNewEvent(value)}
+        removeEvent={(value) => handleDeletedEvent(value)}
       />
     );
   } else {

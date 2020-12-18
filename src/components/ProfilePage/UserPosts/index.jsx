@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import PostCard from "../../../components/PostCard";
 import { findUserDatas } from "../../../requests/user";
 import { useSelector } from "react-redux";
+import usePost from '../../../hooks/usePosts';
 
 const UserPosts = ({ user }) => {
-  const [posts, setPosts] = useState([]);
   const [current_user, setCurrentUser] = useState(
     useSelector((state) => state.current_user)
   );
+  const { posts, handleRemovePost, setPosts } = usePost();
 
   useEffect(() => {
     const fetchPageDatas = async () => {
@@ -42,6 +43,7 @@ const UserPosts = ({ user }) => {
             created_at={post.created_at}
             updated_at={post.updated_at}
             likes={post.likes}
+            removePost={(postId)=>handleRemovePost(postId)}
           />
         ))}
       </div>

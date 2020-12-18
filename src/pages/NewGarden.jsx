@@ -14,7 +14,7 @@ const NewGarden = () => {
         />
       </div>
 
-      <div className="flex flex-col justify-center col-span-10 md:col-span-5 lg:col-span-4 min-h-80vh overflow-y-auto relative px-4">
+      <div className="flex flex-col items-center justify-center col-span-10 md:col-span-5 lg:col-span-4 min-h-80vh overflow-y-auto relative px-4">
         <GardenForm
           droppedImage={droppedImage}
         />
