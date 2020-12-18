@@ -57,7 +57,7 @@ const Comment = ({
       <p id={id} className="col-span-12 flex">
         {content}
       </p>
-      {author?.user?.id === current_user.id ? (
+      {current_user && author?.user?.id === current_user.id ? (
         <div className="col-span-2 col-start-11 flex items-center justify-between">
           <IconDelete onClick={() => handleDelete(id)}/>
           <IconWarning
