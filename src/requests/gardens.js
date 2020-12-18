@@ -130,6 +130,12 @@ const getEvents = async (garden_id) => {
   return events;
 };
 
+const deleteGarden = async (gardenId, jwt_token) =>
+  await deletion("/gardens/" + gardenId, true, jwt_token)
+    .then((res) => res.text())
+    .catch((error) => error);
+
+
 const search = async (ressource, params) => {
   const searchResults = await find(`/${ressource}?${params}`).then((res) =>
     res.json()
@@ -188,5 +194,6 @@ export {
   createGarden,
   search,
   updateGarden,
-  getFollowedGardenAndRelatedData
+  getFollowedGardenAndRelatedData,
+  deleteGarden
 };

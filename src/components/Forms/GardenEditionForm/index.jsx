@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { getClimates } from "../../../requests/climates";
 import { getLocations } from "../../../requests/locations";
-import { getGardenTypes, updateGarden } from "../../../requests/gardens";
+import { deleteGarden, getGardenTypes, updateGarden } from "../../../requests/gardens";
+import { update } from "../../../sevices/Api";
+import useJwtToken from '../../../hooks/useJwtToken';
 import useIsLoading from "../../../hooks/useIsLoading";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import TextArea from "../../base_components/TextArea/index";
@@ -14,10 +16,11 @@ import IconLabel from "../../base_components/icons/IconLabel/index";
 import IconClimate from "../../base_components/icons/IconClimate/index";
 import IconUpdate from "../../base_components/icons/IconUpdate/index";
 import IconLocation from "../../base_components/icons/IconLocation/index";
-import { update } from "../../../sevices/Api";
-import useJwtToken from '../../../hooks/useJwtToken';
+
 
 const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIsAmmendable }) => {
+
+  const history = useHistory();
   const { garden_id } = useParams();
   const [climates, setClimates] = useState([]);
   const [gardenTypes, setGardenTypes] = useState([]);
@@ -38,6 +41,13 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
       isEmpty: "Ce champ est obligatoire",
     }
   );
+
+
+  const handleDelete = async(gardenId) =>
+  {
+      const response = await deleteGarden(gardenId, getJwtToken);
+      history.push('/news_feed');
+  }
 
   const handleUpdate = async () => {
 
@@ -191,6 +201,23 @@ const GardenEditionForm = ({gardenData, updateGardenData, setOpacityValue, setIs
           "my-4",
         ]}
         onclick={() => handleUpdate(garden_id)}
+      />
+
+
+      <Button
+        text="SUPPRIMER"
+        classNames={[
+          "btn",
+          "btn-lg",
+          "bg-red",
+          "text-white",
+          "p-4",
+          "w-full",
+          "col-span-4",
+          "lg:col-span-2",
+          "my-4",
+        ]}
+        onclick={() => handleDelete(garden_id)}
       />
     </>
   );

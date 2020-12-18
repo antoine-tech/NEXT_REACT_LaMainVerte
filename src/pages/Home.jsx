@@ -107,7 +107,7 @@ const Home = () => {
           )}
         </div>
         <div
-          className="flex flex-col justify-center col-span-12 lg:col-span-6 px-4"
+          className="flex flex-col col-span-12 lg:col-span-6 px-4"
           id="wall"
         >
           <SearchEngine

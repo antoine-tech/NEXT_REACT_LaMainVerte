@@ -6,6 +6,7 @@ import {
   likePost,
   unlikePost,
   commentPost,
+  deletePost,
 } from "../../requests/posts";
 import useCurrentUser from "../../hooks/useCurrentUser";
 import useJwtToken from "../../hooks/useJwtToken";
@@ -19,8 +20,9 @@ import Button from "../base_components/Button/index";
 import Avatar from "../Avatar/index";
 import "./index.scss";
 import PostSlider from "../PostSlider";
+import IconDelete from "../base_components/icons/IconDelete";
 
-const PostCard = ({ id }) => {
+const PostCard = ({ id, removePost }) => {
   const [postData, setPostData] = useState([]);
   const [myLike, setMyLike] = useState(null);
   const [newCommentValue, setNewCommentValue] = useState(
@@ -34,6 +36,18 @@ const PostCard = ({ id }) => {
 
   const handleClick = (garden_id) => {
     history.push("/garden/" + garden_id);
+  };
+
+  const handleRemoveComment = (id) => {
+    const newComments = postData.comments.filter(
+      (comment) => comment.id !== id
+    );
+    setPostData({ ...postData, comments: newComments });
+  };
+
+  const handleDelete = async (postId) => {
+    const response = await deletePost(postId, getJwtToken);
+    removePost(postId)
   };
 
   const handleCommentInput = (value) => {
@@ -81,7 +95,10 @@ const PostCard = ({ id }) => {
     <>
       <div className="post-card grid grid-cols-12 p-4 my-4" id={`post-${id}`}>
         {postData?.post?.pictures_url.length > 0 && (
-            <PostSlider classNames={['col-span-12', 'p-0']} sliderData={postData.post.pictures_url} />
+          <PostSlider
+            classNames={["col-span-12", "p-0"]}
+            sliderData={postData.post.pictures_url}
+          />
         )}
 
         <div className="flex col-span-2 items-center">
@@ -107,22 +124,45 @@ const PostCard = ({ id }) => {
         </div>
 
         {current_user ? (
-          <>
-            <div className="col-start-11 col-span-1 flex items-center justify-end">
-              <IconComment
-                onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
-              />
-              <span className="mx-2"> {postData?.comments?.length}</span>
-            </div>
-            <div className="col-span-1 flex items-center justify-end">
-              <IconHeart
-                id={id}
-                fillColor={myLike ? "#ff6b6b" : "#3A405A"}
-                onclick={(value) => handleLike(value)}
-              />
-              <span className="ml-2"> {postData?.likes?.length}</span>
-            </div>
-          </>
+          current_user.id === postData?.user?.id ? (
+            <>
+              <div className="col-start-10 col-span-1 flex items-center justify-end">
+                <IconComment
+                  onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
+                />
+                <span className="mx-2"> {postData?.comments?.length}</span>
+              </div>
+              <div className="col-span-1 flex items-center justify-end">
+                <IconHeart
+                  id={id}
+                  fillColor={myLike ? "#ff6b6b" : "#3A405A"}
+                  onclick={(value) => handleLike(value)}
+                />
+                <span className="ml-2"> {postData?.likes?.length}</span>
+              </div>
+
+              <div className="col-span-1 flex items-center justify-end">
+                <IconDelete onClick={() => handleDelete(postData.post.id)} />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="col-start-11 col-span-1 flex items-center justify-end">
+                <IconComment
+                  onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
+                />
+                <span className="mx-2"> {postData?.comments?.length}</span>
+              </div>
+              <div className="col-span-1 flex items-center justify-end">
+                <IconHeart
+                  id={id}
+                  fillColor={myLike ? "#ff6b6b" : "#3A405A"}
+                  onclick={(value) => handleLike(value)}
+                />
+                <span className="ml-2"> {postData?.likes?.length}</span>
+              </div>
+            </>
+          )
         ) : (
           <>
             <div className="col-start-12 col-span-1 flex items-center justify-end">
@@ -145,6 +185,7 @@ const PostCard = ({ id }) => {
                   id={id}
                   user_id={user_id}
                   content={content}
+                  removeComment={(value) => handleRemoveComment(value)}
                 />
               );
             })}

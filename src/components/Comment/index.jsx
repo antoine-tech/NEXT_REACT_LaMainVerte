@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { findUserDatas } from "../../requests/user";
+import { deleteComment } from "../../requests/posts";
 import useIsLoading from "../../hooks/useIsLoading";
-import LoadingSpinner from '../loaders/LoadingSpinner/index';
+import LoadingSpinner from "../loaders/LoadingSpinner/index";
+import useJwtToken from "../../hooks/useJwtToken";
+import useCurrentUser from "../../hooks/useCurrentUser";
+import IconDelete from "../base_components/icons/IconDelete";
 
-const Comment = ({ id, content, user_id }) => {
+const Comment = ({ id, content, user_id, removeComment }) => {
+  const { current_user } = useCurrentUser();
+  const { getJwtToken } = useJwtToken();
   const { isLoading, setIsLoading } = useIsLoading();
   const [author, setAuthor] = useState(null);
+
+  const handleDelete = async (commentId) => {
+    const response = await deleteComment(commentId, getJwtToken);
+    removeComment(commentId)
+  };
 
   useEffect(() => {
     const fetchAuthorData = async () => {
@@ -31,6 +42,12 @@ const Comment = ({ id, content, user_id }) => {
       <p id={id} className="col-span-12 flex">
         {content}
       </p>
+
+      {author?.user?.id === current_user.id && (
+        <div className="col-span-1 col-start-12 flex items-center justify-end">
+          <IconDelete onClick={()=>handleDelete(id)} />
+        </div>
+      )}
     </div>
   );
 };
