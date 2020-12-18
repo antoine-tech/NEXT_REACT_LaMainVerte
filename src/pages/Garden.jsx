@@ -214,7 +214,7 @@ const Garden = () => {
                 <GardenEditionForm
                   gardenData={gardenData}
                   updateGardenData={(value) =>
-                    setGardenData({ ...gardenData, garden: value })
+                    setGardenData(value)
                   }
                   setOpacityValue={(value) => handleSetOpacityValue(value)}
                   setIsAmmendable={(value) => setIsAmmendable(value)}
