@@ -65,6 +65,11 @@
   }
 }
 
+/* REMOVE OUTLINE ON FOCUS */
+button:focus, input:focus{
+  outline: none;
+}
+
 
 // GENERAL UTILITIES
 
