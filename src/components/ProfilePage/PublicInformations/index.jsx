@@ -6,7 +6,7 @@ const PublicInformations = ({other_user}) => {
     const [avatar_url, setAvatarUrl] = useState(user.avatar_url);
 
     return (
-        <section id="edit-user-informations">
+        <section id="edit-user-informations" className="bg-white radius shadow-neomorph-1 p-4 overflow-auto flex flex-col h-full">
 
             <div className="img justify-center" id="user-avatar">
                 <img src=
