@@ -71,11 +71,15 @@ const Garden = () => {
   }, [gardenData, current_user]);
 
   const handleRemovePost = (postId) => {
-    const newGardenData = {
-      ...gardenData,
-      posts: gardenData.posts.filter((post) => post.id !== postId),
-    };
-    setGardenData(newGardenData);
+    const confirm = window.confirm("Voulez vous vraiment supprimer ce post ?");
+
+    if (confirm) {
+      const newGardenData = {
+        ...gardenData,
+        posts: gardenData.posts.filter((post) => post.id !== postId),
+      };
+      setGardenData(newGardenData);
+    }
   };
 
   const handleSetOpacityValue = (value) => {
@@ -197,7 +201,7 @@ const Garden = () => {
             {!isAmmendable && (
               <>
                 <h1 className="col-span-4 text-center my-8">
-                  {gardenData?.garden?.name.toUpperCase()}
+                  {gardenData?.garden?.name?.toUpperCase()}
                 </h1>
 
                 <h4 className="col-span-4 text-center my-8">
@@ -218,6 +222,8 @@ const Garden = () => {
               ) : (
                 <>
                   <CardIndicator
+                    classNames={["border-red"]}
+                    title="Voir le calendrier de la culture"
                     icon={IconUpdate}
                     dataText={
                       <Moment
@@ -368,9 +374,7 @@ const Garden = () => {
       </section>
     );
   } else {
-    return (
-      <Error404/>
-    );
+    return <Error404 />;
   }
 };
 
