@@ -1,16 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
+import { findUserDatas } from "../../requests/user";
 import useIsLoading from "../../hooks/useIsLoading";
 import LoadingSpinner from "../loaders/LoadingSpinner/index";
 import "./index.scss";
-import Avatar from '../Avatar/index';
+import Avatar from "../Avatar/index";
 
-const TestimonyCard = ({ id, content, user, created_at, updated_at }) => {
+const TestimonyCard = ({ id, content, user_id, created_at, updated_at }) => {
   const { isLoading, setIsLoading } = useIsLoading();
+  const [author, setAuthor] = useState(null);
 
   useEffect(() => {
+    const fetchAndSetAuthor = async () => {
+      const {user} = await findUserDatas(user_id);
+      setAuthor(user);
+    };
+    fetchAndSetAuthor();
     setIsLoading(false);
-  }, [id]);
+  }, [user_id]);
   return isLoading ? (
     <LoadingSpinner />
   ) : (
@@ -19,7 +26,11 @@ const TestimonyCard = ({ id, content, user, created_at, updated_at }) => {
       id={`testimony-${id}`}
     >
       <div className="flex col-span-2 items-center">
-        <Avatar type={'half'} imageSrc={user?.avatar_url} userName={user?.username} />
+        <Avatar
+          type={"half"}
+          imageSrc={author?.avatar_url}
+          userName={author?.username}
+        />
       </div>
 
       <h5 className="flex col-start-10 col-span-3 items-center">

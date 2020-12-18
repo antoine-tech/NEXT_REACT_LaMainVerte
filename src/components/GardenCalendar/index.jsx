@@ -76,6 +76,7 @@ const GardenCalendar = ({ events, setEvents, garden_owner }) => {
             component={EventDisplay}
             setModalOpen={setModalOpen}
             data={currentEvent}
+            setEventDisplayed={setEventDisplayed}
           />
         ))}
     </div>

@@ -10,6 +10,7 @@ const Modal = ({
   setModalOpen,
   parentNodeId,
   component: Component,
+  ...rest
 }) => {
   return ReactDOM.createPortal(
     <Component
@@ -21,6 +22,7 @@ const Modal = ({
       onClick={(event) => {
         event.target.id === id && setModalOpen(false);
       }}
+      {...rest}
     />,
     document.getElementById(parentNodeId)
   );
