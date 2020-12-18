@@ -67,7 +67,7 @@ const Comment = ({ id, content, user_id, warning, post_Id, updateWarning, remove
         </svg>
       </div> 
       }
-      {author?.user?.id === current_user.id && (
+      {current_user && author?.user?.id === current_user.id && (
         <div className="col-span-1 col-start-12 flex items-center justify-end">
           <IconDelete onClick={()=>handleDelete(id)} />
         </div>

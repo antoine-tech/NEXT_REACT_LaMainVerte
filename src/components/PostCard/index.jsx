@@ -179,7 +179,7 @@ const PostCard = ({ id, removePost }) => {
             </>
           ) : (
             <>
-              <div className="col-start-10 col-span-1 flex items-center justify-end">
+              <div className="col-start-1 col-span-1 flex items-center justify-end">
                 <IconComment
                   onclick={() => setAreCommentDiplayed(!areCommentDisplayed)}
                 />
