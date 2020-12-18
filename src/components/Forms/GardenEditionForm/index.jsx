@@ -4,6 +4,7 @@ import { getClimates } from "../../../requests/climates";
 import { getLocations } from "../../../requests/locations";
 import {
   deleteGarden,
+  getGarden,
   getGardenTypes,
   updateGarden,
 } from "../../../requests/gardens";
@@ -126,10 +127,9 @@ const GardenEditionForm = ({
         },
       };
 
-    console.log(data)
-
     const updatedGarden = await updateGarden(garden_id, data, getJwtToken);
-    updateGardenData(updatedGarden);
+    const garden = await getGarden(garden_id);
+    updateGardenData(garden);
     setIsAmmendable(false);
     setIsLoading(false);
   };
@@ -184,7 +184,7 @@ const GardenEditionForm = ({
         type={"text"}
         placeHolder={"Un ptit nom sympa pour votre jardin ?"}
         classNames={["w-full my-2"]}
-        value={datas?.garden?.name}
+        value={updatedDatas.name}
         onInput={(obj) => setUpdatedDatas({ ...datas, name: obj.value })}
       />
 
@@ -196,7 +196,7 @@ const GardenEditionForm = ({
         type={"number"}
         placeHolder={"Quelle est la surface de votre jardin ?"}
         classNames={["w-full my-2"]}
-        value={datas?.garden?.area}
+        value={updatedDatas.area}
         onInput={(obj) => setUpdatedDatas({ ...datas, area: obj.value })}
       />
 
@@ -204,7 +204,7 @@ const GardenEditionForm = ({
         id="description"
         name="description"
         classNames={["col-span-2 my-4"]}
-        value={datas.description}
+        value={updatedDatas.description}
         onInput={(obj) => setUpdatedDatas({ ...datas, description: obj.value })}
       />
 

@@ -21,7 +21,7 @@ const AvatarSlider = ({ sliderData }) => {
         {sliderData?.map((user) => (
           <Link to={`/user/${user.id}`} key={`avatar-${user.id}`}>
             <div>
-              <Avatar imageSrc={user?.avatar_url} />
+              <Avatar imageSrc={user?.avatar_url} title={user.username} />
             </div>
           </Link>
         ))}

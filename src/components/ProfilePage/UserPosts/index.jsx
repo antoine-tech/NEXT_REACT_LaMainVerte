@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import PostCard from "../../../components/PostCard";
 import { findUserDatas } from "../../../requests/user";
 import { useSelector } from "react-redux";
-import usePost from '../../../hooks/usePosts';
+import usePost from "../../../hooks/usePosts";
+import empty_result from "../../../assets/backgrounds/empty_result.svg";
 
 const UserPosts = ({ user }) => {
   const [current_user, setCurrentUser] = useState(
@@ -32,20 +33,34 @@ const UserPosts = ({ user }) => {
         )}
       </div>
 
-      <div className={posts?.length > 3 ? "posts overflow-y-scroll" : "posts"}>
-        {posts?.map((post) => (
-          <PostCard
-            key={`post-${post.id}`}
-            id={post.id}
-            title={post.title}
-            content={post.content}
-            garden_id={post.garden_id}
-            created_at={post.created_at}
-            updated_at={post.updated_at}
-            likes={post.likes}
-            removePost={(postId)=>handleRemovePost(postId)}
-          />
-        ))}
+      <div
+        className={posts?.length > 1 ? "gardens overflow-y-scroll" : "gardens"}
+      >
+        {posts.length > 0 ? (
+          posts?.map((post) => (
+            <PostCard
+              key={`post-${post.id}`}
+              id={post.id}
+              title={post.title}
+              content={post.content}
+              garden_id={post.garden_id}
+              created_at={post.created_at}
+              updated_at={post.updated_at}
+              likes={post.likes}
+              removePost={(postId) => handleRemovePost(postId)}
+            />
+          ))
+        ) : (
+          <div className="flex  flex-col items-center w-full justify-center my-10">
+            <img
+              src={empty_result}
+              className="h-96 w-96"
+              alt="no result found"
+            />
+
+            <h4 className="my-4">Rien pour le moment ...</h4>
+          </div>
+        )}
       </div>
     </section>
   );
