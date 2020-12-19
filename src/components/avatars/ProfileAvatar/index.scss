@@ -1,0 +1,25 @@
+#user-avatar .hover-camera {
+    opacity: 0;
+    transition: 0.25s ease-in-out;
+}
+
+#user-avatar:hover .hover-camera {
+    opacity: 1;
+}
+
+#user-informations .avatar-img {
+    border-radius: 50%;
+    height: 15rem;
+    width: 15rem;
+    background: var(--red-gradient);
+    padding: 0.5rem;
+}
+
+#user-informations .avatar-img img {
+    filter: brightness(70%);
+    transition: filter 0.25s ease-in-out;
+}
+
+#user-informations:hover .avatar-img img {
+    filter: brightness(100%);
+}

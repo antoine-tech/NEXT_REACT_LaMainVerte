@@ -6,9 +6,10 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 import { uploadToAWS } from "../../../sevices/Api";
 import { useDropzone } from "react-dropzone";
 import { editUserProfile, removeProfile } from "../../../requests/user";
-import Button from "../../base_components/Button/index";
-import FormGroup from "../../FormGroup/index";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
+import Button from "../../base_components/Button/index";
+import FormGroup from "../../base_components/FormGroup/index";
+import ProfileAvatar from '../../avatars/ProfileAvatar/index';
 
 const EditProfileForm = ({ current }) => {
   const [user, setUser] = useState(current);
@@ -101,15 +102,7 @@ const EditProfileForm = ({ current }) => {
   return (
     <form id="edit-user-informations" onSubmit={editUserInformations}>
       <div id="upload-avatar" {...getRootProps()}>
-        <img
-          src={
-            avatar_url
-              ? avatar_url
-              : "https://images.unsplash.com/photo-1485955900006-10f4d324d411?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80"
-          }
-          className="avatar-img mx-auto"
-          alt="avatar"
-        />
+        <ProfileAvatar avatar_url={avatar_url} hoverCamera={true} />
         <button id="picture-img" title="Uploader un nouvel avatar">
           <input type="file" name="avatar" {...getInputProps()} />
         </button>

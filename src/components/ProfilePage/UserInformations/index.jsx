@@ -7,7 +7,7 @@ const UserInformations = ({user}) => {
     const [current_user, setCurrentUser] = useState(useSelector(state=>state.current_user));
 
     return (
-        <section id="user-informations" className="bg-white radius shadow-neomorph-1 p-4 overflow-auto flex flex-col h-full">
+        <section id="user-informations" className="bg-white radius p-4 overflow-auto flex flex-col h-full">
             {   current_user && current_user.id === user.id ?
                     <EditProfileForm current={user}/>
                 :

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getGarden } from "../requests/gardens";
 import GardenCalendar from "../components/GardenCalendar";
-import Error404 from "../components/Error404";
+import Error404 from "../components/errors/Error404";
 
 const GardenHistory = () => {
   const [gardenData, setGardenData] = useState(null);

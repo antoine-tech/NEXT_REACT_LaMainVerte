@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import GardenForm from "../components/Forms/GardenForm";
-import MyDropzone from "../components/DropZone/index";
+import MyDropzone from '../components/dropzones/DropZone/index';
 
 const NewGarden = () => {
   const [droppedImage, setDroppedImage] = useState();

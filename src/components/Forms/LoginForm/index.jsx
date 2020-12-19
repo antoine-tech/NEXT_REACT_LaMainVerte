@@ -5,7 +5,7 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
 import RegistrationLinks from "../../RegistrationLinks";
 import LetsGoButton from '../../base_components/buttons/LetsGoButton/index';
-import FormGroup from "../../FormGroup/index";
+import FormGroup from '../../base_components/FormGroup/index';
 
 const LoginForm = ({ setAlertMessage, setIsAlertDisplayed, setAlertType }) => {
   const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(

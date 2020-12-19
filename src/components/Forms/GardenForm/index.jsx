@@ -11,10 +11,10 @@ import useJwtToken from "../../../hooks/useJwtToken";
 import usePageStatus from "../../../hooks/usePageStatus";
 import LoadingAnimation from "../../loaders/LoadingAnimation/index";
 import Select from "../../base_components/Select/index";
-import FormGroup from "../../FormGroup";
 import LetsGoButton from "../../base_components/buttons/LetsGoButton/index";
 import IconClimate from "../../base_components/icons/IconClimate/index";
 import IconLocation from "../../base_components/icons/IconLocation/index";
+import FormGroup from '../../base_components/FormGroup/index';
 
 const GardenForm = ({ droppedImage }) => {
   const history = useHistory();

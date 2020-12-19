@@ -28,9 +28,9 @@ const UserGardens = ({ user }) => {
   return (
     <section
       id="user-gardens"
-      className="bg-white radius shadow-neomorph-1 p-4 overflow-auto flex flex-col h-full"
+      className="bg-white radius p-4 overflow-auto flex flex-col h-full"
     >
-      <div className="radius bg-light-brown shadow-neomorph p-2  flex items-center justify-between">
+      <div className="radius bg-light-brown p-2 flex items-center justify-between">
         {current_user && current_user.id == user.id ? (
           <>
             <h4>Mes jardins</h4>
