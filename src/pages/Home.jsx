@@ -202,7 +202,6 @@ const Home = () => {
           <h4 className="my-4 text-center">Les derniers témoignages</h4>
           <div className="h-screen radius bg-light-brown shadow-neomorph p-2 ">
             {testimonies?.map((testimony) => {
-              console.log(testimony)
               let { id, content, user_id, created_at, updated_at } = testimony;
               return (
                 <TestimonyCard

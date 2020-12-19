@@ -7,9 +7,12 @@ import ToogleSwitch from '../ToogleSwitch/index';
 import MenuLeft from '../MenuLeft/index';
 import LaMainVerteBrandNav from "../../base_components/icons/LaMainVerteBrandNav/index";
 import SettingIcon from '../icons/SettingIcon/index';
+import useInstantMessages from '../../../hooks/useIntantMessages';
 import "./index.scss";
+import IconNotification from '../icons/IconNotification/index';
 
 const Navbar = () => {
+	const {instantMessages} = useInstantMessages();
 	const { getJwtToken, unSetJwtToken } = useJwtToken();
 	const { setCurrentUser, current_user } = useCurrentUser();
 	const history = useHistory();
@@ -71,6 +74,9 @@ const Navbar = () => {
 					)}
 					<li className="mx-4 flex flex-col justify-center">
 						<ToogleSwitch onchange={() => handleSignAction(current_user)} />
+					</li>
+					<li className="mx-4 flex flex-col justify-center">
+						<IconNotification/>
 					</li>
 				</ul>
 			</nav>

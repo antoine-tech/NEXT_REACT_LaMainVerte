@@ -48,8 +48,8 @@ const PostCommentTab = () => {
 									<img
 										src={TrashIcon}
 										alt="Delete a post comment"
-										width="25"
-										height="25"
+										width="24"
+										height="24"
 										onClick={async () => {
 											await deleteContent(
 												"post_comments",
