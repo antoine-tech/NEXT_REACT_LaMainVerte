@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Switch, useLocation, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Navbar from './components/base_components/Navbar/index';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";

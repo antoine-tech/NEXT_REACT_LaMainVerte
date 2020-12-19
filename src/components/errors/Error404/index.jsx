@@ -1,4 +1,4 @@
-import status404 from "../../assets/img/404.jpg";
+import status404 from "../../../assets/img/404.jpg";
 
 const Error404 = () =>
 {

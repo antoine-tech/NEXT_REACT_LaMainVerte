@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "infinite-react-carousel";
 import { Link } from "react-router-dom";
-import Avatar from "../Avatar/index";
+import Avatar from '../Avatar/index';
 import "./index.scss";
 
 const AvatarSlider = ({ sliderData }) => {

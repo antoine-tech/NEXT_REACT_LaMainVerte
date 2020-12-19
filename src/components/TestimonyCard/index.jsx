@@ -3,8 +3,8 @@ import Moment from "react-moment";
 import { findUserDatas } from "../../requests/user";
 import useIsLoading from "../../hooks/useIsLoading";
 import LoadingSpinner from "../loaders/LoadingSpinner/index";
+import Avatar from '../avatars/Avatar/index';
 import "./index.scss";
-import Avatar from "../Avatar/index";
 
 const TestimonyCard = ({ id, content, user_id, created_at, updated_at }) => {
   const { isLoading, setIsLoading } = useIsLoading();

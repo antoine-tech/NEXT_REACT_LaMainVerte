@@ -1,5 +1,5 @@
 import React from "react";
-import Input from '../base_components/Input/index';
+import Input from '../../base_components/Input'
 
 
 const FormGroup = ({

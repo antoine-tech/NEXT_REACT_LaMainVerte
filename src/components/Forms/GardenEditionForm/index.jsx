@@ -19,7 +19,7 @@ import Select from "../../base_components/Select/index";
 import IconLabel from "../../base_components/icons/IconLabel/index";
 import IconClimate from "../../base_components/icons/IconClimate/index";
 import IconLocation from "../../base_components/icons/IconLocation/index";
-import FormGroup from '../../FormGroup/index';
+import FormGroup from '../../base_components/FormGroup/index';
 
 const GardenEditionForm = ({
   gardenData,

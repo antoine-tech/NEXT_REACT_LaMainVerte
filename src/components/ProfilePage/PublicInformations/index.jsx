@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Input from "../../base_components/Input";
-import ProfileAvatar from "../../ProfileAvatar";
+import ProfileAvatar from '../../avatars/ProfileAvatar/index';
 
 const PublicInformations = ({ other_user }) => {
   const [user, setUser] = useState(other_user);

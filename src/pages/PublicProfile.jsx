@@ -5,7 +5,7 @@ import FollowedGardens from "../components/ProfilePage/FollowedGardens";
 import UserGardens from "../components/ProfilePage/UserGardens";
 import UserPosts from "../components/ProfilePage/UserPosts";
 import { findUserDatas } from "../requests/user";
-import Error404 from "../components/Error404";
+import Error404 from "../components/errors/Error404";
 
 const PublicProfile = () => {
   const { user_id } = useParams();

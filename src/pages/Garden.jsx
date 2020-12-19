@@ -25,7 +25,7 @@ import IconAdd from "../components/base_components/icons/IconAdd/index";
 import GardenCoverImage from "../components/GardenCoverImage";
 import usePageStatus from "../hooks/usePageStatus";
 import LoadingAnimation from "../components/loaders/LoadingAnimation/index";
-import Error404 from "../components/Error404";
+import Error404 from "../components/errors/Error404";
 
 const Garden = () => {
   const history = useHistory();

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import useCurrentUser from "../../hooks/useCurrentUser";
-import Modal from "../Modal";
 import EventCreationForm from "../Forms/EventCreationForm/index";
+import EventDisplay from "../EventDisplay";
+import Modal from "../base_components/Modal/index";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./index.scss";
-import EventDisplay from "../EventDisplay";
+
 const localizer = momentLocalizer(moment);
 
 const GardenCalendar = ({ events, setEvents, removeEvent, garden_owner }) => {

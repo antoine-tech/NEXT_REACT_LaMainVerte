@@ -18,11 +18,11 @@ import IconHeart from "../base_components/icons/IconHeart/index";
 import IconComment from "../base_components/icons/IconComment/index";
 import TextArea from "../base_components/TextArea/index";
 import Button from "../base_components/Button/index";
-import Avatar from "../Avatar/index";
-import "./index.scss";
 import PostSlider from "../PostSlider";
 import IconDelete from "../base_components/icons/IconDelete";
 import IconWarning from "../base_components/icons/IconWarning";
+import Avatar from '../avatars/Avatar/index';
+import "./index.scss";
 
 const PostCard = ({ id, removePost }) => {
 	const [postData, setPostData] = useState([]);

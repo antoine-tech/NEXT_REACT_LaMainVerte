@@ -6,10 +6,10 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 import { uploadToAWS } from "../../../sevices/Api";
 import { useDropzone } from "react-dropzone";
 import { editUserProfile, removeProfile } from "../../../requests/user";
-import Button from "../../base_components/Button/index";
-import FormGroup from "../../FormGroup/index";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
-import ProfileAvatar from "../../ProfileAvatar";
+import Button from "../../base_components/Button/index";
+import FormGroup from "../../base_components/FormGroup/index";
+import ProfileAvatar from '../../avatars/ProfileAvatar/index';
 
 const EditProfileForm = ({ current }) => {
   const [user, setUser] = useState(current);

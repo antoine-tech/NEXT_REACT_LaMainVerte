@@ -1,6 +1,6 @@
 import React from "react";
-import avatar_default from "../../assets/img/avatar_default.jpeg";
-import IconCamera from "../base_components/icons/IconCamera";
+import avatar_default from "../../../assets/img/avatar_default.jpeg";
+import IconCamera from "../../base_components/icons/IconCamera";
 import "./index.scss";
 
 const ProfileAvatar = ({ avatar_url, hoverCamera = false }) => {

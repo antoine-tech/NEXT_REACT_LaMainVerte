@@ -4,13 +4,13 @@ import { uploadToAWS } from "../../../sevices/Api";
 import { createPost } from "../../../requests/posts";
 import useJwtToken from "../../../hooks/useJwtToken";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
-import FormGroup from "../../FormGroup/index";
-import Dropzone from "../../PostDropZone/index";
 import Button from "../../base_components/Button/index";
 import TextArea from "../../base_components/TextArea/index";
 import IconAdd from "../../base_components/icons/IconAdd/index";
 import IconRemove from "../../base_components/icons/IconRemove/index";
 import NewGarden from '../../../pages/NewGarden';
+import FormGroup from '../../base_components/FormGroup/index';
+import Dropzone from '../../dropzones/PostDropZone/index';
 
 const PostCreation = ({ setGardenData, gardenData, setNewPostZoneDisplayed }) => {
   const { getJwtToken } = useJwtToken();

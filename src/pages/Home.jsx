@@ -6,7 +6,6 @@ import { getPosts } from "../requests/posts";
 import { getTestimonies } from "../requests/testimonies";
 import useCurrentUser from "../hooks/useCurrentUser";
 import usePageStatus from "../hooks/usePageStatus";
-import AvatarSlider from "../components/AvatarSlider/index";
 import GardenCard from "../components/GardenCard/index";
 import SearchEngine from "../components/SearchEngine/index";
 import useJwtToken from "../hooks/useJwtToken";
@@ -15,6 +14,7 @@ import TestimonyCard from "../components/TestimonyCard/index";
 import empty_result from "../assets/backgrounds/empty_result.svg";
 import LoadingAnimation from "../components/loaders/LoadingAnimation/index";
 import Button from "../components/base_components/Button/index";
+import AvatarSlider from '../components/avatars/AvatarSlider/index';
 
 const Home = () => {
   const history = useHistory();

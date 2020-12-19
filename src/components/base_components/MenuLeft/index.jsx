@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ToogleSwitch from "../ToogleSwitch/index";
-import SettingIcon from '../base_components/icons/SettingIcon/index';
+import ToogleSwitch from '../ToogleSwitch/index';
+import SettingIcon from '../icons/SettingIcon/index';
 
 const MenuLeft = ({ current_user, handleMenuToogle, handleSignAction }) => {
   return (
