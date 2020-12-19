@@ -38,6 +38,7 @@
   --radius: 12.5px;
   --card-height: 35rem;
   --card-width: 100%;
+  --notification-width: 100%;
 }
 
 @media screen and (min-width: 320px) {
@@ -207,6 +208,10 @@ div {
   background-color: var(--light-brown);
 }
 
+.bg-brown{
+  background-color: var(--brown-light);
+}
+
 .bg-light-white {
   background-color: var(--light-white);
 }
@@ -340,6 +345,18 @@ input:checked + .switch {
 }
 
 /* CARDS */
+
+.notification {
+  height: max-content;
+  width: var(--notification-width);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-neomorph-3);
+  border-radius: var(--radius);
+}
 .card {
   height: var(--card-height);
   width: var(--card-width);

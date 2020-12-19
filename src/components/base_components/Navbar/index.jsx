@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { logout } from "../../../requests/user";
 import useJwtToken from '../../../hooks/useJwtToken';
@@ -7,12 +7,15 @@ import ToogleSwitch from '../ToogleSwitch/index';
 import MenuLeft from '../MenuLeft/index';
 import LaMainVerteBrandNav from "../../base_components/icons/LaMainVerteBrandNav/index";
 import SettingIcon from '../icons/SettingIcon/index';
-import useInstantMessages from '../../../hooks/useIntantMessages';
 import "./index.scss";
 import IconNotification from '../icons/IconNotification/index';
+import WEBSOCKET_CLIENT from '../../../sevices/WebsocketClient';
+import MenuNotification from "../../MenuNotification";
 
 const Navbar = () => {
-	const {instantMessages} = useInstantMessages();
+
+	const [areNotifcationDisplayed, setNotificationDisplayed] = useState(false)
+	const [instantMessages, setInstantMessages] = useState([]);
 	const { getJwtToken, unSetJwtToken } = useJwtToken();
 	const { setCurrentUser, current_user } = useCurrentUser();
 	const history = useHistory();
@@ -35,6 +38,24 @@ const Navbar = () => {
 		setIsMenuLeftDisplayed(!isMenuLeftDisplayed);
 	};
 
+
+	useEffect(() => {
+
+		WEBSOCKET_CLIENT.onopen = function () {
+			console.log("WebSocket Client Connected");
+		  };
+	  
+		
+		WEBSOCKET_CLIENT.onmessage = function (newMessage) {
+		  setInstantMessages([...instantMessages, JSON.parse(newMessage.data)]);
+		};
+	
+		WEBSOCKET_CLIENT.onclose = function (closeEvent, WEBSOCKET_CLIENT) {
+			const CONNECTION_TYPE = process.env.NODE_ENV === "production" ? 'wss' : 'ws'
+			WEBSOCKET_CLIENT = new WebSocket(`${CONNECTION_TYPE}://la-main-verte-ws.herokuapp.com`);
+		};
+	  }, []);
+
   return (
     <>
       <nav className="flex w-full justify-between items-center p-4 relative">
@@ -45,6 +66,9 @@ const Navbar = () => {
 				<ul className="flex lg:hidden items-center">
 					<li>
 						<SettingIcon onClick={handleMenuToogle} classNames={["nav-link"]} />
+					</li>
+					<li className="mx-4 flex flex-col justify-center">
+						<IconNotification onClick={()=>setNotificationDisplayed(!areNotifcationDisplayed)} notificationNumber={instantMessages.length}/>
 					</li>
 				</ul>
 
@@ -75,8 +99,9 @@ const Navbar = () => {
 					<li className="mx-4 flex flex-col justify-center">
 						<ToogleSwitch onchange={() => handleSignAction(current_user)} />
 					</li>
+				
 					<li className="mx-4 flex flex-col justify-center">
-						<IconNotification/>
+						<IconNotification onClick={()=>setNotificationDisplayed(!areNotifcationDisplayed)} notificationNumber={instantMessages.length}/>
 					</li>
 				</ul>
 			</nav>
@@ -87,6 +112,12 @@ const Navbar = () => {
 					handleSignAction={handleSignAction}
 				/>
 			)}
+
+			{
+				areNotifcationDisplayed && (
+					<MenuNotification notifications={instantMessages} handleMenuToogle={()=>setNotificationDisplayed(!areNotifcationDisplayed)}/>
+				)
+			}
 		</>
 	);
 };
