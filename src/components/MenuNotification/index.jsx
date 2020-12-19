@@ -8,7 +8,7 @@ const MenuNotification = ({
   notifications,
 }) => {
   return (
-    <div className="fixed top-0 right-0 w-full md:w-4/6 lg:w-2/6 h-screen z-40 p-8 flex flex-col items-center bg-white shadow-neomorph-1 overflow-auto">
+    <div className="fixed top-0 right-0 w-full md:w-4/6 lg:w-2/6 h-screen z-40 p-8 block bg-white shadow-neomorph-1 overflow-auto">
       <CloseMenuIcon
         onClick={handleMenuToogle}
         classNames={["absolute", "top-8", "right-8"]}
