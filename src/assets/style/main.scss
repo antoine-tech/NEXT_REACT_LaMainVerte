@@ -261,6 +261,9 @@ div {
 
 .bg-man {
   background-image: url(../backgrounds/man.jpg);
+  background-size: auto 100vh;
+  background-position: top 0% right 250%;
+  background-attachment: fixed;
 }
 
 .bg-start-to-grow {
