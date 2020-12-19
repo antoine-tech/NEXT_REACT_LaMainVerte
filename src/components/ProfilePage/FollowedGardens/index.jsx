@@ -25,8 +25,8 @@ const FollowedGardens = ({ user }) => {
   }, []);
 
   return (
-    <section id="followed-gardens" className="bg-white radius shadow-neomorph-1 p-4 overflow-auto flex flex-col h-full">
-      <div className="radius bg-light-brown shadow-neomorph p-2 ">
+    <section id="followed-gardens" className="bg-white radius p-4 overflow-auto flex flex-col h-full">
+      <div className="radius bg-light-brown p-2 ">
         {current_user && current_user.id == user.id ? (
           <h4>Mes jardins favoris</h4>
         ) : (
