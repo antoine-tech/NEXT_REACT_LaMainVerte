@@ -14,7 +14,7 @@ const Timer = () => {
     }
   }, [currentTime]);
 
-  return [currentTime, setCurrentTime];
+  return ''
 };
 
 export default Timer;

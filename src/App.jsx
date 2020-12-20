@@ -17,11 +17,9 @@ import UnAuthRoute from "./components/routes/UnAuthRoute/index";
 import AdminRoute from "./components/routes/AdminRoute/index";
 import AuthRoute from "./components/routes/AuthRoute";
 import PublicProfile from "./pages/PublicProfile";
-import WEBSOCKET_CLIENT from "./services/WebsocketClient";
 import Timer from "./components/Timer/index";
 
 const App = () => {
-  const [instantMessages, setInstantMessages] = useState([]);
   const { pathname } = useLocation();
   const { setCurrentUser, current_user } = useCurrentUser();
   const [isNavbarPresent, setNavbarPresent] = useState(true);
@@ -39,25 +37,6 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    WEBSOCKET_CLIENT.onopen = function () {
-      console.log("WebSocket Client Connected");
-    };
-
-    WEBSOCKET_CLIENT.onmessage = function (newMessage) {
-      const data = JSON.parse(newMessage.data);
-      !data.ping &&
-        setInstantMessages([...instantMessages, JSON.parse(newMessage.data)]);
-    };
-
-    WEBSOCKET_CLIENT.onclose = function (closeEvent, WEBSOCKET_CLIENT) {
-      const CONNECTION_TYPE =
-        process.env.NODE_ENV === "production" ? "wss" : "ws";
-      WEBSOCKET_CLIENT = new WebSocket(
-        `${CONNECTION_TYPE}://la-main-verte-ws.herokuapp.com`
-      );
-    };
-  });
 
   useEffect(() => {
     pathname === "/login" || pathname === "/register"
@@ -67,7 +46,7 @@ const App = () => {
 
   return (
     <>
-      {isNavbarPresent && <Navbar instantMessages={instantMessages} />}
+      {isNavbarPresent && <Navbar />}
       <Switch>
         <UnAuthRoute
           current_user={current_user}
