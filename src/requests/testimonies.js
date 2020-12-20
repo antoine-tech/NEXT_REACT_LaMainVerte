@@ -1,4 +1,4 @@
-import { find, deletion } from "../sevices/Api";
+import { find, deletion } from "../services/Api";
 
 const getTestimonies = async () =>
   await find("/testimonies", false).then((res) => res.json());

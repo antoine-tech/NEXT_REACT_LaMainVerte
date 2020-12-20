@@ -23,7 +23,7 @@ import IconDelete from "../base_components/icons/IconDelete";
 import IconWarning from "../base_components/icons/IconWarning";
 import Avatar from "../avatars/Avatar/index";
 import "./index.scss";
-import WEBSOCKET_CLIENT from "../../sevices/WebsocketClient";
+import WEBSOCKET_CLIENT from "../../services/WebsocketClient";
 
 const PostCard = ({ id, removePost }) => {
   const [postData, setPostData] = useState([]);
@@ -92,7 +92,7 @@ const PostCard = ({ id, removePost }) => {
     WEBSOCKET_CLIENT.send(
       JSON.stringify({
         label: "commentaire",
-        pathName: `garden/${postData.post.garden_id}`,
+        pathName: `/garden/${postData.post.garden_id}`,
         type: "comment",
         content,
       })

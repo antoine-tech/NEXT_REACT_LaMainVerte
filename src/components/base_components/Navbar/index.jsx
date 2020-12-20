@@ -11,7 +11,7 @@ import "./index.scss";
 import IconNotification from '../icons/IconNotification/index';
 import MenuNotification from "../../MenuNotification";
 
-const Navbar = ({instantMessages}) => {
+const Navbar = ({instantMessages, setInstantMessages}) => {
 	const [areNotifcationDisplayed, setNotificationDisplayed] = useState(false)
 	const { getJwtToken, unSetJwtToken } = useJwtToken();
 	const { setCurrentUser, current_user } = useCurrentUser();
@@ -48,7 +48,7 @@ const Navbar = ({instantMessages}) => {
 						<SettingIcon onClick={handleMenuToogle} classNames={["nav-link"]} />
 					</li>
 					<li className="mx-4 flex flex-col justify-center">
-						<IconNotification onClick={()=>setNotificationDisplayed(!areNotifcationDisplayed)} notificationNumber={instantMessages.length}/>
+						<IconNotification onClick={()=>setNotificationDisplayed(!areNotifcationDisplayed)} notificationNumber={instantMessages.length} />
 					</li>
 				</ul>
 

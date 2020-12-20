@@ -1,4 +1,4 @@
-import { find, deletion } from "../sevices/Api";
+import { find, deletion } from "../services/Api";
 import jwtDecode from "jwt-decode";
 
 const getAdminData = async (jwt_token) => {

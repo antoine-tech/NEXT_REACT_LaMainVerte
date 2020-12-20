@@ -17,11 +17,10 @@ import UnAuthRoute from "./components/routes/UnAuthRoute/index";
 import AdminRoute from "./components/routes/AdminRoute/index";
 import AuthRoute from "./components/routes/AuthRoute";
 import PublicProfile from "./pages/PublicProfile";
-import WEBSOCKET_CLIENT from "./sevices/WebsocketClient";
+import WEBSOCKET_CLIENT from "./services/WebsocketClient";
+import Timer from "./components/Timer/index";
 
 const App = () => {
-  const [currentTime, setCurrentTime] = useState(Date.now());
-  const [lastMessageTime, setLastMesageTime] = useState(Date.now());
   const [instantMessages, setInstantMessages] = useState([]);
   const { pathname } = useLocation();
   const { setCurrentUser, current_user } = useCurrentUser();
@@ -39,17 +38,6 @@ const App = () => {
       fetchUserDatas();
     }
   }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => setCurrentTime(Date.now()), 1000);
-
-    if (currentTime - lastMessageTime >= 45 * 1000) {
-      WEBSOCKET_CLIENT.send(JSON.stringify({ ping: Date.now() }));
-      setLastMesageTime(Date.now());
-       return clearInterval(interval)
-    }
-
-  }, [currentTime]);
 
   useEffect(() => {
     WEBSOCKET_CLIENT.onopen = function () {
@@ -122,6 +110,7 @@ const App = () => {
           component={NewGarden}
         />
       </Switch>
+      <Timer />
     </>
   );
 };

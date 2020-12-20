@@ -5,7 +5,7 @@ import Notification from "../Notification/index";
 const MenuNotification = ({
   current_user,
   handleMenuToogle,
-  notifications,
+  notifications
 }) => {
   return (
     <div className="fixed top-0 right-0 w-full md:w-4/6 lg:w-2/6 h-screen z-40 p-8 block bg-white shadow-neomorph-1 overflow-auto">

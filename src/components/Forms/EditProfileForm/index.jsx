@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import useJwtToken from "../../../hooks/useJwtToken";
 import { useHistory } from "react-router-dom";
 import useCurrentUser from "../../../hooks/useCurrentUser";
-import { uploadToAWS } from "../../../sevices/Api";
+import { uploadToAWS } from "../../../services/Api";
 import { useDropzone } from "react-dropzone";
 import { editUserProfile, removeProfile } from "../../../requests/user";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";

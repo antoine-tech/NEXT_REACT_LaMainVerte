@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { uploadToAWS } from "../../../sevices/Api";
+import { uploadToAWS } from "../../../services/Api";
 import { createPost } from "../../../requests/posts";
 import useJwtToken from "../../../hooks/useJwtToken";
 import useFormAnalysis from "../../../hooks/useFormAnalysis";
@@ -11,8 +11,12 @@ import IconRemove from "../../base_components/icons/IconRemove/index";
 import NewGarden from '../../../pages/NewGarden';
 import FormGroup from '../../base_components/FormGroup/index';
 import Dropzone from '../../dropzones/PostDropZone/index';
+import useCurrentUser from '../../../hooks/useCurrentUser';
+import WEBSOCKET_CLIENT from '../../../services/WebsocketClient';
 
 const PostCreation = ({ setGardenData, gardenData, setNewPostZoneDisplayed }) => {
+
+  const {current_user} = useCurrentUser()
   const { getJwtToken } = useJwtToken();
 
   const { garden_id } = useParams();
@@ -60,14 +64,28 @@ const PostCreation = ({ setGardenData, gardenData, setNewPostZoneDisplayed }) =>
       imagesUrls
     );
 
+
+    const content = {
+      id: newPost.id,
+      author: current_user,
+      gardenId:garden_id,
+      teaser: newPost.content,
+      created_at: newPost.created_at,
+    };
+    
+    WEBSOCKET_CLIENT.send(
+      JSON.stringify({
+        label: "post",
+        pathName: `/garden/${garden_id}`,
+        type: "post",
+        content,
+      })
+    );
+
     const newGardenData = {...gardenData, posts: [...gardenData.posts, newPost]}
     setGardenData(newGardenData);
     setNewPostZoneDisplayed(false);
   };
-
-  useEffect(() => {
-    console.log(imageFields);
-  }, [imageFields]);
 
   const { datas, alerts, handleInput, handleBlur } = useFormAnalysis(
     {
