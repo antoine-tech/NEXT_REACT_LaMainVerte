@@ -3,7 +3,7 @@ import { findUserDatas } from "../../../requests/user";
 import { getFollowedGardenAndRelatedData } from "../../../requests/gardens";
 import GardenCard from "../../../components/GardenCard";
 import { useSelector } from "react-redux";
-import empty_result from "../../../assets/backgrounds/empty_result.svg";
+import empty_result from "../../../assets/backgrounds/empty_result_2.svg";
 
 const FollowedGardens = ({ user }) => {
   const [followedGardens, setFollowedGardens] = useState([]);

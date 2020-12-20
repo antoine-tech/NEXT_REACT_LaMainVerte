@@ -4,6 +4,7 @@ import Notification from "../Notification/index";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setNotifications } from "../../redux/actions";
+import empty_result from "../../assets/backgrounds/empty_result.svg";
 
 const MenuNotification = ({ current_user, handleMenuToogle }) => {
   const notifications = useSelector((state) => state.notifications);
@@ -21,20 +22,32 @@ const MenuNotification = ({ current_user, handleMenuToogle }) => {
         classNames={["absolute", "top-8", "right-8"]}
       />
 
-      <h4 className="my-4 italic">C'est nouveau sur LaMainVerte ...</h4>
+      {notifications.length > 0 ? (
+        <>
+          <h4 className="my-4 italic w-full text-center">C'est nouveau sur LaMainVerte ...</h4>
+          {notifications.map((notification) => {
+            let { content, type, label, pathName } = notification;
+            return (
+              <Notification
+                key={`notification-${type}-${content.id}`}
+                type={type}
+                content={content}
+                label={label}
+                pathName={pathName}
+              />
+            );
+          })}
+        </>
+      ) : (
+        <div className="h-full w-full flex flex-col items-center justify-center">
 
-      {notifications?.map((notification) => {
-        let { content, type, label, pathName } = notification;
-        return (
-          <Notification
-            key={`notification-${type}-${content.id}`}
-            type={type}
-            content={content}
-            label={label}
-            pathName={pathName}
-          />
-        );
-      })}
+          <img src={empty_result} className="h-96 w-96 mx-auto" alt="no result found" />
+
+          <h4 className="my-4 w-full text-center">Rien pour le moment ...</h4>
+
+          
+        </div>
+      )}
     </div>
   );
 };
