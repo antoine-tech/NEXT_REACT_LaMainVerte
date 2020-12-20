@@ -1,4 +1,4 @@
-import { find, create, deletion, update } from "../sevices/Api";
+import { find, create, deletion, update } from "../services/Api";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 

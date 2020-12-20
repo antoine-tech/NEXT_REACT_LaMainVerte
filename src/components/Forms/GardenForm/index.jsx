@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { uploadToAWS } from "../../../sevices/Api";
+import { uploadToAWS } from "../../../services/Api";
 import { getClimates } from "../../../requests/climates";
 import { getGardenTypes } from "../../../requests/gardens";
 import { getLocations } from "../../../requests/locations";
@@ -14,9 +14,12 @@ import Select from "../../base_components/Select/index";
 import LetsGoButton from "../../base_components/buttons/LetsGoButton/index";
 import IconClimate from "../../base_components/icons/IconClimate/index";
 import IconLocation from "../../base_components/icons/IconLocation/index";
-import FormGroup from '../../base_components/FormGroup/index';
+import FormGroup from "../../base_components/FormGroup/index";
+import WEBSOCKET_CLIENT from "../../../services/WebsocketClient";
+import useCurrentUser from "../../../hooks/useCurrentUser";
 
 const GardenForm = ({ droppedImage }) => {
+  const { current_user } = useCurrentUser();
   const history = useHistory();
   const { pageStatus, setPageStatus } = usePageStatus();
   const [climates, setClimates] = useState([]);
@@ -98,6 +101,21 @@ const GardenForm = ({ droppedImage }) => {
     const response = await createGarden(newGarden, getJwtToken);
     if (response.id) {
       const createdGardenId = response.id;
+      const content = {
+        id: response.id,
+        author: current_user,
+        gardenId: response.id,
+        teaser: response.name,
+        created_at: response.created_at,
+      };
+      WEBSOCKET_CLIENT.send(
+        JSON.stringify({
+          label: "jardin",
+          pathName: `/garden/${response.id}`,
+          type: "garden",
+          content,
+        })
+      );
       history.push(`/garden/${createdGardenId}`);
     } else {
       setIsThereErrors(true);

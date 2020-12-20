@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EditProfileForm from "../../Forms/EdiProfileForm";
+import EditProfileForm from "../../Forms/EditProfileForm";
 import { useSelector } from "react-redux";
 import PublicInformations from "../PublicInformations";
 

@@ -7,4 +7,11 @@ const setCurrentUser = (user) => {
   };
 };
 
-export { setCurrentUser };
+const setNotifications = (notifications) => {
+  return {
+    type: "NOTIFICATION",
+    payload: notifications,
+  };
+};
+
+export { setCurrentUser, setNotifications };

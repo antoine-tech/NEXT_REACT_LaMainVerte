@@ -1,4 +1,4 @@
-import { create, deletion } from "../sevices/Api";
+import { create, deletion } from "../services/Api";
 
 const createEvent = async (garden_id, data, jwt_token) => {
   return await create(data, `/gardens/${garden_id}/events`, true, jwt_token).then((res) =>

@@ -56,8 +56,8 @@ const PostTab = () => {
 									<img
 										src={TrashIcon}
 										alt="Delete a post"
-										width="25"
-										height="25"
+										width="24"
+										height="24"
 										onClick={async () => {
 											await deleteContent("posts", post.id, getJwtToken);
 											handlePosts();
